@@ -15,12 +15,12 @@
     <Button
         android:id="@+id/btnEvents"
         style="@style/AppRoundedButton"
-        android:text="Events"/>
+        android:text="Events" />
 
 
     <Button
         android:id="@+id/btnSettings"
         style="@style/AppRoundedButton"
-        android:text="Settings"/>
+        android:text="Settings" />
 
 </LinearLayout>
