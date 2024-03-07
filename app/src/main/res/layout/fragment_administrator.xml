@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#10283B">
+
+    <!-- Close (X) Button at the top right -->
+    <Button
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        style="@style/AppRoundedButton"/>
+
+    <!-- LinearLayout to center the buttons vertically -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal">
+
+        <!-- Events Option Button -->
+        <Button
+            android:id="@+id/btn_events_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Events Option"
+            android:layout_marginBottom="8dp"
+            style="@style/AppRoundedButton"/>
+
+        <!-- Profile Option Button -->
+        <Button
+            android:id="@+id/btn_profile_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Profile Option"
+            android:layout_marginBottom="8dp"
+            style="@style/AppRoundedButton"/>
+
+        <!-- Images Option Button -->
+        <Button
+            android:id="@+id/btn_images_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Images Option"
+            android:layout_marginBottom="8dp"
+            style="@style/AppRoundedButton"/>
+
+        <!-- Settings Button -->
+        <Button
+            android:id="@+id/btn_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            style="@style/AppRoundedButton"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
