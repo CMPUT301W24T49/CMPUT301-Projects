@@ -36,4 +36,10 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // for QR code
+    // citation: OpenAI, ChatGPT4, 2024, I want a seperate class from main activity that
+    // will create the QR code in android studio
+    implementation 'com.google.zxing:core:3.4.1'
+    implementation 'com.journeyapps:zxing-android-embedded:4.2.0'
+    // end of citation
 }
