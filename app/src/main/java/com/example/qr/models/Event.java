@@ -3,7 +3,7 @@ package com.example.qr.models;
 import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.GeoPoint;
-import com.google.type.Date;
+import java.util.Date;
 
 public class Event {
     private final String id; // Document ID in Firestore

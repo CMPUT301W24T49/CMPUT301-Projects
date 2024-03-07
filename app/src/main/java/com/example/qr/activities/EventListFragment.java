@@ -10,8 +10,20 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
+import com.example.qr.models.Event;
+import com.example.qr.models.EventArrayAdapter;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 public class EventListFragment extends Fragment {
+
+    ListView eventList;
+    ArrayList<Event> eventDataList;
+    EventArrayAdapter eventArrayAdapter;
+
+    private FirebaseFirestore db;
 
     public EventListFragment() {
         // Required empty public constructor
@@ -25,10 +37,16 @@ public class EventListFragment extends Fragment {
         ListView listView = view.findViewById(R.id.listview_events);
         Button btnClose = view.findViewById(R.id.btn_close_event_list);
 
-        // TODO: Set up the ListView adapter here
+        db = FirebaseFirestore.getInstance();
+
+        eventDataList = new ArrayList<>();
+        eventArrayAdapter = new EventArrayAdapter(getContext(), eventDataList);
+        listView.setAdapter(eventArrayAdapter);
+
+        fetchData();
 
         listView.setOnItemClickListener((adapterView, view1, i, l) -> {
-            // TODO: Open the EventDetailFragment dialog here with event details
+            // Handle list item click
         });
 
         btnClose.setOnClickListener(v -> {
@@ -40,5 +58,15 @@ public class EventListFragment extends Fragment {
         return view;
     }
 
-    // TODO: Implement the adapter for the ListView to display the events
+    private void fetchData() {
+        db.collection("Events").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
+                Event event = snapshot.toObject(Event.class);
+                eventDataList.add(event);
+            }
+            eventArrayAdapter.notifyDataSetChanged(); // Notify the adapter that data has changed
+        }).addOnFailureListener(e -> {
+            // Handle the error
+        });
+    }
 }
