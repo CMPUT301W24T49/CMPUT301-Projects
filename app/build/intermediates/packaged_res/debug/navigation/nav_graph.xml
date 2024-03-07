@@ -1,0 +1,43 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph">
+
+    <!-- Specify the start destination -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.qr.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <!-- Action to navigate from HomeFragment to AdminMenuFragment -->
+        <action
+            android:id="@+id/action_homeFragment_to_adminMenuFragment"
+            app:destination="@id/adminMenuFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminMenuFragment"
+        android:name="com.example.qr.AdministratorFragment"
+        android:label="fragment_admin_menu"
+        tools:layout="@layout/fragment_administrator" />
+    <fragment
+        android:id="@+id/eventsListFragment"
+        android:name="com.example.qr.EventListFragment"
+        android:label="fragment_events_list"
+        tools:layout="@layout/fragment_event_list" />
+    <fragment
+        android:id="@+id/AdministratorFragment"
+        android:name="com.example.qr.AdministratorFragment"
+        android:label="fragment_admin_menu"
+        tools:layout="@layout/fragment_administrator">
+
+        <!-- Action to navigate from AdminMenuFragment to EventsListFragment -->
+        <action
+            android:id="@+id/action_adminMenuFragment_to_eventsListFragment"
+            app:destination="@id/eventsListFragment" />
+    </fragment>
+
+
+
+    <!-- You can define other fragments and actions here -->
+</navigation>

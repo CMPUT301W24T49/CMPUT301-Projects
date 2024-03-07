@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#10283B"
+    android:padding="16dp">
+
+    <!-- Close (X) Button at the top right -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="X"
+        android:background="#FFFFFF" />
+
+    <!-- LinearLayout to center the buttons vertically -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <!-- Events Option Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_events_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Events Option"
+            android:background="@drawable/rounded_button"
+            android:textColor="#000000"
+            style="@style/AppRoundedButton"/>
+
+
+        <!-- Profile Option Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_profile_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+
+            android:text="Profile Option"
+            android:textColor="#000000"
+            android:background="@drawable/rounded_button"
+            style="@style/AppRoundedButton"/>
+
+        <!-- Images Option Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_images_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/rounded_button"
+            android:text="Images Option"
+            android:textColor="#000000"
+            style="@style/AppRoundedButton"/>
+
+        <!-- Settings Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:text="Settings"
+            android:textColor="#000000"
+            style="@style/AppRoundedButton"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

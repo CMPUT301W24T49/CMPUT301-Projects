@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#10283B"
+    android:padding="16dp">
+
+    <!-- Close (X) Button at the top right -->
+    <Button
+        android:id="@+id/btn_close_profile_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <TextView
+        android:id="@+id/txt_events_list"
+        android:layout_width="158dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="149dp"
+        android:layout_toStartOf="@id/btn_close_profile_list"
+        android:text="Profile List"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <!-- ListView for the profiles -->
+    <ListView
+        android:id="@+id/listview_profiles"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn_close_profile_list"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:background="#424242"
+        android:padding="8dp"
+        android:scrollbars="vertical" />
+
+</RelativeLayout>
