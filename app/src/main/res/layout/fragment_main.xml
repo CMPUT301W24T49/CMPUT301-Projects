@@ -1,45 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#10283B"> <!-- Assuming a dark theme similar to your image -->
-
+    android:background="#10283B "
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
     <!-- Admin Button -->
     <Button
         android:id="@+id/button_admin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="8dp"
         android:text="Admin"
-
         style="@style/AppRoundedButton"/>
 
     <!-- Attendee Button -->
     <Button
         android:id="@+id/button_attendee"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="Attendee"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_below="@+id/button_admin"
-
         style="@style/AppRoundedButton"
         />
 
     <!-- Organizer Button -->
     <Button
         android:id="@+id/button_organizer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="Organizer"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="8dp"
-        android:layout_below="@+id/button_attendee"
         style="@style/AppRoundedButton"
         />
 
-</RelativeLayout>
+</LinearLayout>
