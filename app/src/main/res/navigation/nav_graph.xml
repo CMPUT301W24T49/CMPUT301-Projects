@@ -1,0 +1,24 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph">
+
+    <!-- Specify the start destination -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.qr.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_main" >
+        <!-- Action to navigate from HomeFragment to AdminMenuFragment -->
+        <action
+            android:id="@+id/action_homeFragment_to_adminMenuFragment"
+            app:destination="@id/adminMenuFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminMenuFragment"
+        android:name="com.example.qr.AdministratorFragment"
+        android:label="fragment_admin_menu"
+        tools:layout="@layout/fragment_administrator" />
+    <!-- You can define other fragments and actions here -->
+</navigation>
