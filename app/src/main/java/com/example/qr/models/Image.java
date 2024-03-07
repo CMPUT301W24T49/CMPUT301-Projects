@@ -2,7 +2,7 @@ package com.example.qr.models;
 
 import androidx.annotation.NonNull;
 
-import com.google.type.Date;
+import java.util.Date;
 
 public class Image {
     private final String id; // Document ID in Firestore
