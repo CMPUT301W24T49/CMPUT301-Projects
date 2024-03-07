@@ -5,8 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.qr.R;
+import com.example.qr.models.Event;
+import com.example.qr.models.EventArrayAdapter;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    ArrayList<Event> events;
+    EventArrayAdapter eventArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

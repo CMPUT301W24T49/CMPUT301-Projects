@@ -9,7 +9,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 public class GenerateQRCode {
     // citation: OpenAI, ChatGPT4, 2024, I want a seperate class from main activity that
     // will create the QR code in android studio
-    public static Bitmap generateQR(String content) {
+    public static Bitmap generateQR(String url) {
         QRCodeWriter writer = new QRCodeWriter();
         // in pixels set height and width of QR code
         int width = 500;
@@ -17,7 +17,7 @@ public class GenerateQRCode {
         try {
             // 2D matrix of bits that makes up the QR code. Essentially,
             // it's a grid where each cell (or bit) can be either on (1) or off (0)
-            BitMatrix bitMatrix = writer.encode(content, BarcodeFormat.QR_CODE, width, height);
+            BitMatrix bitMatrix = writer.encode(url, BarcodeFormat.QR_CODE, width, height);
             // creates an empty bitmap with the specified dimensions and color configuration.
             // mutable bitmap with specified width and height, configuration for storing colors.
             Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
