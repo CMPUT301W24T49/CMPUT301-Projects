@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#10283B"
+    android:padding="16dp">
+
+    <!-- Close (X) Button in the top right -->
+    <Button
+        android:id="@+id/btn_close"
+        style="@style/AppRoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="X" />
+
+    <!-- LinearLayout to align buttons verically) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#10283B"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Create Events Button -->
+        <Button
+            android:id="@+id/create_events_btn"
+            style="@style/AppRoundedButton"
+            android:text="Create new Event"/>
+
+        <!-- Events Button -->
+        <Button
+            android:id="@+id/events_btn"
+            style="@style/AppRoundedButton"
+            android:text="Events"/>
+
+        <!-- Settings Button -->
+        <Button
+            android:id="@+id/settings_btn"
+            style="@style/AppRoundedButton"
+            android:text="Settings"/>
+    </LinearLayout>
+</RelativeLayout>
