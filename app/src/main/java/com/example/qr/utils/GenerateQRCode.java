@@ -1,4 +1,4 @@
-package com.example.qr;
+package com.example.qr.utils;
 
 import android.graphics.Bitmap;
 import com.google.zxing.BarcodeFormat;
