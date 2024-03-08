@@ -5,6 +5,10 @@ import androidx.annotation.NonNull;
 import com.google.firebase.firestore.GeoPoint;
 import java.util.Date;
 
+/**
+ * Represents an event stored in Firestore. Contains information about the event title,
+ * description, organizer, date, location, QR code, event poster, and attendee limit.
+ */
 public class Event {
     private String id; // Document ID in Firestore
     private String title;
@@ -16,8 +20,10 @@ public class Event {
     private String eventPoster;
     private Integer attendeeLimit; // Optional
 
-    // Constructor, getters, and setters
 
+    /**
+     * Default constructor required for Firestore data mapping.
+     */
     public Event() {
 
     }
@@ -35,78 +41,173 @@ public class Event {
         this.attendeeLimit = attendeeLimit;
     }
 
+    /**
+     * Returns the document ID of the event.
+     *
+     * @return The document ID of the event.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Sets the document ID of the event.
+     *
+     * @param id The document ID of the event.
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * Returns the title of the event.
+     *
+     * @return The title of the event.
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Sets the title of the event.
+     *
+     * @param title The title of the event.
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Returns the description of the event.
+     *
+     * @return The description of the event.
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Sets the description of the event.
+     *
+     * @param description The description of the event.
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Returns the document ID of the event organizer.
+     *
+     * @return The document ID of the event organizer.
+     */
     public String getOrganizerId() {
         return organizerId;
     }
 
+    /**
+     * Sets the document ID of the event organizer.
+     *
+     * @param organizerId The document ID of the event organizer.
+     */
     public void setOrganizerId(String organizerId) {
         this.organizerId = organizerId;
     }
 
+    /**
+     * Returns the date of the event.
+     *
+     * @return The date of the event.
+     */
     public Date getEventDate() {
         return eventDate;
     }
 
+    /**
+     * Sets the date of the event.
+     *
+     * @param eventDate The date of the event.
+     */
     public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
 
+    /**
+     * Returns the location of the event.
+     *
+     * @return The location of the event.
+     */
     public GeoPoint getLocation() {
         return location;
     }
 
+    /**
+     * Sets the location of the event.
+     *
+     * @param location The location of the event.
+     */
     public void setLocation(GeoPoint location) {
         this.location = location;
     }
 
+    /**
+     * Returns the QR code of the event.
+     *
+     * @return The QR code of the event.
+     */
     public String getQrCode() {
         return qrCode;
     }
 
+    /**
+     * Sets the QR code of the event.
+     *
+     * @param qrCode The QR code of the event.
+     */
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode;
     }
 
+    /**
+     * Returns the poster of the event.
+     *
+     * @return The poster of the event.
+     */
     public String getEventPoster() {
         return eventPoster;
     }
 
+    /**
+     * Sets the poster of the event.
+     *
+     * @param eventPoster The poster of the event.
+     */
     public void setEventPoster(String eventPoster) {
         this.eventPoster = eventPoster;
     }
 
+    /**
+     * Returns the attendee limit of the event.
+     *
+     * @return The attendee limit of the event.
+     */
     public Integer getAttendeeLimit() {
         return attendeeLimit;
     }
 
+    /**
+     * Sets the attendee limit of the event.
+     *
+     * @param attendeeLimit The attendee limit of the event.
+     */
     public void setAttendeeLimit(Integer attendeeLimit) {
         this.attendeeLimit = attendeeLimit;
     }
 
+    /**
+     * Returns a string representation of the event.
+     *
+     * @return A string representation of the event.
+     */
     @NonNull
     @Override
     public String toString() {
