@@ -1,5 +1,6 @@
 package com.example.qr.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.qr.R;
 import com.google.firebase.firestore.CollectionReference;
@@ -44,11 +47,13 @@ public class CreateEventFragment extends Fragment {
         btnCreate = view.findViewById(R.id.btnCreate);
         btnCancel = view.findViewById(R.id.btnCancel);
 
-        btnUseExistingQr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle the create button click
-
+        btnUseExistingQr.setOnClickListener(v -> {
+            ReuseQrCodeFragment reuseQrCodeFragment = new ReuseQrCodeFragment();
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, reuseQrCodeFragment)
+                        .addToBackStack(null)  // Optional: Add transaction to back stack
+                        .commit();
             }
         });
 
@@ -67,14 +72,27 @@ public class CreateEventFragment extends Fragment {
             }
         });
 
-        // Example: Set a click listener on the Cancel button
+        // citation: OpenAI, ChatGPT 4, 2024: How do I click a button to change fragments
+        // in android studio
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle the cancel button click
+                // Create a new instance of OrganizerFragment
+                OrganizerFragment organizerFragment = new OrganizerFragment();
 
+                // Perform the fragment transaction
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager(); // Use getFragmentManager() in a Fragment
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                // Replace the current fragment with OrganizerFragment. Assume R.id.fragment_container is the ID of your FrameLayout
+                fragmentTransaction.replace(R.id.fragment_container, organizerFragment);
+                // fragmentTransaction.addToBackStack(null); // Optional: Add this transaction to the back stack
+                fragmentTransaction.commit(); // Commit the transaction
             }
         });
+        // end citation
+
+
 
         // Add listeners or any additional initialization for other views as needed
         return view;
