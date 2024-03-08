@@ -49,7 +49,7 @@ public class AttendeeFragmentTest {
         Espresso.onView(withId(R.id.btnSettings)).perform(ViewActions.click());
 
         // Now check if the OrganizerSettingsFragment is displayed by checking one of its views
-        Espresso.onView(withId(R.id.fragment_organizer_settings_layout)).check(ViewAssertions.matches(isDisplayed()));
+        Espresso.onView(withId(R.id.fragment_settings_layout)).check(ViewAssertions.matches(isDisplayed()));
     }
 
 
