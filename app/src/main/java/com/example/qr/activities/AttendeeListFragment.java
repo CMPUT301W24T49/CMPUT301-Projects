@@ -46,7 +46,7 @@ public class AttendeeListFragment extends Fragment {
         attendeeArrayAdapter = new AttendeeArrayAdapter(getActivity(), attendeeDataList);
         listView.setAdapter(attendeeArrayAdapter);
 
-        List<String> userIds = fetchCheckIns(); // Store list of userIds
+        fetchCheckIns(); // Store list of userIds
 
 
         return view;
@@ -69,6 +69,10 @@ public class AttendeeListFragment extends Fragment {
                 }
                 attendeeDataList.addAll(userIds);   // Add userIds to data list
                 attendeeArrayAdapter.notifyDataSetChanged();
+                //print attendee data list
+                for (String userId : userIds) {
+                    Log.d("AttendeeListFragment", "userId: " + userId);
+                }
             }
 
             @Override

@@ -16,13 +16,13 @@ import java.util.ArrayList;
 
 public class AttendeeArrayAdapter extends ArrayAdapter<String> {
 
-    private ArrayList<String> attendees;
+    private ArrayList<String> attendeeDataList;
     private Context context;
 
     public AttendeeArrayAdapter(Context context, ArrayList<String> attendees) {
-        super(context, 0);
+        super(context, 0, attendees);
         this.context = context;
-        this.attendees = attendees;
+        this.attendeeDataList = attendees;
     }
 
     @NonNull
@@ -34,8 +34,8 @@ public class AttendeeArrayAdapter extends ArrayAdapter<String> {
             view = LayoutInflater.from(context).inflate(R.layout.fragment_attendee_list_info, parent, false);
         }
 
-        String attendee = attendees.get(position);
-        TextView attendeeName = convertView.findViewById(R.id.attendee_list_info);
+        String attendee = attendeeDataList.get(position);
+        TextView attendeeName = view.findViewById(R.id.attendee_list_info);
         attendeeName.setText(attendee);
 
         return view;
