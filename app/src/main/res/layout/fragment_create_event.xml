@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_create_new_event"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -77,16 +78,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp">
-
-            <Button
-                android:id="@+id/btnCreate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Create"
-                android:background="@drawable/rounded_button_dark"
-                android:textColor="#FFFFFF"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="16dp"/>
 
             <Button
                 android:id="@+id/btnCancel"

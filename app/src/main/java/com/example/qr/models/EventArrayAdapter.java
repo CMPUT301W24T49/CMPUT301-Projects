@@ -26,17 +26,32 @@ public class EventArrayAdapter extends ArrayAdapter<Event> {
         this.events = events;
     }
 
+//    @NonNull
+//    @Override
+//    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+//        View view = convertView;
+//
+//        if (view == null) {
+//            view = LayoutInflater.from(context).inflate(R.layout.fragment_event_detail, parent, false);
+//        }
+//
+//        Event event = events.get(position);
+//        TextView eventName = view.findViewById(R.id.textview_event_detail);
+//        eventName.setText(event.getTitle());
+//
+//        return view;
+//    }
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
 
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.fragment_event_detail, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.fragment_event_list_view_info, parent, false);
         }
 
         Event event = events.get(position);
-        TextView eventName = view.findViewById(R.id.textview_event_detail);
+        TextView eventName = view.findViewById(R.id.event_list_info);
         eventName.setText(event.getTitle());
 
         return view;

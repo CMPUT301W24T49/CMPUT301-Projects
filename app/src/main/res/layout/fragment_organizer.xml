@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_organizer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#10283B"
@@ -30,18 +31,18 @@
         <Button
             android:id="@+id/create_events_btn"
             style="@style/AppRoundedButton"
-            android:text="Create new Event"/>
+            android:text="Create new Event" />
 
         <!-- Events Button -->
         <Button
             android:id="@+id/events_btn"
             style="@style/AppRoundedButton"
-            android:text="Events"/>
+            android:text="Events" />
 
         <!-- Settings Button -->
         <Button
             android:id="@+id/settings_btn"
             style="@style/AppRoundedButton"
-            android:text="Settings"/>
+            android:text="Settings" />
     </LinearLayout>
 </RelativeLayout>

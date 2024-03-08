@@ -13,24 +13,7 @@
         android:text="Event 1"
         android:padding="16dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end">
 
-        <Button
-            android:id="@+id/btn_delete_event"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Delete"/>
-
-        <Button
-            android:id="@+id/btn_cancel_event"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:layout_marginStart="8dp"/>
 
     </LinearLayout>
-</LinearLayout>
+

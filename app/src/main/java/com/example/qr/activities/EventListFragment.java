@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-
+import android.widget.AdapterView;
 import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
@@ -26,6 +26,8 @@ public class EventListFragment extends Fragment {
     ArrayList<Event> eventDataList;
     EventArrayAdapter eventArrayAdapter;
 
+    private int positionToEdit;
+    private FirebaseFirestore db;
 
     public EventListFragment() {
         // Required empty public constructor
@@ -46,8 +48,18 @@ public class EventListFragment extends Fragment {
 
         fetchData();
 
-        listView.setOnItemClickListener((adapterView, view1, i, l) -> {
-            // Handle list item click
+//        listView.setOnItemClickListener((adapterView, view1, i, l) -> {
+//            // Handle list item click
+//        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                listView.setItemChecked(position, true);
+                positionToEdit = position;
+                Event clickedEvent = (Event) adapterView.getAdapter().getItem(position);
+                EventDetailFragment addCityFragment = EventDetailFragment.newInstance(clickedEvent);
+                addCityFragment.show(getParentFragmentManager(), "Event Detail");
+            }
         });
 
         btnClose.setOnClickListener(v -> {

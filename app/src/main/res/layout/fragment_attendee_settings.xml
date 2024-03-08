@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_settings_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#10283B"
@@ -33,13 +34,13 @@
 
         <Switch
             android:id="@+id/switchPushNotifications"
-            android:text="Toggle Push Notifications"
-            style="@style/AppRoundedSwitch" />
+            style="@style/AppRoundedSwitch"
+            android:text="Toggle Push Notifications" />
 
         <Switch
             android:id="@+id/switchGeoTracking"
-            android:text="Toggle Geolocation Tracking"
-            style="@style/AppRoundedSwitch" />
+            style="@style/AppRoundedSwitch"
+            android:text="Toggle Geolocation Tracking" />
 
         <Button
             android:id="@+id/btnExitToMainMenu"
