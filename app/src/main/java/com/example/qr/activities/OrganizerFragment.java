@@ -51,10 +51,10 @@ public class OrganizerFragment extends Fragment {
 
         // Settings button onclick listener
         settingsBtn.setOnClickListener(v -> {
-            OrganizerSettingsFragment organizerSettingsFragment = new OrganizerSettingsFragment();
+            AttendeeSettingsFragment attendeeSettingsFragment = new AttendeeSettingsFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, organizerSettingsFragment)
+                        .replace(R.id.fragment_container, attendeeSettingsFragment)
                         .addToBackStack(null)  // Optional: Add transaction to back stack
                         .commit();
             }
