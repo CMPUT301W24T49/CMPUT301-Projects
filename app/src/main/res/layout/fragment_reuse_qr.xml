@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/reuseQRcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#10283B"
+        android:text="Reuse QR Code"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/selectEventLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select event:"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/reuseQRcode"
+        android:layout_marginTop="32dp"
+        android:background="#10283B"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:paddingLeft="16dp"/>
+
+    <Spinner
+        android:id="@+id/eventSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/selectEventLabel"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:spinnerMode="dropdown"
+        android:padding="16dp"
+        android:textColor="@android:color/white"
+        android:background="#10283B"/>
+
+    <FrameLayout
+        android:id="@+id/frameLayoutQRCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/eventSpinner"
+        android:layout_marginTop="24dp">
+        <ImageView
+            android:id="@+id/ivEventPoster"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:src="@drawable/ic_launcher_background"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QR Code"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"/>
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/chooseQrCodeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose QR Code"
+        android:layout_below="@id/frameLayoutQRCode"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/rounded_button_dark"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:padding="16dp"/>
+</RelativeLayout>
