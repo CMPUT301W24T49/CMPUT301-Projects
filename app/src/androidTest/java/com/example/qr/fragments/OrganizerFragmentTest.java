@@ -1,4 +1,4 @@
-package com.example.qr;
+package com.example.qr.fragments;
 
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -6,9 +6,11 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.assertion.ViewAssertions;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.qr.R;
 import com.example.qr.activities.MainActivity;
 
 import org.junit.Rule;
@@ -23,7 +25,7 @@ public class OrganizerFragmentTest {
     @Test
     public void testCreateNewButtonClick() {
         // Wait for the MainActivity to be started and create event to be displayed
-        Espresso.onView(withId(R.id.button_organizer)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.button_organizer)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.create_events_btn)).perform(ViewActions.click());
 
         // Now check if the create event layout is displayed by checking one of its views

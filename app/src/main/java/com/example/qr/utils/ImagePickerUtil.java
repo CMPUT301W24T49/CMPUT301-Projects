@@ -27,6 +27,12 @@ public class ImagePickerUtil {
 
     private static final int COMPRESSION_QUALITY = 50;
 
+    /**
+     * Constructor for ImagePickerUtil.
+     *
+     * @param activity The activity that will use the image picker.
+     * @param listener The listener for image picked event.
+     */
     public ImagePickerUtil(AppCompatActivity activity, OnImagePickedListener listener) {
         this.activity = activity;
 
@@ -56,11 +62,17 @@ public class ImagePickerUtil {
         void onImagePicked(Uri imageUri);
     }
 
+    /**
+     * Launches the image picker to select an image from the gallery.
+     */
     public void pickImageFromGallery() {
         Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         imagePickerLauncher.launch(pickPhotoIntent);
     }
 
+    /**
+     * Launches the camera to capture an image.
+     */
     public void captureImageFromCamera() {
         try {
             currentPhotoUri = createImageFile();
@@ -70,6 +82,12 @@ public class ImagePickerUtil {
         imageCaptureLauncher.launch(currentPhotoUri);
     }
 
+    /**
+     * Compresses the image to reduce its size. Source: Chat GPT 4, 2024
+     *
+     * @param imageUri The Uri of the image to compress.
+     * @return The Uri of the compressed image.
+     */
     private Uri compressImageUri(Uri imageUri) {
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), imageUri);
@@ -83,6 +101,12 @@ public class ImagePickerUtil {
         }
     }
 
+    /**
+     * Loads an image from a URL and returns it as a Drawable.
+     *
+     * @param url The URL of the image to load.
+     * @return The Drawable of the image.
+     */
     public static Drawable LoadImageFromWebOperations(String url) {
         try {
             InputStream is = (InputStream) new URL(url).getContent();
@@ -93,6 +117,12 @@ public class ImagePickerUtil {
         }
     }
 
+    /**
+     * Creates a temporary image file to store the captured image.
+     *
+     * @return The Uri of the created image file.
+     * @throws IOException If an I/O error occurs.
+     */
     private Uri createImageFile() throws IOException {
         String fileName = "JPEG_" + System.currentTimeMillis();
         File storageDir = activity.getExternalFilesDir(null);

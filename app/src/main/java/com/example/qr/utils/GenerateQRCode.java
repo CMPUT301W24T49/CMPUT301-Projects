@@ -13,6 +13,12 @@ public class GenerateQRCode {
 
     private static final QRCodeWriter writer = new QRCodeWriter();
 
+    /**
+     * Generates a QR code for the given ID.
+     *
+     * @param id The ID to encode in the QR code.
+     * @return The QR code as a Bitmap.
+     */
     public static Bitmap generateQR(String id) {
 
         // in pixels set height and width of QR code

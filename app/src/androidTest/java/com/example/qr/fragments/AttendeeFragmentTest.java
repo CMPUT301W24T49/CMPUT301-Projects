@@ -1,4 +1,4 @@
-package com.example.qr;
+package com.example.qr.fragments;
 
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.action.ViewActions;

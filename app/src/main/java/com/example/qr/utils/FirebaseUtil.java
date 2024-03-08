@@ -139,5 +139,4 @@ public class FirebaseUtil {
         void setId(String id);
     }
 
-    // You can add more methods here for updating and deleting documents, querying collections, etc.
 }
