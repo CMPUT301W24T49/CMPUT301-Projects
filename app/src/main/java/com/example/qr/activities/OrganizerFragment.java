@@ -40,10 +40,10 @@ public class OrganizerFragment extends Fragment {
 
         // Events button onclick listener
         eventsBtn.setOnClickListener(v -> {
-            EventListFragment eventListFragment = new EventListFragment();
+            EventListOrganizerFragment eventListOrganizerFragment = new EventListOrganizerFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, eventListFragment)
+                        .replace(R.id.fragment_container, eventListOrganizerFragment)
                         .addToBackStack(null)  // Optional: Add transaction to back stack
                         .commit();
             }
