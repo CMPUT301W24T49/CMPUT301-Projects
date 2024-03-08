@@ -30,12 +30,12 @@ public class AttendeeArrayAdapter extends ArrayAdapter<String> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
 
-        if (convertView == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.fragment_attendee_list, parent, false);
+        if (view == null) {
+            view = LayoutInflater.from(context).inflate(R.layout.fragment_attendee_list_info, parent, false);
         }
 
         String attendee = attendees.get(position);
-        TextView attendeeName = convertView.findViewById(R.id.attendee_name_textview);
+        TextView attendeeName = convertView.findViewById(R.id.attendee_list_info);
         attendeeName.setText(attendee);
 
         return view;

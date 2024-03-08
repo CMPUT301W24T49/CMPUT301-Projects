@@ -38,22 +38,23 @@ public class AttendeeListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_attendee_list, container, false);
 
         ListView listView = view.findViewById(R.id.attendee_listview);
-       // Button btnClose = view.findViewById(R.id.close_attendee_list_btn);
+        Button btnClose = view.findViewById(R.id.btn_close_attendee_list);
 
-        eventId = getArguments().getString("Id"); // retrieve eventId data from EventListOrganizerFragment
+        eventId = getArguments().getString("Id"); // Retrieve eventId data from EventListOrganizerFragment
 
         attendeeDataList = new ArrayList<>();
         attendeeArrayAdapter = new AttendeeArrayAdapter(getActivity(), attendeeDataList);
         listView.setAdapter(attendeeArrayAdapter);
 
-        List<String> userIds = fetchCheckIns(); // store list of userIds
-        attendeeDataList.addAll(userIds);
-        attendeeArrayAdapter.notifyDataSetChanged();
+        List<String> userIds = fetchCheckIns(); // Store list of userIds
+
 
         return view;
     }
 
     // Fetch checkIns (attendees) from Firebase and add them to checkInList
+    // Filter through checkInList and add userIds checked into the clicked event
+    // return list of userIds
     private List<String> fetchCheckIns() {
         // Fetch attendee data from Firebase
         List<String> userIds = new ArrayList<>();
@@ -66,6 +67,8 @@ public class AttendeeListFragment extends Fragment {
                         userIds.add(checkIn.getUserId());
                     }
                 }
+                attendeeDataList.addAll(userIds);   // Add userIds to data list
+                attendeeArrayAdapter.notifyDataSetChanged();
             }
 
             @Override
