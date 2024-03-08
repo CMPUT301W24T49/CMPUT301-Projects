@@ -48,7 +48,7 @@ public class CreateEventFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Handle the create button click
-                createEvent();
+
             }
         });
 
@@ -56,14 +56,14 @@ public class CreateEventFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Handle the create button click
-                createEvent();
+
             }
         });
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Handle the create button click
-                createEvent();
+
             }
         });
 
