@@ -31,6 +31,14 @@ public class AdminSettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Handle profile button click
+                // Needs implemention to get profil from DB
+                Fragment profileFragment = new AdminProfileFragment();
+                if (getActivity() != null) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, profileFragment)
+                            .addToBackStack(null)  // Optional: Add transaction to back stack
+                            .commit();
+                }
             }
         });
 

@@ -2,9 +2,10 @@ package com.example.qr.models;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class User {
+public class User implements Serializable {
     private String id; // Document ID in Firestore
     private String name;
     private String role; // "organizer", "attendee", or "admin"

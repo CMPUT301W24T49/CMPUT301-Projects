@@ -6,8 +6,9 @@ import android.os.Bundle;
 
 import com.example.qr.R;
 import com.example.qr.models.Event;
+import com.example.qr.models.User;
 
-public class MainActivity extends AppCompatActivity implements EventDetailFragment.EventDetailDialogListener{
+public class MainActivity extends AppCompatActivity implements EventDetailFragment.EventDetailDialogListener, AdminUserProfileDetailFragment.UserDetailDialogListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,11 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
     }
     @Override
     public void onDeleteEvent(Event event) {
+        // Code to delete the event goes here
+        // You may need to communicate with your database or a ViewModel to perform the deletion
+    }
+    @Override
+    public void onDeleteUser(User user) {
         // Code to delete the event goes here
         // You may need to communicate with your database or a ViewModel to perform the deletion
     }
