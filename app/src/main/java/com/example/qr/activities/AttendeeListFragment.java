@@ -60,7 +60,6 @@ public class AttendeeListFragment extends Fragment {
 
     // Fetch checkIns (attendees) from Firebase and add them to checkInList
     // Filter through checkInList and add userIds checked into the clicked event
-    // return list of userIds
     private void fetchCheckIns() {
         // Fetch attendee data from Firebase
         List<String> userIds = new ArrayList<>();

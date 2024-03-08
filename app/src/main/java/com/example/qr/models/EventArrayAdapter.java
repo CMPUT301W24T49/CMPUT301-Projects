@@ -15,17 +15,36 @@ import com.example.qr.R;
 
 import java.util.ArrayList;
 
+/**
+ * An ArrayAdapter for displaying event objects.
+ * Converts an ArrayList of Event objects into View items loaded into the ListView container. 
+ * Each item in the list represents an individual event.
+ */
 public class EventArrayAdapter extends ArrayAdapter<Event> {
 
-    private ArrayList<Event> events;
-    private Context context;
+    private ArrayList<Event> events;    // List of events
+    private Context context;    // Current context
 
+    /**
+     * Constructs a new EventArrayAdapter.
+     *
+     * @param context The current context which is used to inflate the layout file.
+     * @param events An ArrayList of Event objects to display in the list.
+     */
     public EventArrayAdapter(Context context, ArrayList<Event> events) {
         super(context, 0, events);
         this.context = context;
         this.events = events;
     }
-
+    
+    /**
+     * Provides a view for an AdapterView.
+     *
+     * @param position The position in the list of data that should be displayed in the list item view.
+     * @param convertView The recycled view to populate.
+     * @param parent The parent ViewGroup that is used for inflation.
+     * @return The View for the position in the AdapterView.
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
