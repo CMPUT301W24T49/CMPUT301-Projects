@@ -79,16 +79,6 @@
             android:layout_marginTop="16dp">
 
             <Button
-                android:id="@+id/btnCreate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Create"
-                android:background="@drawable/rounded_button_dark"
-                android:textColor="#FFFFFF"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="16dp"/>
-
-            <Button
                 android:id="@+id/btnCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

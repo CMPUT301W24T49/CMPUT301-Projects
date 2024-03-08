@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         // feel free to change it to the admin main menu if you want to preview your UI
         // example: setContentView(R.layout.organizer_main_menu);
         // example: setContentView(R.layout.admin_main_menu);
-//        setContentView(R.layout.attendee_main_menu);
+        //setContentView(R.layout.attendee_main_menu);
 
         // this for admin part
         setContentView(R.layout.activity_main);

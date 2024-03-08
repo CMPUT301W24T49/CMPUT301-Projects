@@ -44,7 +44,6 @@ public class CreateEventFragment extends Fragment {
 
         btnUseExistingQr = view.findViewById(R.id.btnUseExistingQr);
         btnGenerateQr = view.findViewById(R.id.btnGenerateQr);
-        btnCreate = view.findViewById(R.id.btnCreate);
         btnCancel = view.findViewById(R.id.btnCancel);
 
         btnUseExistingQr.setOnClickListener(v -> {
@@ -58,13 +57,6 @@ public class CreateEventFragment extends Fragment {
         });
 
         btnGenerateQr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle the create button click
-
-            }
-        });
-        btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Handle the create button click
