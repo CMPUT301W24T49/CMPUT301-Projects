@@ -7,7 +7,7 @@
 
     <!-- Close (X) Button in the top right -->
     <Button
-        android:id="@+id/btn_close"
+        android:id="@+id/close_btn"
         style="@style/AppRoundedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
