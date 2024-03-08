@@ -39,7 +39,6 @@
         android:layout_marginEnd="40dp"
         android:spinnerMode="dropdown"
         android:padding="16dp"
-        android:textColor="@android:color/white"
         android:background="#10283B"/>
 
     <FrameLayout
@@ -72,6 +71,21 @@
         android:layout_marginTop="24dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
+        android:background="@drawable/rounded_button_dark"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:padding="16dp"/>
+
+    <!-- New button added at the bottom -->
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/rounded_button_dark"
         android:textColor="@android:color/white"
         android:gravity="center"
