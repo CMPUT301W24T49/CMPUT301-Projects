@@ -76,6 +76,7 @@ public class EventListOrganizerFragment extends Fragment {
         return view;
     }
 
+    // Fetch data on events
     private void fetchData() {
         FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
             @Override
@@ -88,7 +89,6 @@ public class EventListOrganizerFragment extends Fragment {
 
             @Override
             public void onError(Exception e) {
-                // Handle any errors here
             }
 
         });

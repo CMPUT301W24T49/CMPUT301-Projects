@@ -14,13 +14,13 @@ import com.example.qr.R;
 
 import java.util.ArrayList;
 
-public class AttendeeArrayAdapter extends ArrayAdapter<User> {
+public class AttendeeArrayAdapter extends ArrayAdapter<String> {
 
-    private ArrayList<User> attendees;
+    private ArrayList<String> attendees;
     private Context context;
 
-    public AttendeeArrayAdapter(Context context, ArrayList<User> attendees) {
-        super(context, 0, attendees);
+    public AttendeeArrayAdapter(Context context, ArrayList<String> attendees) {
+        super(context, 0);
         this.context = context;
         this.attendees = attendees;
     }
@@ -34,9 +34,9 @@ public class AttendeeArrayAdapter extends ArrayAdapter<User> {
             view = LayoutInflater.from(context).inflate(R.layout.fragment_attendee_list, parent, false);
         }
 
-        User attendee = attendees.get(position);
+        String attendee = attendees.get(position);
         TextView attendeeName = convertView.findViewById(R.id.attendee_name_textview);
-        attendeeName.setText(attendee.getName());
+        attendeeName.setText(attendee);
 
         return view;
     }
