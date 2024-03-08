@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventListOrganizerFragment extends Fragment {
-
-    ListView eventList;
+    
     ArrayList<Event> eventDataList;
     EventArrayAdapter eventArrayAdapter;
 
@@ -31,13 +30,14 @@ public class EventListOrganizerFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate layout
         View view = inflater.inflate(R.layout.fragment_event_list, container, false);
-
+        
+        // Button initialization
         ListView listView = view.findViewById(R.id.listview_events);
         Button btnClose = view.findViewById(R.id.btn_close_event_list);
-
+        
         eventDataList = new ArrayList<>();
         eventArrayAdapter = new EventArrayAdapter(getContext(), eventDataList);
         listView.setAdapter(eventArrayAdapter);
@@ -66,8 +66,10 @@ public class EventListOrganizerFragment extends Fragment {
                         .commit();
             }
         });
-
+        
+        // Close button going back previous screen
         btnClose.setOnClickListener(v -> {
+            // Check if fragment is added to an activity and if activity has a FragmentManager
             if (isAdded() && getActivity() != null) {
                 getActivity().onBackPressed();
             }
@@ -76,20 +78,23 @@ public class EventListOrganizerFragment extends Fragment {
         return view;
     }
 
-    // Fetch data on events
+    // Fetch events from Firebase and add them to eventList
     private void fetchData() {
+        // Citation: OpenAI, ChatGPT 4, 2024
+        // Prompt: How would i use fetchCollection to fetch event data?
         FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
             @Override
             public void onCollectionFetched(List<Event> eventList) {
-                // Handle the fetched events here
+                // Handle the fetched events
                 eventDataList.addAll(eventList);
-                eventArrayAdapter.notifyDataSetChanged();
+                eventArrayAdapter.notifyDataSetChanged();   // Update event array adapter
                 Log.d("EventListFragment", "Fetched " + eventList.size() + " events");
             }
 
             @Override
             public void onError(Exception e) {
             }
+            // End of citation
 
         });
     }

@@ -62,7 +62,9 @@ public class EventListFragment extends Fragment {
             }
         });
 
+        // Close button to go back to the previous screen
         btnClose.setOnClickListener(v -> {
+            // Check if the fragment is added to an activity and if the activity has a FragmentManager
             if (isAdded() && getActivity() != null) {
                 getActivity().onBackPressed();
             }
@@ -71,13 +73,14 @@ public class EventListFragment extends Fragment {
         return view;
     }
 
+    // Fetch events from Firebase and add them to eventList
     private void fetchData() {
         FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
             @Override
             public void onCollectionFetched(List<Event> eventList) {
-                // Handle the fetched events here
+                // Handle the fetched events
                 eventDataList.addAll(eventList);
-                eventArrayAdapter.notifyDataSetChanged();
+                eventArrayAdapter.notifyDataSetChanged();   // Update event array adapter
                 Log.d("EventListFragment", "Fetched " + eventList.size() + " events");
             }
 

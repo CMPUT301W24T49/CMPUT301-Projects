@@ -102,7 +102,8 @@ public class FirebaseUtil {
         }).addOnSuccessListener(onSuccessListener).addOnFailureListener(onFailureListener);
     }
 
-
+    // Citation: OpenAI, ChatGPT 4, 2024
+    // Prompt: How to fetch collection from Firestore database?
     /**
      * Fetches documents from a specified collection and converts them into objects of a specified class.
      *
@@ -128,7 +129,7 @@ public class FirebaseUtil {
             }
         });
     }
-
+    // end of citation
 
     public interface OnCollectionFetchedListener<T> {
         void onCollectionFetched(List<T> objectList);
