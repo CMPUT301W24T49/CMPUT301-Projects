@@ -110,17 +110,7 @@ public class Event {
     @NonNull
     @Override
     public String toString() {
-        return "Event{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", organizerId='" + organizerId + '\'' +
-                ", eventDate=" + eventDate +
-                ", location=" + location +
-                ", qrCode='" + qrCode + '\'' +
-                ", eventPoster='" + eventPoster + '\'' +
-                ", attendeeLimit=" + attendeeLimit +
-                '}';
+        return getTitle() + "(" + getId() + ")";
     }
 
 }
