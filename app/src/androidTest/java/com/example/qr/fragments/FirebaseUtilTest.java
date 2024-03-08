@@ -1,4 +1,4 @@
-package com.example.qr.utils;
+package com.example.qr.fragments;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import com.example.qr.models.CheckIn;
 import com.example.qr.models.Event;
 import com.example.qr.models.User;
+import com.example.qr.utils.FirebaseUtil;
 import com.example.qr.utils.FirebaseUtil.OnCollectionFetchedListener;
 
 import org.junit.Test;
