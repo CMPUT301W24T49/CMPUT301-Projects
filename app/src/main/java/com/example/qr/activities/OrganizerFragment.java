@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.qr.R;
 
@@ -58,16 +60,25 @@ public class OrganizerFragment extends Fragment {
             }
         });
 
-        // Close button to go back to previous screen
-        closeBtn.setOnClickListener(v -> {
-            // Check if the fragment is added to an activity and if the activity has a FragmentManager
-            if (isAdded() && getActivity() != null) {
-                getActivity().onBackPressed();
+        // citation: OpenAI, ChatGPT 4, 2024: How do I click a button to change fragments
+        // in android studio
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a new instance of OrganizerFragment
+                HomeFragment homeFragment = new HomeFragment();
+
+                // Perform the fragment transaction
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager(); // Use getFragmentManager() in a Fragment
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                // Replace the current fragment with OrganizerFragment. Assume R.id.fragment_container is the ID of your FrameLayout
+                fragmentTransaction.replace(R.id.fragment_container, homeFragment);
+                // fragmentTransaction.addToBackStack(null); // Optional: Add this transaction to the back stack
+                fragmentTransaction.commit(); // Commit the transaction
             }
         });
-
-
-
+        // end citation
 
         return view;
     }
