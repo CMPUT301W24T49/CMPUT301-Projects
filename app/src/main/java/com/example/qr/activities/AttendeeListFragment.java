@@ -62,17 +62,24 @@ public class AttendeeListFragment extends Fragment {
         // Fetch attendee data from Firebase
         List<String> userIds = new ArrayList<>();
         FirebaseUtil.fetchCollection("CheckIns", CheckIn.class, new FirebaseUtil.OnCollectionFetchedListener<CheckIn>() {
+            
+            // 
             @Override
             public void onCollectionFetched(List<CheckIn> checkInList) {
                 // If check ins match the eventId, add to userIds list
+                // citation: OpenAI, ChatGPT 4, 2024
+                // Prompt:  I want to only get checkIns with the eventId of the clicked event 
+                // in the fetchCheckIns() method. How can I do this with a for loop? 
                 for (CheckIn checkIn : checkInList) {
                     if (eventId.equals(checkIn.getEventId())) {
                         userIds.add(checkIn.getUserId());
                     }
                 }
+                // end of citation
                 attendeeDataList.addAll(userIds);   // Add userIds to data list
-                attendeeArrayAdapter.notifyDataSetChanged();
-                //print attendee data list
+                attendeeArrayAdapter.notifyDataSetChanged();    // Notify attendee array adapter
+                
+                // print attendee data list
                 for (String userId : userIds) {
                     Log.d("AttendeeListFragment", "userId: " + userId);
                 }

@@ -76,7 +76,7 @@ public class EventListOrganizerFragment extends Fragment {
         return view;
     }
 
-    // Fetch data on events
+    // Fetch events from Firebase and add them to eventList
     private void fetchData() {
         FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
             @Override
