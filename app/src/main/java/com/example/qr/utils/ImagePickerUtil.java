@@ -19,6 +19,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+/**
+ * Utility class to handle image picking and capturing operations.
+ * TODO: FIX!!!!
+ */
 public class ImagePickerUtil {
 
     private final AppCompatActivity activity;
