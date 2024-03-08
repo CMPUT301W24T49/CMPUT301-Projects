@@ -14,16 +14,36 @@ import com.example.qr.R;
 
 import java.util.ArrayList;
 
+/**
+ * An ArrayAdapter for displaying images in a list.
+ * Manages a list of Image objects and populates a ListView with views representing each image.
+ */
 public class ImageArrayAdapter extends ArrayAdapter<Image> {
 
     private ArrayList<Image> images;
     private Context context;
 
+
+    /**
+     * Constructs an ImageArrayAdapter.
+     * 
+     * @param context The current context, used to inflate the layout file.
+     * @param profile An ArrayList of Image objects to be displayed.
+     */
     public ImageArrayAdapter(Context context, ArrayList<Image> profile) {
         super(context, 0);
         this.context = context;
         this.images = profile;
     }
+
+    /**
+     * Provides a view for an AdapterView.
+     *
+     * @param position The position in the list of data that should be displayed in the list item view.
+     * @param convertView The recycled view to populate.
+     * @param parent The parent ViewGroup that is used for inflation.
+     * @return The View for the position in the AdapterView.
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

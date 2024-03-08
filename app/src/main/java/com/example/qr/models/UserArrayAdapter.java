@@ -14,16 +14,37 @@ import com.example.qr.R;
 
 import java.util.ArrayList;
 
+/**
+ * An ArrayAdapter for displaying user information in a list.
+ * Creates views for each User object within a ListView.
+ * Each item in the list represents a single user.
+ */
 public class UserArrayAdapter extends ArrayAdapter<Event> {
 
     private ArrayList<User> profile;
     private Context context;
 
+    /**
+     * Constructs a new UserArrayAdapter.
+     *
+     * @param context The current context which is used to inflate the layout file.
+     * @param profile An ArrayList of User objects to be displayed.
+     */
     public UserArrayAdapter(Context context, ArrayList<User> profile) {
         super(context, 0);
         this.context = context;
         this.profile = profile;
     }
+
+    /**
+     * Provides a view for an AdapterView (ListView, GridView, etc.).
+     * This method inflates a custom layout for each User object and sets the user's name in a TextView.
+     *
+     * @param position The position in the list of data that should be displayed in the list item view.
+     * @param convertView The recycled view to populate, or null if a new view needs to be created.
+     * @param parent The parent ViewGroup that is used for inflation.
+     * @return The View for the position in the AdapterView.
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
