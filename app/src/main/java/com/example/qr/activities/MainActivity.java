@@ -5,8 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.qr.R;
+import com.example.qr.models.Event;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EventDetailFragment.EventDetailDialogListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,5 +32,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+    @Override
+    public void onDeleteEvent(Event event) {
+        // Code to delete the event goes here
+        // You may need to communicate with your database or a ViewModel to perform the deletion
     }
 }
