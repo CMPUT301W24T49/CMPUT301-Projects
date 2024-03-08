@@ -13,9 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.example.qr.R;
 import com.example.qr.models.AttendeeArrayAdapter;
 import com.example.qr.models.CheckIn;
-import com.example.qr.models.Event;
 import com.example.qr.utils.FirebaseUtil;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 
 import java.util.ArrayList;
@@ -46,8 +44,13 @@ public class AttendeeListFragment extends Fragment {
         attendeeArrayAdapter = new AttendeeArrayAdapter(getActivity(), attendeeDataList);
         listView.setAdapter(attendeeArrayAdapter);
 
-        List<String> userIds = fetchCheckIns(); // Store list of userIds
+        fetchCheckIns(); // Store list of userIds
 
+        btnClose.setOnClickListener(v -> {
+            if (isAdded() && getActivity() != null) {
+                getActivity().onBackPressed();
+            }
+        });
 
         return view;
     }
@@ -55,7 +58,7 @@ public class AttendeeListFragment extends Fragment {
     // Fetch checkIns (attendees) from Firebase and add them to checkInList
     // Filter through checkInList and add userIds checked into the clicked event
     // return list of userIds
-    private List<String> fetchCheckIns() {
+    private void fetchCheckIns() {
         // Fetch attendee data from Firebase
         List<String> userIds = new ArrayList<>();
         FirebaseUtil.fetchCollection("CheckIns", CheckIn.class, new FirebaseUtil.OnCollectionFetchedListener<CheckIn>() {
@@ -69,6 +72,10 @@ public class AttendeeListFragment extends Fragment {
                 }
                 attendeeDataList.addAll(userIds);   // Add userIds to data list
                 attendeeArrayAdapter.notifyDataSetChanged();
+                //print attendee data list
+                for (String userId : userIds) {
+                    Log.d("AttendeeListFragment", "userId: " + userId);
+                }
             }
 
             @Override
@@ -76,7 +83,6 @@ public class AttendeeListFragment extends Fragment {
             }
         });
 
-        return userIds;
     }
 
 //    private void fetchUsers(List<String> userIdList) {
