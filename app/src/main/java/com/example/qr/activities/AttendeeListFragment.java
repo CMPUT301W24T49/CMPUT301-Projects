@@ -1,36 +1,62 @@
 package com.example.qr.activities;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.qr.R;
+//import com.example.qr.models.AttendeesArrayAdapter;
+
+
+import java.util.ArrayList;
 
 public class AttendeeListFragment extends Fragment {
+
+    ListView attendeesList;
+ //   ArrayList<Attendee> attendeeArrayList;
+ //   AttendeesArrayAdapter attendeesArrayAdapter;
 
     public AttendeeListFragment() {
         // Required empty public constructor
     }
 
-    private RecyclerView attendeesRecyclerView;
-    private AttendeesAdapter adapter;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_attendee_list, container, false);
-        attendeesRecyclerView = view.findViewById(R.id.attendees_recycler_view);
-        attendeesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        loadAttendees();
-        return view;
-    }
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        View view = inflater.inflate(R.layout.fragment_attendee_list, container, false);
+//
+//        attendeesList = view.findViewById(R.id.listView);
+//        attendees = new ArrayList<>();
+//        attendeeArrayAdapter = new AttendeeArrayAdapter(getActivity(), attendees);
+//        listView.setAdapter(attendeeArrayAdapter);
+//
+//
+//        fetchAttendees(); // Implement this method to fetch attendees from Firebase and add them to attendeeList
+//
+//        return view;
+//    }
 
 
-    private void loadAttendees() {
-        FirebaseUtil.getEventAttendees(eventId, new FirestoreCallback<List<Attendee>>() {
-            @Override
-            public void onCallback(List<Attendee> attendees) {
-                adapter = new AttendeesAdapter(attendees, getContext());
-                attendeesRecyclerView.setAdapter(adapter);
-            }
-        });
-    }
+//  //  private void fetchAttendees() {
+//        FirebaseUtil.getEventAttendees(eventId, new FirestoreCallback<List<Attendee>>() {
+//            @Override
+//            public void onCallback(List<Attendee> attendees) {
+//                attendeeList.clear();
+//                attendeeList.addAll(attendees);
+//                adapter.notifyDataSetChanged(); // Notify the adapter to refresh the ListView
+//            }
+//
+//            @Override
+//            public void onError(Exception e) {
+//                // Handles error
+//            }
+//        });
+//    }
+//
+//    }
 
 
 
