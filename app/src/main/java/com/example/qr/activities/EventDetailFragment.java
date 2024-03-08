@@ -56,7 +56,9 @@ import com.example.qr.R;
 import com.example.qr.models.Event;
 
 import java.io.Serializable;
-
+/**
+ * EventDetailFragment presents detailed information about an event and provides options to delete or cancel.
+ */
 public class EventDetailFragment extends DialogFragment {
     interface EventDetailDialogListener {
         void onDeleteEvent(Event event);

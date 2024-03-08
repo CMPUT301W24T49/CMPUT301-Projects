@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
+/**
+ * AdminSettingsFragment offers administrative settings options including profile management and logout functionality.
+ */
 
 public class AdminSettingsFragment extends Fragment {
 

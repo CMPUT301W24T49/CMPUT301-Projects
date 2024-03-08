@@ -76,7 +76,9 @@ import com.example.qr.R;
 import com.example.qr.models.Image;
 import com.example.qr.models.User;
 
-
+/**
+ * ImageDetailDialogFragment provides a detailed view of an image, including options to delete or cancel the view.
+ */
 public class ImageDetailDialogFragment extends DialogFragment {
     interface ImageDetailDialogListener {
         void onDeleteImage(Image image);

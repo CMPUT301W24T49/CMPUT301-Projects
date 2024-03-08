@@ -20,6 +20,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * ProfileListFragment displays a list of user profiles, offering options to view or edit detailed profile information.
+ */
 public class ProfileListFragment extends Fragment {
     ListView userList;
     ArrayList<User> userDataList;

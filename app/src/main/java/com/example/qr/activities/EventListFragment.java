@@ -19,7 +19,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * EventListFragment displays a list of events, allowing users to view detailed information or edit them.
+ */
 public class EventListFragment extends Fragment {
 
     ListView eventList;
