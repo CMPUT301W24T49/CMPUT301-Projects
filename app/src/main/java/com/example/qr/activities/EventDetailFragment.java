@@ -1,5 +1,4 @@
-//package com.example.qr.activities;
-//
+
 //import android.os.Bundle;
 //import android.view.LayoutInflater;
 //import android.view.View;
@@ -93,7 +92,6 @@ public class EventDetailFragment extends DialogFragment {
         TextView textTitle = view.findViewById(R.id.textview_event_detail);
         textTitle.setText(event.getTitle());
 
-        // ... Initialize other TextViews for details as needed ...
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder

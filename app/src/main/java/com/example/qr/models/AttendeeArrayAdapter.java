@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,15 +14,15 @@ import com.example.qr.R;
 
 import java.util.ArrayList;
 
-public class EventArrayAdapter extends ArrayAdapter<Event> {
+public class AttendeeArrayAdapter extends ArrayAdapter<String> {
 
-    private ArrayList<Event> events;
+    private ArrayList<String> attendees;
     private Context context;
 
-    public EventArrayAdapter(Context context, ArrayList<Event> events) {
-        super(context, 0, events);
+    public AttendeeArrayAdapter(Context context, ArrayList<String> attendees) {
+        super(context, 0);
         this.context = context;
-        this.events = events;
+        this.attendees = attendees;
     }
 
     @NonNull
@@ -31,14 +30,15 @@ public class EventArrayAdapter extends ArrayAdapter<Event> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
 
-        if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.fragment_event_list_view_info, parent, false);
+        if (convertView == null) {
+            view = LayoutInflater.from(context).inflate(R.layout.fragment_attendee_list, parent, false);
         }
 
-        Event event = events.get(position);
-        TextView eventName = view.findViewById(R.id.event_list_info);
-        eventName.setText(event.getTitle());
+        String attendee = attendees.get(position);
+        TextView attendeeName = convertView.findViewById(R.id.attendee_name_textview);
+        attendeeName.setText(attendee);
 
         return view;
     }
+
 }

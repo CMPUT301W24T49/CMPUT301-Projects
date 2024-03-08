@@ -1,13 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_attendee_list_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="16dp">
+    android:layout_height="match_parent"
+    android:background="#10283B">
 
-    <TextView
-        android:id="@+id/attendee_name_textview"
+    <!-- Close (X) Button at the top right -->
+    <Button
+        android:id="@+id/btn_close_attendee_list"
+        style="@style/AppRoundedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"/>
-</LinearLayout>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="X" />
+
+    <!-- ListView for the events -->
+    <TextView
+        android:id="@+id/txt_attendee_list"
+        android:layout_width="181dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="126dp"
+        android:layout_toStartOf="@id/btn_close_attendee_list"
+        android:text="Attendees List"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <ListView
+        android:id="@+id/attendee_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn_close_attendee_list"
+        android:layout_marginTop="16dp"
+        android:background="#424242"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:padding="8dp"
+        android:scrollbars="vertical" />
+
+</RelativeLayout>
