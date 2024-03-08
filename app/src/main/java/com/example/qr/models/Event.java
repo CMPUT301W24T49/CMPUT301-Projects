@@ -3,11 +3,9 @@ package com.example.qr.models;
 import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.GeoPoint;
-
-import java.io.Serializable;
 import java.util.Date;
 
-public class Event implements Serializable {
+public class Event {
     private String id; // Document ID in Firestore
     private String title;
     private String description;
@@ -112,17 +110,7 @@ public class Event implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return "Event{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", organizerId='" + organizerId + '\'' +
-                ", eventDate=" + eventDate +
-                ", location=" + location +
-                ", qrCode='" + qrCode + '\'' +
-                ", eventPoster='" + eventPoster + '\'' +
-                ", attendeeLimit=" + attendeeLimit +
-                '}';
+        return getTitle() + "(" + getId() + ")";
     }
 
 }
