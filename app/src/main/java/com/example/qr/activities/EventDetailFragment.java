@@ -34,6 +34,7 @@ public class EventDetailFragment extends DialogFragment {
             dismiss();
         });
 
+
         return view;
 
     }

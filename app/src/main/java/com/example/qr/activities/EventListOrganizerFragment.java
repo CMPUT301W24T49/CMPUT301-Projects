@@ -14,20 +14,19 @@ import com.example.qr.R;
 import com.example.qr.models.Event;
 import com.example.qr.models.EventArrayAdapter;
 import com.example.qr.utils.FirebaseUtil;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventListFragment extends Fragment {
+public class EventListOrganizerFragment extends Fragment {
 
     ListView eventList;
     ArrayList<Event> eventDataList;
     EventArrayAdapter eventArrayAdapter;
 
 
-    public EventListFragment() {
+    public EventListOrganizerFragment() {
         // Required empty public constructor
     }
 
@@ -39,15 +38,33 @@ public class EventListFragment extends Fragment {
         ListView listView = view.findViewById(R.id.listview_events);
         Button btnClose = view.findViewById(R.id.btn_close_event_list);
 
-
         eventDataList = new ArrayList<>();
         eventArrayAdapter = new EventArrayAdapter(getContext(), eventDataList);
         listView.setAdapter(eventArrayAdapter);
 
         fetchData();
 
-        listView.setOnItemClickListener((adapterView, view1, i, l) -> {
-            // Handle list item click
+        // Event list onclick directs to AttendeeListFragment
+        listView.setOnItemClickListener((adapterView, view1, position, rowId) -> {
+
+            // Get position and Id of event clicked
+            Event event = eventDataList.get(position);
+            String eventId = event.getId();
+
+            // Send eventId to AttendeeListFragment
+            // Adapted from answer given by João Marcos
+            // https://stackoverflow.com/questions/24555417/how-to-send-data-from-one-fragment-to-another-fragment
+            Bundle args = new Bundle();
+            args.putString("Id", eventId);
+
+            AttendeeListFragment attendeeListFragment = new AttendeeListFragment();
+            attendeeListFragment.setArguments(args); // Pass data to attendeeListFragment
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, attendeeListFragment)
+                        .addToBackStack(null)  // Optional: Add transaction to back stack
+                        .commit();
+            }
         });
 
         btnClose.setOnClickListener(v -> {
@@ -73,7 +90,6 @@ public class EventListFragment extends Fragment {
             public void onError(Exception e) {
                 // Handle any errors here
             }
-
 
         });
     }
