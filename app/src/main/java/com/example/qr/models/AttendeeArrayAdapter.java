@@ -1,3 +1,5 @@
+// Adapted from Cole Haraga's EventArrayAdapter.java and lab 5 code
+
 package com.example.qr.models;
 
 import android.content.Context;

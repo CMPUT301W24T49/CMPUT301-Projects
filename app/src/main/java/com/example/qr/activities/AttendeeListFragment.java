@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AttendeeListFragment extends Fragment {
-
-    ListView attendeeList;
+    
     ArrayList<String> attendeeDataList;
     AttendeeArrayAdapter attendeeArrayAdapter;
 
@@ -33,20 +32,24 @@ public class AttendeeListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate layout
         View view = inflater.inflate(R.layout.fragment_attendee_list, container, false);
-
+        
+        // Button initialization
         ListView listView = view.findViewById(R.id.attendee_listview);
         Button btnClose = view.findViewById(R.id.btn_close_attendee_list);
 
         eventId = getArguments().getString("Id"); // Retrieve eventId data from EventListOrganizerFragment
-
+        
         attendeeDataList = new ArrayList<>();
         attendeeArrayAdapter = new AttendeeArrayAdapter(getActivity(), attendeeDataList);
         listView.setAdapter(attendeeArrayAdapter);
 
-        fetchCheckIns(); // Store list of userIds
-
+        fetchCheckIns();
+        
+        // Close button to go back to the previous screen
         btnClose.setOnClickListener(v -> {
+            // Check if the fragment is added to an activity and if the activity has a FragmentManager
             if (isAdded() && getActivity() != null) {
                 getActivity().onBackPressed();
             }
@@ -61,9 +64,9 @@ public class AttendeeListFragment extends Fragment {
     private void fetchCheckIns() {
         // Fetch attendee data from Firebase
         List<String> userIds = new ArrayList<>();
+        // fetchCollection use adapted from EventListOrganizerFragment.java to fetch check ins
+        // (citation found there)
         FirebaseUtil.fetchCollection("CheckIns", CheckIn.class, new FirebaseUtil.OnCollectionFetchedListener<CheckIn>() {
-            
-            // 
             @Override
             public void onCollectionFetched(List<CheckIn> checkInList) {
                 // If check ins match the eventId, add to userIds list
@@ -75,11 +78,11 @@ public class AttendeeListFragment extends Fragment {
                         userIds.add(checkIn.getUserId());
                     }
                 }
-                // end of citation
+                // End of citation
                 attendeeDataList.addAll(userIds);   // Add userIds to data list
-                attendeeArrayAdapter.notifyDataSetChanged();    // Notify attendee array adapter
+                attendeeArrayAdapter.notifyDataSetChanged();    // Update attendee array adapter
                 
-                // print attendee data list
+                // Print attendee data list
                 for (String userId : userIds) {
                     Log.d("AttendeeListFragment", "userId: " + userId);
                 }
@@ -91,25 +94,6 @@ public class AttendeeListFragment extends Fragment {
         });
 
     }
-
-//    private void fetchUsers(List<String> userIdList) {
-//        List<String> newUserList = new ArrayList<>();
-//        FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
-//            @Override
-//            public void onCollectionFetched(List<User> userList) {
-//                // Only get checkIns with eventId Attendee
-//                for (User user : userList) {
-//                    if (user.getId()  ) {
-//                        newUserList.add(user.getName());
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onError(Exception e) {
-//            }
-//        });
-//    }
 
 }
 

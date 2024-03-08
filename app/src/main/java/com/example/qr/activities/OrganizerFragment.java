@@ -1,3 +1,4 @@
+// Adapted from Bashar's AttendeeFragment.java
 package com.example.qr.activities;
 
 import android.os.Bundle;
@@ -19,14 +20,15 @@ public class OrganizerFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate layout
         View view = inflater.inflate(R.layout.fragment_organizer, container, false);
-
+        
+        // Button initialization
         Button createEventsBtn = view.findViewById(R.id.create_events_btn);
         Button eventsBtn = view.findViewById(R.id.events_btn);
         Button settingsBtn = view.findViewById(R.id.settings_btn);
         Button closeBtn = view.findViewById(R.id.close_btn);
-
-
+        
         // Create events button onclick listener
         createEventsBtn.setOnClickListener(v -> {
             CreateEventFragment createEventFragment = new CreateEventFragment();
