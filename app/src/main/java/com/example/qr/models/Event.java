@@ -3,13 +3,16 @@ package com.example.qr.models;
 import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.GeoPoint;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Represents an event stored in Firestore. Contains information about the event title,
  * description, organizer, date, location, QR code, event poster, and attendee limit.
  */
-public class Event {
+// Event needs to implement Serializable to Event List and User Profile List implementation for Administrator part
+public class Event implements Serializable {
     private String id; // Document ID in Firestore
     private String title;
     private String description;
