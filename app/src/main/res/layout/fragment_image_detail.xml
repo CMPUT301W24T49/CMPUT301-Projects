@@ -19,6 +19,14 @@
         android:padding="16dp"
         android:gravity="center"/>
 
+        <TextView
+            android:id="@+id/image_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Image Detail"
+            android:padding="16dp"
+            android:gravity="center"/>
+
     <ImageView
         android:id="@+id/image_detail"
         android:layout_width="match_parent"
