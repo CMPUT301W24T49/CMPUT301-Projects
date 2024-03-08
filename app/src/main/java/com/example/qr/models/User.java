@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import java.util.Map;
 
 public class User {
-    private final String id; // Document ID in Firestore
+    private String id; // Document ID in Firestore
     private String name;
     private String role; // "organizer", "attendee", or "admin"
     private String profilePicture; // URL to the image
@@ -13,6 +13,11 @@ public class User {
     private String homepage; // Optional
 
     // Constructor, getters, and setters
+
+    public User() {
+
+    }
+
     public User(String id, String name, String role,
                 String profilePicture, Map<String, String> contactInfo, String homepage) {
         this.id = id;
@@ -25,6 +30,10 @@ public class User {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
