@@ -83,7 +83,6 @@ public class EventListFragment extends Fragment {
 
             @Override
             public void onError(Exception e) {
-                // Handle any errors here
             }
 
 
