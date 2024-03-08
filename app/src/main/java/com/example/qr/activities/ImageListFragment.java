@@ -71,7 +71,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * ImageListFragment displays a list of images and provides functionality to view or edit them in detail.
+ */
 public class ImageListFragment extends Fragment {
 
     ListView imageList;

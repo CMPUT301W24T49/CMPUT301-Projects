@@ -9,6 +9,9 @@ import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
+/**
+ * AdminProfileFragment provides an interface for viewing and editing administrative user profile details.
+ */
 
 public class AdminProfileFragment extends Fragment {
 

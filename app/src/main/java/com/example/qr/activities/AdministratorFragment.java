@@ -9,7 +9,9 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
-
+/**
+ * AdministratorFragment handles the UI for the admin dashboard, providing navigation to different admin functionalities.
+ */
 public class AdministratorFragment extends Fragment {
 
     public AdministratorFragment() {

@@ -16,6 +16,9 @@ import com.example.qr.R;
 import com.example.qr.models.User;
 
 import java.io.Serializable;
+/**
+ * AdminUserProfileDetailFragment presents detailed information about a user profile, with options for administrative actions such as deletion.
+ */
 
 public class AdminUserProfileDetailFragment extends DialogFragment {
     interface UserDetailDialogListener {
