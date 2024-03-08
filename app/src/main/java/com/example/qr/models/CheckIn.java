@@ -5,13 +5,17 @@ import androidx.annotation.NonNull;
 import com.google.firebase.firestore.GeoPoint;
 import java.util.Date;
 public class CheckIn {
-    private final String id; // Document ID in Firestore
-    private final String eventId; // Reference to Event document ID
-    private final String userId; // Reference to User document ID
+    private String id; // Document ID in Firestore
+    private String eventId; // Reference to Event document ID
+    private String userId; // Reference to User document ID
     private Date checkInTime;
     private GeoPoint location;
 
     // Constructor, getters, and setters
+    public CheckIn() {
+
+    }
+
     public CheckIn(String id, String eventId, String userId, Date checkInTime, GeoPoint location) {
         this.id = id;
         this.eventId = eventId;
@@ -24,12 +28,24 @@ public class CheckIn {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getEventId() {
         return eventId;
     }
 
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+
     public String getUserId() {
         return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Date getCheckInTime() {

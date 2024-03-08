@@ -5,12 +5,16 @@ import androidx.annotation.NonNull;
 import java.util.Date;
 
 public class Notification {
-    private final String id; // Document ID in Firestore
-    private final String eventId; // Reference to Event document ID
+    private String id; // Document ID in Firestore
+    private String eventId; // Reference to Event document ID
     private String message;
     private Date sentTime;
 
     // Constructor, getters, and setters
+
+    public Notification(){
+
+    }
 
     public Notification(String id, String eventId, String message, Date sentTime) {
         this.id = id;
@@ -23,8 +27,16 @@ public class Notification {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getEventId() {
         return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 
     public String getMessage() {
