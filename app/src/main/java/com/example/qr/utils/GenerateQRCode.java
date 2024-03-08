@@ -10,8 +10,11 @@ public class GenerateQRCode {
     // citation: OpenAI, ChatGPT4, 2024, I want a seperate class from main activity that
     // will create the QR code in android studio
     // pass in event ID from firebase
+
+    private static final QRCodeWriter writer = new QRCodeWriter();
+
     public static Bitmap generateQR(String id) {
-        QRCodeWriter writer = new QRCodeWriter();
+
         // in pixels set height and width of QR code
         int width = 500;
         int height = 500;

@@ -3,11 +3,9 @@ package com.example.qr.models;
 import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.GeoPoint;
-
-import java.io.Serializable;
 import java.util.Date;
 
-public class Event implements Serializable {
+public class Event {
     private String id; // Document ID in Firestore
     private String title;
     private String description;

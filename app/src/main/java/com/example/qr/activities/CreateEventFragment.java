@@ -1,5 +1,7 @@
 package com.example.qr.activities;
 
+import static com.example.qr.utils.GenericUtils.getLocationFromAddress;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import com.example.qr.utils.ImagePickerUtil;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.type.LatLng;
 
 import java.util.Date;
 
@@ -73,12 +76,11 @@ public class CreateEventFragment extends Fragment {
                     //display error message
                     return;
                 }
-                // Handle the create button click
+                //Handle the create button click
                 //Generate a random event id string
-
-
+                LatLng location = getLocation();
                 String eventId = "event" + System.currentTimeMillis();
-                FirebaseUtil.addEvent(new Event (eventId, eventTitle.getText().toString(), "", "", new Date(), new GeoPoint(0, 0)
+                FirebaseUtil.addEvent(new Event (eventId, eventTitle.getText().toString(), "", "", new Date(), new GeoPoint(location.getLatitude(), location.getLongitude())
                 , eventId, "", 0),
                         documentReference -> {
                         // Handle successful event creation
@@ -125,8 +127,8 @@ public class CreateEventFragment extends Fragment {
         return view;
     }
 
-    private void createEvent() {
-        // Implement your logic to handle event creation
-        // This could involve reading from the EditText fields, etc.
+    private LatLng getLocation() {
+        return getLocationFromAddress( getActivity()  ,eventLocation.getText().toString());
+
     }
 }
