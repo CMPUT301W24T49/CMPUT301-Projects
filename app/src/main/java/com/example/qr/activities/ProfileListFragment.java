@@ -33,10 +33,10 @@ public class ProfileListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_image_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile_list, container, false);
 
-        ListView listView = view.findViewById(R.id.listview_images);
-        Button btnClose = view.findViewById(R.id.btn_close_image_list);
+        ListView listView = view.findViewById(R.id.listview_profiles);
+        Button btnClose = view.findViewById(R.id.btn_close_profile_list);
 
         // TODO: Replace with actual image data
         db = FirebaseFirestore.getInstance();

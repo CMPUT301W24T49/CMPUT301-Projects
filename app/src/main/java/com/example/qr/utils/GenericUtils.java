@@ -11,6 +11,13 @@ import java.util.List;
 
 public class GenericUtils {
 
+    /**
+     * Converts an address to a latitude and longitude coordinate.
+     *
+     * @param context The context of the application.
+     * @param strAddress The address to convert.
+     * @return The latitude and longitude coordinate of the address.
+     */
     public static LatLng getLocationFromAddress(Context context, String strAddress) {
 
         Geocoder coder = new Geocoder(context);

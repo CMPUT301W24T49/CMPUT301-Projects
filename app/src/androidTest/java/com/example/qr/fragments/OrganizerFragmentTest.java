@@ -1,14 +1,19 @@
-package com.example.qr;
+package com.example.qr.fragments;
 
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.assertion.ViewAssertions;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.qr.R;
 import com.example.qr.activities.MainActivity;
 
 import org.junit.Rule;
@@ -23,7 +28,7 @@ public class OrganizerFragmentTest {
     @Test
     public void testCreateNewButtonClick() {
         // Wait for the MainActivity to be started and create event to be displayed
-        Espresso.onView(withId(R.id.button_organizer)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.button_organizer)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.create_events_btn)).perform(ViewActions.click());
 
         // Now check if the create event layout is displayed by checking one of its views
@@ -45,8 +50,15 @@ public class OrganizerFragmentTest {
         // Wait for the MainActivity to be started and reuse QR screen to be displayed
         Espresso.onView(withId(R.id.button_organizer)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.create_events_btn)).perform(ViewActions.click());
-        Espresso.onView(withId(R.id.btnUseExistingQr)).perform(ViewActions.click());
-
+        onView(withId(R.id.eventTitle)).perform(ViewActions.typeText("Test Script"));
+        onView(withId(R.id.eventLocation)).perform(ViewActions.typeText("Edmonton"),
+                ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.btnUseExistingQr)).perform(click());
+        try {
+            Thread.sleep(1000); // Sleep for 1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // Now check if the reuse QR code screen is displayed by checking one of its views
         Espresso.onView(withId(R.id.fragment_reuse_qr)).check(ViewAssertions.matches(isDisplayed()));
     }

@@ -20,6 +20,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility class to handle Firebase Firestore and Storage operations.
+ */
 public class FirebaseUtil {
 
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -139,5 +142,4 @@ public class FirebaseUtil {
         void setId(String id);
     }
 
-    // You can add more methods here for updating and deleting documents, querying collections, etc.
 }
