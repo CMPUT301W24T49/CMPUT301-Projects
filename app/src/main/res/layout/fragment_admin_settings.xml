@@ -6,6 +6,7 @@
     android:background="#10283B"
     android:orientation="horizontal">
 
+
     <!-- Sidebar menu -->
     <LinearLayout
         android:layout_width="match_parent"
