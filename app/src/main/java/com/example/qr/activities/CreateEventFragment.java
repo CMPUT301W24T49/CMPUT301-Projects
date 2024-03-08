@@ -20,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class CreateEventFragment extends Fragment {
     private ImageView eventPoster;
     private EditText eventTitle, eventLocation;
-    private Button btnUseExistingQr, btnGenerateQr, btnCreate, btnCancel;
+    private Button btnUseExistingQr, btnGenerateQr, btnCancel;
 
     private FirebaseFirestore db;
     private CollectionReference eventsRef;

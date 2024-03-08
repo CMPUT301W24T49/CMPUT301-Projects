@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_event_list_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#10283B">
@@ -7,13 +8,13 @@
     <!-- Close (X) Button at the top right -->
     <Button
         android:id="@+id/btn_close_event_list"
+        style="@style/AppRoundedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="X"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
-        style="@style/AppRoundedButton"/>
+        android:text="X" />
 
     <!-- ListView for the events -->
     <TextView
@@ -33,11 +34,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/btn_close_event_list"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"
         android:layout_marginTop="16dp"
         android:background="#424242"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
         android:padding="8dp"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical" />
 
 </RelativeLayout>

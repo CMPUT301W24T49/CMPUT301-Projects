@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_admin_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#10283B">
+    android:background="#10283B"
+    android:padding="16dp">
 
     <!-- Close (X) Button at the top right -->
     <Button
         android:id="@+id/btn_close"
+        style="@style/AppRoundedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="X"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        style="@style/AppRoundedButton"/>
+        android:text="X" />
 
     <!-- LinearLayout to center the buttons vertically -->
     <LinearLayout
@@ -29,26 +30,26 @@
         <!-- Events Option Button -->
         <Button
             android:id="@+id/btn_events_option"
-            android:text="Events Option"
-            style="@style/AppRoundedButton"/>
+            style="@style/AppRoundedButton"
+            android:text="Events Option" />
 
         <!-- Profile Option Button -->
         <Button
             android:id="@+id/btn_profile_option"
-            android:text="Profile Option"
-            style="@style/AppRoundedButton"/>
+            style="@style/AppRoundedButton"
+            android:text="Profile Option" />
 
         <!-- Images Option Button -->
         <Button
             android:id="@+id/btn_images_option"
-            android:text="Images Option"
-            style="@style/AppRoundedButton"/>
+            style="@style/AppRoundedButton"
+            android:text="Images Option" />
 
         <!-- Settings Button -->
         <Button
             android:id="@+id/btn_settings"
-            android:text="Settings"
-            style="@style/AppRoundedButton"/>
+            style="@style/AppRoundedButton"
+            android:text="Settings" />
 
     </LinearLayout>
 
