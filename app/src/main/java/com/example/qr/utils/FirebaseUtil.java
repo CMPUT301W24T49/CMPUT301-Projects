@@ -8,6 +8,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FirebaseUtil {
 
@@ -63,6 +68,44 @@ public class FirebaseUtil {
         db.collection("Notifications").add(notification)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
+    }
+
+    /**
+     * Fetches documents from a specified collection and converts them into objects of a specified class.
+     *
+     * @param collectionName The name of the collection to fetch.
+     * @param clazz The class of the objects to be created from the documents.
+     * @param listener Listener to handle the fetched objects or an error.
+     * @param <T> The type parameter for the class of the objects to fetch.
+     */
+    public static <T> void fetchCollection(String collectionName, Class<T> clazz, OnCollectionFetchedListener<T> listener) {
+        db.collection(collectionName).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                List<T> objectList = new ArrayList<>();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    T object = document.toObject(clazz);
+                    if (object instanceof HasId) {
+                        ((HasId) object).setId(document.getId());
+                    }
+                    objectList.add(object);
+                }
+                listener.onCollectionFetched(objectList);
+            } else {
+                listener.onError(task.getException());
+            }
+        });
+    }
+
+    public interface OnCollectionFetchedListener<T> {
+        void onCollectionFetched(List<T> objectList);
+        void onError(Exception e);
+    }
+
+    /**
+     * Interface to be implemented by classes that should handle Firestore document IDs.
+     */
+    public interface HasId {
+        void setId(String id);
     }
 
     // You can add more methods here for updating and deleting documents, querying collections, etc.

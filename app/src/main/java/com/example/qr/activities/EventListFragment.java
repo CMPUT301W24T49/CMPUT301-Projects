@@ -1,6 +1,7 @@
 package com.example.qr.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,12 @@ import androidx.fragment.app.Fragment;
 import com.example.qr.R;
 import com.example.qr.models.Event;
 import com.example.qr.models.EventArrayAdapter;
+import com.example.qr.utils.FirebaseUtil;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EventListFragment extends Fragment {
 
@@ -59,14 +62,33 @@ public class EventListFragment extends Fragment {
     }
 
     private void fetchData() {
-        db.collection("Events").get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) {
-                Event event = snapshot.toObject(Event.class);
-                eventDataList.add(event);
+//        db.collection("Events").get().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                for (DocumentSnapshot document : task.getResult()) {
+//                    Event event = document.toObject(Event.class);
+//                    if (event != null) {
+//                        event.setId(document.getId());
+//                    }
+//                    eventDataList.add(event);}
+//                eventArrayAdapter.notifyDataSetChanged();
+//            }
+//        });
+
+        FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
+            @Override
+            public void onCollectionFetched(List<Event> eventList) {
+                // Handle the fetched events here
+                eventDataList.addAll(eventList);
+                eventArrayAdapter.notifyDataSetChanged();
+                Log.d("EventListFragment", "Fetched " + eventList.size() + " events");
             }
-            eventArrayAdapter.notifyDataSetChanged(); // Notify the adapter that data has changed
-        }).addOnFailureListener(e -> {
-            // Handle the error
+
+            @Override
+            public void onError(Exception e) {
+                // Handle any errors here
+            }
+
+
         });
     }
 }
