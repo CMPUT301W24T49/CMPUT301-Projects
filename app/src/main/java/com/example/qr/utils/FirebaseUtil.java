@@ -1,5 +1,6 @@
 package com.example.qr.utils;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
 import com.example.qr.models.CheckIn;
@@ -124,6 +125,7 @@ public class FirebaseUtil {
             }
         });
     }
+
 
     public interface OnCollectionFetchedListener<T> {
         void onCollectionFetched(List<T> objectList);

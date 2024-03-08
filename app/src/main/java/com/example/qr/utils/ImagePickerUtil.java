@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import androidx.activity.result.ActivityResultLauncher;
@@ -15,6 +16,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 public class ImagePickerUtil {
 
@@ -79,6 +82,17 @@ public class ImagePickerUtil {
             return null;
         }
     }
+
+    public static Drawable LoadImageFromWebOperations(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "src name");
+            return d;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private Uri createImageFile() throws IOException {
         String fileName = "JPEG_" + System.currentTimeMillis();
         File storageDir = activity.getExternalFilesDir(null);

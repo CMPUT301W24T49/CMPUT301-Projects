@@ -31,7 +31,10 @@
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:src="@drawable/ic_launcher_background"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:clickable="true"
+                android:focusable="true"/>
+
         </FrameLayout>
 
         <TextView

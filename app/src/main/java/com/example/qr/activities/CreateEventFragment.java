@@ -1,5 +1,7 @@
 package com.example.qr.activities;
 
+import static com.example.qr.utils.GenericUtils.getLocationFromAddress;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,15 +16,22 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.qr.R;
+import com.example.qr.models.Event;
+import com.example.qr.utils.FirebaseUtil;
+import com.example.qr.utils.ImagePickerUtil;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.type.LatLng;
+
+import java.util.Date;
 
 public class CreateEventFragment extends Fragment {
     private ImageView eventPoster;
     private EditText eventTitle, eventLocation;
     private Button btnUseExistingQr, btnGenerateQr, btnCancel;
 
-    private FirebaseFirestore db;
+    private ImagePickerUtil image;
     private CollectionReference eventsRef;
 
     public CreateEventFragment() {
@@ -33,9 +42,6 @@ public class CreateEventFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_create_event, container, false);
         super.onCreate(savedInstanceState);
-
-        db = FirebaseFirestore.getInstance();
-        eventsRef = db.collection("Event");
 
         // Initialize your views
         eventPoster = view.findViewById(R.id.ivEventPoster);
@@ -48,6 +54,12 @@ public class CreateEventFragment extends Fragment {
 
         btnUseExistingQr.setOnClickListener(v -> {
             ReuseQrCodeFragment reuseQrCodeFragment = new ReuseQrCodeFragment();
+
+            Bundle args = new Bundle();
+            args.putString("name", eventTitle.getText().toString());
+            args.putString("location", eventLocation.getText().toString());
+            reuseQrCodeFragment.setArguments(args);
+
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, reuseQrCodeFragment)
@@ -59,7 +71,32 @@ public class CreateEventFragment extends Fragment {
         btnGenerateQr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle the create button click
+                //check if textviews are empty
+                if (eventTitle.getText().toString().isEmpty() || eventLocation.getText().toString().isEmpty()) {
+                    //display error message
+                    return;
+                }
+                //Handle the create button click
+                //Generate a random event id string
+                LatLng location = getLocation();
+                String eventId = "event" + System.currentTimeMillis();
+                FirebaseUtil.addEvent(new Event (eventId, eventTitle.getText().toString(), "", "", new Date(), new GeoPoint(location.getLatitude(), location.getLongitude())
+                , eventId, "", 0),
+                        documentReference -> {
+                        // Handle successful event creation
+
+                        // Create a new instance of OrganizerFragment
+                        OrganizerFragment organizerFragment = new OrganizerFragment();
+
+                        // Perform the fragment transaction
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container, organizerFragment);
+
+                        fragmentTransaction.commit(); // Commit the transaction
+                }, e -> {
+                    // Handle event creation failure
+                });
 
             }
         });
@@ -90,8 +127,8 @@ public class CreateEventFragment extends Fragment {
         return view;
     }
 
-    private void createEvent() {
-        // Implement your logic to handle event creation
-        // This could involve reading from the EditText fields, etc.
+    private LatLng getLocation() {
+        return getLocationFromAddress( getActivity()  ,eventLocation.getText().toString());
+
     }
 }
