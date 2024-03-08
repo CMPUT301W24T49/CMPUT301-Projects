@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#10283B"
+    android:padding="16dp">
+
+    <!-- Close (X) Button at the top right -->
+    <Button
+        android:id="@+id/btn_close"
+        style="@style/AppRoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="X" />
+
+    <!-- Content below (using LinearLayout for vertical alignment) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#10283B "
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btnProfileSettings"
+            style="@style/AppRoundedButton"
+            android:text="Profile Settings" />
+
+        <Switch
+            android:id="@+id/switchPushNotifications"
+            android:text="Toggle Push Notifications"
+            style="@style/AppRoundedSwitch" />
+
+        <Switch
+            android:id="@+id/switchGeoTracking"
+            android:text="Toggle Geolocation Tracking"
+            style="@style/AppRoundedSwitch" />
+
+        <Button
+            android:id="@+id/btnExitToMainMenu"
+            style="@style/AppRoundedButton"
+            android:text="Exit To Main Menu" />
+
+    </LinearLayout>
+</RelativeLayout>

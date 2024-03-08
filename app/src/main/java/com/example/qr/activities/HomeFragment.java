@@ -24,6 +24,9 @@ public class HomeFragment extends Fragment {
         // Find the attendee button by its ID
         Button attendeeButton = view.findViewById(R.id.button_attendee);
 
+        // Find the organizer button by its ID
+        Button organizerButton = view.findViewById(R.id.button_organizer);
+
         // Set a click listener for the admin button
         adminButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +53,22 @@ public class HomeFragment extends Fragment {
                 if (fragmentManager != null) {
                     fragmentManager.beginTransaction()
                             .replace(R.id.fragment_container, attendeeFragment)
+                            .addToBackStack(null) // This adds the transaction to the back stack
+                            .commit();
+                }
+            }
+        });
+
+        // Set a click listener for the attendee button
+        organizerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Replace the HomeFragment with AttendeeFragment
+                OrganizerFragment organizerFragment = new OrganizerFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                if (fragmentManager != null) {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, organizerFragment)
                             .addToBackStack(null) // This adds the transaction to the back stack
                             .commit();
                 }
