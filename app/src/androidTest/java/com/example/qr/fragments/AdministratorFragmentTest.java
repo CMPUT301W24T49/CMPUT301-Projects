@@ -59,6 +59,16 @@ public class AdministratorFragmentTest {
         Espresso.onView(withId(R.id.fragment_image_list_layout)).check(ViewAssertions.matches(isDisplayed()));
     }
 
-    // Add more tests for other buttons as needed
+    @Test
+    public void testSettingOptionButtonClick() {
+        // Navigate to AdministratorFragment first
+        Espresso.onView(withId(R.id.button_admin)).perform(ViewActions.click());
+
+        // Click on the Setting Option button
+        Espresso.onView(withId(R.id.btn_settings)).perform(ViewActions.click());
+
+        // Check if Setting page is displayed
+        Espresso.onView(withId(R.id.fragment_admin_settings)).check(ViewAssertions.matches(isDisplayed()));
+    }
 
 }
