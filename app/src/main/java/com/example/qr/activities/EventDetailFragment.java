@@ -93,7 +93,7 @@ public class EventDetailFragment extends DialogFragment {
         TextView textTitle = view.findViewById(R.id.textview_event_detail);
         textTitle.setText(event.getTitle());
 
-        // ... Initialize other TextViews for details as needed ...
+        return view;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
