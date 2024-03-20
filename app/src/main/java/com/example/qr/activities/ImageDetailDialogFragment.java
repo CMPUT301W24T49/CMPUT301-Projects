@@ -61,6 +61,7 @@ package com.example.qr.activities;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,6 +77,8 @@ import com.example.qr.R;
 import com.example.qr.models.Image;
 import com.example.qr.models.User;
 
+import java.text.SimpleDateFormat;
+
 /**
  * ImageDetailDialogFragment provides a detailed view of an image, including options to delete or cancel the view.
  */
@@ -83,6 +86,7 @@ public class ImageDetailDialogFragment extends DialogFragment {
     interface ImageDetailDialogListener {
         void onDeleteImage(Image image);
     }
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private ImageDetailDialogListener listener;
     private Image image;
     // Assume you pass the image details as arguments
@@ -139,7 +143,18 @@ public class ImageDetailDialogFragment extends DialogFragment {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_image_detail, null);
 
         TextView textTitle = view.findViewById(R.id.image_id);
+        ImageView imageDetailView = view.findViewById(R.id.image_detail);
+        TextView imageUploadedBY = view.findViewById(R.id.image_uploadedBy);
+        TextView imageUploadTime = view.findViewById(R.id.image_uploadTime);
+        TextView imageRelatedTo = view.findViewById(R.id.image_relatedTo);
         textTitle.setText(image.getId());
+        // this needs to be checked
+        imageDetailView.setImageURI(Uri.parse(image.getUrl()));
+        imageUploadedBY.setText(image.getUploadedBy());
+        imageUploadTime.setText(dateFormat.format(image.getUploadTime()));
+        imageRelatedTo.setText(image.getRelatedTo());
+
+
 
         // ... Initialize other TextViews for details as needed ...
 
