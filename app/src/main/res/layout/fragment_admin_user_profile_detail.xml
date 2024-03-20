@@ -3,17 +3,40 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@android:color/white">
+    android:padding="16dp">
 
     <TextView
-        android:id="@+id/textview_user_profile_detail"
-        android:layout_width="match_parent"
+        android:id="@+id/userNameTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Event 1"
-        android:padding="16dp"/>
+        android:text="Name"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
+    <TextView
+        android:id="@+id/userRoleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Role"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
+    <TextView
+        android:id="@+id/userEmailTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
+    <TextView
+        android:id="@+id/userPhoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+    <TextView
+        android:id="@+id/userHomepageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Homepage"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
 </LinearLayout>
-

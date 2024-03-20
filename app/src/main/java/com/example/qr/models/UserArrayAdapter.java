@@ -55,8 +55,18 @@ public class UserArrayAdapter extends ArrayAdapter<Event> {
         }
 
         User user = profile.get(position);
-        TextView eventName = view.findViewById(R.id.profile_list_info);
-        eventName.setText(user.getName());
+//        TextView eventName = view.findViewById(R.id.profile_list_info);
+        TextView userNameTextView = view.findViewById(R.id.userNameTextView);
+        TextView userRoleTextView = view.findViewById(R.id.userRoleTextView);
+        TextView userEmailTextView = view.findViewById(R.id.userEmailTextView);
+        TextView userPhoneTextView = view.findViewById(R.id.userPhoneTextView);
+        TextView userHomepageTextView = view.findViewById(R.id.userHomepageTextView);
+//        eventName.setText(user.getName());
+        userNameTextView.setText(user.getName());
+        userRoleTextView.setText(user.getRole());
+        userEmailTextView.setText(user.getContactInfo().get("email")); // Assuming the map has an "email" key
+        userPhoneTextView.setText(user.getContactInfo().get("phone")); // Assuming the map has a "phone" key
+        userHomepageTextView.setText(user.getHomepage());
 
         return view;
     }

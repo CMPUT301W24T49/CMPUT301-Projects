@@ -52,8 +52,19 @@ public class AdminUserProfileDetailFragment extends DialogFragment {
         user = (User) getArguments().getSerializable("user");
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_admin_user_profile_detail, null);
 
-        TextView textTitle = view.findViewById(R.id.textview_user_profile_detail);
-        textTitle.setText(user.getName());
+//        TextView textTitle = view.findViewById(R.id.textview_user_profile_detail);
+        TextView userNameTextView = view.findViewById(R.id.userNameTextView); // Assuming you have added this
+        TextView userRoleTextView = view.findViewById(R.id.userRoleTextView); // And so on for the other details
+        TextView userEmailTextView = view.findViewById(R.id.userEmailTextView);
+        TextView userPhoneTextView = view.findViewById(R.id.userPhoneTextView);
+        TextView userHomepageTextView = view.findViewById(R.id.userHomepageTextView);
+
+//        textTitle.setText(user.getName());
+        userNameTextView.setText(user.getName());
+        userRoleTextView.setText(user.getRole());
+        userEmailTextView.setText(user.getContactInfo().get("email")); // Assuming the map has an "email" key
+        userPhoneTextView.setText(user.getContactInfo().get("phone")); // Assuming the map has a "phone" key
+        userHomepageTextView.setText(user.getHomepage());
 
         // ... Initialize other TextViews for details as needed ...
 
