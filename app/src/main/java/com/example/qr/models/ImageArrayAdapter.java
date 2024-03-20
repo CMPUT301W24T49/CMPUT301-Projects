@@ -2,6 +2,7 @@ package com.example.qr.models;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,11 +65,31 @@ public class ImageArrayAdapter extends ArrayAdapter<Image> {
         TextView imageUploadedBY = view.findViewById(R.id.image_uploadedBy);
         TextView imageUploadTime = view.findViewById(R.id.image_uploadTime);
         TextView imageRelatedTo = view.findViewById(R.id.image_relatedTo);
-        textTitle.setText(image.getId());
-        imageDetailView.setImageURI(Uri.parse(image.getUrl()));
-        imageUploadedBY.setText(image.getUploadedBy());
-        imageUploadTime.setText(dateFormat.format(image.getUploadTime()));
-        imageRelatedTo.setText(image.getRelatedTo());
+        if (textTitle == null) {
+            Log.e("ImageArrayAdapter", "textTitle is null!");
+        } else {
+            textTitle.setText(image.getId());
+        }
+        if (imageDetailView == null) {
+            Log.e("ImageArrayAdapter", "imageDetailView is null!");
+        } else {
+            imageDetailView.setImageURI(Uri.parse(image.getUrl()));
+        }
+        if (imageUploadedBY == null) {
+            Log.e("ImageArrayAdapter", "imageUploadedBY is null!");
+        } else {
+            imageUploadedBY.setText(image.getUploadedBy());
+        }
+        if (imageUploadTime == null) {
+            Log.e("ImageArrayAdapter", "imageUploadTime is null!");
+        } else {
+            imageUploadTime.setText(dateFormat.format(image.getUploadTime()));
+        }
+        if (imageRelatedTo == null) {
+            Log.e("ImageArrayAdapter", "imageRelatedTo is null!");
+        } else {
+            imageRelatedTo.setText(image.getRelatedTo());
+        }
 
         return view;
     }

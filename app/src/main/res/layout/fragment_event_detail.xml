@@ -4,16 +4,35 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:elevation="4dp">
 
     <TextView
-        android:id="@+id/textview_event_detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Event 1"
-        android:padding="16dp"/>
+    android:id="@+id/eventTitleTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Event Title"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textStyle="bold"/>
 
+    <TextView
+    android:id="@+id/eventDescriptionTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Event Description"
+    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
+    <TextView
+    android:id="@+id/eventDateTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Event Date"
+    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-    </LinearLayout>
-
+    <TextView
+    android:id="@+id/eventAttendeeLimitTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Attendee Limit"
+    android:textAppearance="?android:attr/textAppearanceSmall"/>
+</LinearLayout>

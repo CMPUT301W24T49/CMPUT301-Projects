@@ -1,6 +1,7 @@
 package com.example.qr.models;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,11 +63,31 @@ public class UserArrayAdapter extends ArrayAdapter<Event> {
         TextView userPhoneTextView = view.findViewById(R.id.userPhoneTextView);
         TextView userHomepageTextView = view.findViewById(R.id.userHomepageTextView);
 //        eventName.setText(user.getName());
-        userNameTextView.setText(user.getName());
-        userRoleTextView.setText(user.getRole());
-        userEmailTextView.setText(user.getContactInfo().get("email")); // Assuming the map has an "email" key
-        userPhoneTextView.setText(user.getContactInfo().get("phone")); // Assuming the map has a "phone" key
-        userHomepageTextView.setText(user.getHomepage());
+        if (userNameTextView == null) {
+            Log.e("UserArrayAdapter", "userNameTextView is null!");
+        } else {
+            userNameTextView.setText(user.getName());
+        }
+        if (userRoleTextView == null) {
+            Log.e("UserArrayAdapter", "userRoleTextView is null!");
+        } else {
+            userRoleTextView.setText(user.getRole());
+        }
+        if (userEmailTextView == null) {
+            Log.e("UserArrayAdapter", "userEmailTextView is null!");
+        } else {
+            userEmailTextView.setText(user.getContactInfo().get("email")); // Assuming the map has an "email" key
+        }
+        if (userPhoneTextView == null) {
+            Log.e("UserArrayAdapter", "userPhoneTextView is null!");
+        } else {
+            userPhoneTextView.setText(user.getContactInfo().get("phone")); // Assuming the map has a "phone" key
+        }
+        if (userHomepageTextView == null) {
+            Log.e("UserArrayAdapter", "userHomepageTextView is null!");
+        } else {
+            userHomepageTextView.setText(user.getHomepage());
+        }
 
         return view;
     }

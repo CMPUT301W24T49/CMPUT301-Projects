@@ -56,6 +56,9 @@ import com.example.qr.R;
 import com.example.qr.models.Event;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 /**
  * EventDetailFragment presents detailed information about an event and provides options to delete or cancel.
  */
@@ -91,8 +94,20 @@ public class EventDetailFragment extends DialogFragment {
         event = (Event) getArguments().getSerializable("event");
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_event_detail, null);
 
-        TextView textTitle = view.findViewById(R.id.textview_event_detail);
-        textTitle.setText(event.getTitle());
+//        TextView textTitle = view.findViewById(R.id.textview_event_detail);
+//        textTitle.setText(event.getTitle());
+        TextView eventTitleTextView = view.findViewById(R.id.eventTitleTextView);
+        TextView eventDescriptionTextView = view.findViewById(R.id.eventDescriptionTextView);
+        TextView eventDateTextView = view.findViewById(R.id.eventDateTextView);
+        TextView eventAttendeeLimitTextView = view.findViewById(R.id.eventAttendeeLimitTextView);
+
+        eventTitleTextView.setText(event.getTitle());
+        eventDescriptionTextView.setText(event.getDescription());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        eventDateTextView.setText(sdf.format(event.getEventDate()));
+        eventAttendeeLimitTextView.setText(event.getAttendeeLimit() != null ? event.getAttendeeLimit().toString() : "No limit");
+
+
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
