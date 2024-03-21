@@ -54,6 +54,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.qr.R;
 import com.example.qr.models.Event;
+import com.example.qr.models.EventArrayAdapter;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -64,7 +65,7 @@ import java.util.Locale;
  */
 public class EventDetailFragment extends DialogFragment {
     interface EventDetailDialogListener {
-        void onDeleteEvent(String eventID);
+
     }
 
     private EventDetailDialogListener listener;
@@ -114,8 +115,6 @@ public class EventDetailFragment extends DialogFragment {
         return builder
                 .setView(view)
                 .setTitle("Event Details")
-                .setNegativeButton("Cancel", (dialog, which) -> dismiss())
-                .setPositiveButton("Delete", (dialog, which) -> listener.onDeleteEvent(event.getId()))
                 .create();
     }
 }

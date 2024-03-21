@@ -7,12 +7,13 @@ import android.widget.Toast;
 
 import com.example.qr.R;
 import com.example.qr.models.Event;
+import com.example.qr.models.EventArrayAdapter;
 import com.example.qr.models.User;
 import com.example.qr.models.Image;
 import com.example.qr.utils.FirebaseUtil;
 
 public class MainActivity extends AppCompatActivity implements EventDetailFragment.EventDetailDialogListener, AdminUserProfileDetailFragment.UserDetailDialogListener, ImageDetailDialogFragment.ImageDetailDialogListener {
-
+    EventArrayAdapter eventArrayAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,26 +36,7 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                     .add(R.id.fragment_container, firstFragment).commit();
         }
 
-
     }
-    @Override
-    public void onDeleteEvent(String eventId) {
-        // Code to delete the event goes here
-        // You may need to communicate with your database or a ViewModel to perform the deletion
-        FirebaseUtil.deleteEvent(eventId,
-                aVoid -> {
-                    // Success callback
-                    Toast.makeText(this, "Event deleted successfully", Toast.LENGTH_SHORT).show();
-                    // Handle the rest of the success scenario, like updating the UI or finishing an activity.
-                },
-                e -> {
-                    // Failure callback
-                    Toast.makeText(this, "Failed to delete event: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    // Handle the failure scenario, like showing an error message to the user.
-                });
-    }
-
-
     @Override
     public void onDeleteUser(String userId){
         FirebaseUtil.deleteUser(userId,
