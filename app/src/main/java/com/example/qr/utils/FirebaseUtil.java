@@ -41,6 +41,19 @@ public class FirebaseUtil {
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
+    /**
+     * Deletes an event from the Firestore database.
+     *
+     * @param eventId The ID of the event to delete.
+     * @param onSuccessListener Callback for successful operation.
+     * @param onFailureListener Callback for operation failure.
+     */
+    public static void deleteEvent(String eventId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("Events").document(eventId)
+                .delete()
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
 
     /**
      * Adds a new user to the Firestore database.
@@ -51,6 +64,19 @@ public class FirebaseUtil {
      */
     public static void addUser(User user, OnSuccessListener<DocumentReference> onSuccessListener, OnFailureListener onFailureListener) {
         db.collection("Users").add(user)
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+    /**
+     * Deletes a user from the Firestore database.
+     *
+     * @param userId The ID of the user to delete.
+     * @param onSuccessListener Callback for successful operation.
+     * @param onFailureListener Callback for operation failure.
+     */
+    public static void deleteUser(String userId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("Users").document(userId)
+                .delete()
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
@@ -65,6 +91,28 @@ public class FirebaseUtil {
     public static void addCheckIn(CheckIn checkIn, OnSuccessListener<DocumentReference> onSuccessListener, OnFailureListener onFailureListener) {
         db.collection("Check-Ins").add(checkIn)
                 .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
+    /**
+     * Deletes an image from both Firestore database and Firebase Storage.
+     *
+     * @param imageId The ID of the image to delete from Firestore.
+     * @param imagePath The path of the image file to delete from Firebase Storage.
+     * @param onSuccessListener Callback for successful operation.
+     * @param onFailureListener Callback for operation failure.
+     */
+    public static void deleteImage(String imageId, String imagePath, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        // Delete the reference from Firestore
+        db.collection("Images").document(imageId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    // Upon successful deletion from Firestore, delete from Firebase Storage
+                    StorageReference imageRef = storage.getReference().child(imagePath);
+                    imageRef.delete()
+                            .addOnSuccessListener(onSuccessListener)
+                            .addOnFailureListener(onFailureListener);
+                })
                 .addOnFailureListener(onFailureListener);
     }
 

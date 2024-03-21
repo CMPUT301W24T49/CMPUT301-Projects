@@ -64,7 +64,7 @@ import java.util.Locale;
  */
 public class EventDetailFragment extends DialogFragment {
     interface EventDetailDialogListener {
-        void onDeleteEvent(Event event);
+        void onDeleteEvent(String eventID);
     }
 
     private EventDetailDialogListener listener;
@@ -115,7 +115,7 @@ public class EventDetailFragment extends DialogFragment {
                 .setView(view)
                 .setTitle("Event Details")
                 .setNegativeButton("Cancel", (dialog, which) -> dismiss())
-                .setPositiveButton("Delete", (dialog, which) -> listener.onDeleteEvent(event))
+                .setPositiveButton("Delete", (dialog, which) -> listener.onDeleteEvent(event.getId()))
                 .create();
     }
 }
