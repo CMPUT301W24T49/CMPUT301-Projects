@@ -56,38 +56,10 @@ public class UserArrayAdapter extends ArrayAdapter<Event> {
         }
 
         User user = profile.get(position);
-//        TextView eventName = view.findViewById(R.id.profile_list_info);
-        TextView userNameTextView = view.findViewById(R.id.userNameTextView);
-        TextView userRoleTextView = view.findViewById(R.id.userRoleTextView);
-        TextView userEmailTextView = view.findViewById(R.id.userEmailTextView);
-        TextView userPhoneTextView = view.findViewById(R.id.userPhoneTextView);
-        TextView userHomepageTextView = view.findViewById(R.id.userHomepageTextView);
-//        eventName.setText(user.getName());
-        if (userNameTextView == null) {
-            Log.e("UserArrayAdapter", "userNameTextView is null!");
-        } else {
-            userNameTextView.setText(user.getName());
-        }
-        if (userRoleTextView == null) {
-            Log.e("UserArrayAdapter", "userRoleTextView is null!");
-        } else {
-            userRoleTextView.setText(user.getRole());
-        }
-        if (userEmailTextView == null) {
-            Log.e("UserArrayAdapter", "userEmailTextView is null!");
-        } else {
-            userEmailTextView.setText(user.getContactInfo().get("email")); // Assuming the map has an "email" key
-        }
-        if (userPhoneTextView == null) {
-            Log.e("UserArrayAdapter", "userPhoneTextView is null!");
-        } else {
-            userPhoneTextView.setText(user.getContactInfo().get("phone")); // Assuming the map has a "phone" key
-        }
-        if (userHomepageTextView == null) {
-            Log.e("UserArrayAdapter", "userHomepageTextView is null!");
-        } else {
-            userHomepageTextView.setText(user.getHomepage());
-        }
+        TextView eventName = view.findViewById(R.id.profile_list_info);
+
+        eventName.setText(user.getName());
+
 
         return view;
     }

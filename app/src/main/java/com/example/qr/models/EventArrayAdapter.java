@@ -60,33 +60,12 @@ public class EventArrayAdapter extends ArrayAdapter<Event> {
         Event event = events.get(position);
 //        TextView eventName = view.findViewById(R.id.event_list_info);
 //        eventName.setText(event.getTitle());
-        TextView eventTitleTextView = view.findViewById(R.id.eventTitleTextView);
-        TextView eventDescriptionTextView = view.findViewById(R.id.eventDescriptionTextView);
-        TextView eventDateTextView = view.findViewById(R.id.eventDateTextView);
-        TextView eventAttendeeLimitTextView = view.findViewById(R.id.eventAttendeeLimitTextView);
+        TextView tvEventId = view.findViewById(R.id.tvEventId);
+        TextView tvEventName = view.findViewById(R.id.tvEventName);
 
-        if (eventTitleTextView == null) {
-            Log.e("EventArrayAdapter", "eventTitleTextView is null!");
-        } else {
-            eventTitleTextView.setText(event.getTitle());
-        }
-        if (eventDescriptionTextView == null) {
-            Log.e("EventArrayAdapter", "eventDescriptionTextView is null!");
-        } else {
-            eventDescriptionTextView.setText(event.getDescription());
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        if (eventDateTextView == null) {
-            Log.e("EventArrayAdapter", "eventDateTextView is null!");
-        } else {
-            eventDateTextView.setText(sdf.format(event.getEventDate()));
-        }
-        if (eventAttendeeLimitTextView == null) {
-            Log.e("EventArrayAdapter", "eventAttendeeLimitTextView is null!");
-        } else {
-            eventAttendeeLimitTextView.setText(event.getAttendeeLimit() != null ? event.getAttendeeLimit().toString() : "No limit");
+        tvEventId.setText(event.getId());
+        tvEventName.setText(event.getTitle());
 
-        }
         return view;
     }
 }

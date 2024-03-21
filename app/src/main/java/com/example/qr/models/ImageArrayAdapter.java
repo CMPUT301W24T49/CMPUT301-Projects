@@ -58,38 +58,9 @@ public class ImageArrayAdapter extends ArrayAdapter<Image> {
         }
 
         Image image = images.get(position);
-//        TextView imageID = view.findViewById(R.id.image_list_info);
-//        imageID.setText(image.getId());
-        TextView textTitle = view.findViewById(R.id.image_id);
-        ImageView imageDetailView = view.findViewById(R.id.image_detail);
-        TextView imageUploadedBY = view.findViewById(R.id.image_uploadedBy);
-        TextView imageUploadTime = view.findViewById(R.id.image_uploadTime);
-        TextView imageRelatedTo = view.findViewById(R.id.image_relatedTo);
-        if (textTitle == null) {
-            Log.e("ImageArrayAdapter", "textTitle is null!");
-        } else {
-            textTitle.setText(image.getId());
-        }
-        if (imageDetailView == null) {
-            Log.e("ImageArrayAdapter", "imageDetailView is null!");
-        } else {
-            imageDetailView.setImageURI(Uri.parse(image.getUrl()));
-        }
-        if (imageUploadedBY == null) {
-            Log.e("ImageArrayAdapter", "imageUploadedBY is null!");
-        } else {
-            imageUploadedBY.setText(image.getUploadedBy());
-        }
-        if (imageUploadTime == null) {
-            Log.e("ImageArrayAdapter", "imageUploadTime is null!");
-        } else {
-            imageUploadTime.setText(dateFormat.format(image.getUploadTime()));
-        }
-        if (imageRelatedTo == null) {
-            Log.e("ImageArrayAdapter", "imageRelatedTo is null!");
-        } else {
-            imageRelatedTo.setText(image.getRelatedTo());
-        }
+        TextView imageID = view.findViewById(R.id.image_list_info);
+        imageID.setText(image.getId());
+
 
         return view;
     }
