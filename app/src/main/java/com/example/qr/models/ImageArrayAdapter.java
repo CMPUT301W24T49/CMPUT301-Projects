@@ -59,7 +59,10 @@ public class ImageArrayAdapter extends ArrayAdapter<Image> {
 
         Image image = images.get(position);
         TextView imageID = view.findViewById(R.id.image_list_info);
+        TextView imagePic = view.findViewById(R.id.image_picture);
+
         imageID.setText(image.getId());
+        imagePic.setText(image.getUrl());
 
 
         return view;

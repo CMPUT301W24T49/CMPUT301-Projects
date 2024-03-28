@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 public class AdminUserProfileDetailFragment extends DialogFragment {
     interface UserDetailDialogListener {
-        void onDeleteUser(String userId);
+
     }
 
     private UserDetailDialogListener listener;
@@ -72,8 +72,6 @@ public class AdminUserProfileDetailFragment extends DialogFragment {
         return builder
                 .setView(view)
                 .setTitle("Profile Details")
-                .setNegativeButton("Cancel", (dialog, which) -> dismiss())
-                .setPositiveButton("Delete", (dialog, which) -> listener.onDeleteUser(user.getId()))
                 .create();
     }
 }

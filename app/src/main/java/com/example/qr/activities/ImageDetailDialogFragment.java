@@ -84,7 +84,7 @@ import java.text.SimpleDateFormat;
  */
 public class ImageDetailDialogFragment extends DialogFragment {
     interface ImageDetailDialogListener {
-        void onDeleteImage(Image image);
+
     }
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private ImageDetailDialogListener listener;
@@ -162,8 +162,6 @@ public class ImageDetailDialogFragment extends DialogFragment {
         return builder
                 .setView(view)
                 .setTitle("Profile Details")
-                .setNegativeButton("Cancel", (dialog, which) -> dismiss())
-                .setPositiveButton("Delete", (dialog, which) -> listener.onDeleteImage(image))
                 .create();
     }
 }

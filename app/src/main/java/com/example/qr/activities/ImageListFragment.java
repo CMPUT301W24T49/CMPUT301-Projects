@@ -61,11 +61,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
 import com.example.qr.models.Image;
 import com.example.qr.models.ImageArrayAdapter;
+import com.example.qr.models.User;
 import com.example.qr.utils.FirebaseUtil;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -114,6 +117,28 @@ public class ImageListFragment extends Fragment {
                 ImageDetailDialogFragment addCityFragment = ImageDetailDialogFragment.newInstance(String.valueOf(clickedImage));
                 addCityFragment.show(getParentFragmentManager(), "Image Detail");
             }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Image imageToBeDeleted = imageDataList.get(position);
+
+                FirebaseUtil.deleteUser(imageToBeDeleted.getId(),
+                        aVoid -> {
+
+                            imageDataList.remove(position);
+                            imageArrayAdapter.notifyDataSetChanged();
+                            fetchData();
+                            Toast.makeText(getActivity(), "Image " + imageToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
+                        },
+                        e -> {
+                            Toast.makeText(getActivity(), "Failed to delete image", Toast.LENGTH_SHORT).show();
+                        });
+                fetchData();
+                return true; // Return true to indicate that the click was handled
+            }
+
         });
 
         btnClose.setOnClickListener(v -> {

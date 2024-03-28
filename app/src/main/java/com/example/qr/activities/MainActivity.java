@@ -37,24 +37,5 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
         }
 
     }
-    @Override
-    public void onDeleteUser(String userId){
-        FirebaseUtil.deleteUser(userId,
-                aVoid -> {
-                    // This code will be executed on successful deletion
-                    Toast.makeText(this, "User deleted successfully", Toast.LENGTH_SHORT).show();
-                    // Further actions to handle the user interface after deletion can be added here,
-                    // such as removing the item from a list or returning to the previous screen.
-                },
-                e -> {
-                    // This code will be executed if there's a failure during deletion
-                    Toast.makeText(this, "Failed to delete user: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    // You might want to handle the error, maybe by showing an error message
-                    // or retrying the operation.
-                });
-    }
-    @Override
-    public void onDeleteImage(Image image){
 
-    }
 }
