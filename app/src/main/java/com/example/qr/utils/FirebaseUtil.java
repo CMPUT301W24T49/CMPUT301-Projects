@@ -64,8 +64,10 @@ public class FirebaseUtil {
      * @param onSuccessListener Callback for successful operation.
      * @param onFailureListener Callback for operation failure.
      */
-    public static void addUser(User user, OnSuccessListener<DocumentReference> onSuccessListener, OnFailureListener onFailureListener) {
-        db.collection("Users").add(user)
+    public static void addUser(User user, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("Users")
+                .document(user.getId())
+                .set(user)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
@@ -90,8 +92,10 @@ public class FirebaseUtil {
      * @param onSuccessListener Callback for successful operation.
      * @param onFailureListener Callback for operation failure.
      */
-    public static void addCheckIn(CheckIn checkIn, OnSuccessListener<DocumentReference> onSuccessListener, OnFailureListener onFailureListener) {
-        db.collection("Check-Ins").add(checkIn)
+    public static void addCheckIn(CheckIn checkIn, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("Check-Ins")
+                .document(checkIn.getId())
+                .set(checkIn)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
