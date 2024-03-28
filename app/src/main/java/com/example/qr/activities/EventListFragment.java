@@ -72,6 +72,8 @@ public class EventListFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Event eventToBeDeleted = eventDataList.get(position);
+                // Event(eventId, eventTitle.getText().toString(), "", "",
+                //  new Date(), new GeoPoint(location.getLatitude(), location.getLongitude()), eventId, "", 0)
 
                 // Call FirebaseUtil.deleteEvent to delete the event
                 FirebaseUtil.deleteEvent(eventToBeDeleted.getId(),
@@ -81,16 +83,17 @@ public class EventListFragment extends Fragment {
                             eventArrayAdapter.notifyDataSetChanged(); // Notify the adapter to update the list
                             fetchData();
                             // Optionally, show a confirmation message
-                            Toast.makeText(getActivity(), "Event deleted successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Event " + eventToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
+
+                            //Toast.makeText(getActivity(), "Event deleted successfully", Toast.LENGTH_SHORT).show();
                         },
                         e -> {
-                            // Handle the deletion error
-                            Log.e("EventListFragment", "Error deleting event", e);
                             Toast.makeText(getActivity(), "Failed to delete event", Toast.LENGTH_SHORT).show();
                         });
-
+                fetchData();
                 return true; // Return true to indicate that the click was handled
             }
+
         });
 
         // Close button to go back to the previous screen
