@@ -36,8 +36,10 @@ public class FirebaseUtil {
      * @param onSuccessListener Callback for successful operation.
      * @param onFailureListener Callback for operation failure.
      */
-    public static void addEvent(Event event, OnSuccessListener<DocumentReference> onSuccessListener, OnFailureListener onFailureListener) {
-        db.collection("Events").add(event)
+    public static void addEvent(Event event, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("Events")
+                .document(event.getId())
+                .set(event)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
