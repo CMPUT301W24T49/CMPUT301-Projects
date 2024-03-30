@@ -12,7 +12,14 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia;
 import androidx.fragment.app.DialogFragment;
+
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.qr.R;
+
+import org.json.JSONException;
 
 public class AttendeeProfileSettingsFragment extends DialogFragment {
 
@@ -46,6 +53,7 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
 
         Button uploadProfilePicture = view.findViewById(R.id.uploadButton);
         Button removeProfilePicture = view.findViewById(R.id.removeButton);
+        Button generateButton = view.findViewById(R.id.generateButton);
 
         uploadProfilePicture.setOnClickListener(v -> {
             Log.d("ProfileSettings", "Upload button clicked");
@@ -69,6 +77,23 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                     .setNegativeButton(android.R.string.no, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
+        });
+
+
+        /*
+            // github, August 14, 2013, github.blog, by Jason Long,
+            // source URL: https://github.blog/2013-08-14-identicons/
+            // Usage: this blog post explains how to generate Identicons
+        */
+        generateButton.setOnClickListener(v -> {
+            Log.d("ProfileSettings", "Generate button clicked");
+            // Assume the username is always "john"
+            String username = "basharharash";
+            // Use the username to generate a URL to an Identicon
+            String url = "https://github.com/identicons/" + username + ".png";
+            // Load the Identicon into the ImageView
+            ImageView profileImageView = requireView().findViewById(R.id.profileImageView);
+            Glide.with(this).load(url).into(profileImageView);
         });
 
         return view;
