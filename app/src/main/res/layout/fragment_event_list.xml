@@ -36,7 +36,7 @@
         android:id="@+id/listview_events"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="70dp"
         android:background="#424242"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp"

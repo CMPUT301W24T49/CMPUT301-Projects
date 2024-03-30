@@ -25,7 +25,7 @@ android:background="#10283B"
         android:layout_alignParentTop="true"
         android:layout_marginTop="26dp"
         android:layout_marginEnd="140dp"
-        android:text="Image List"
+        android:text=" Image List"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF" />
 
