@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
@@ -18,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 /**
  * EventListFragment displays a list of events, allowing users to view detailed information or edit them.
@@ -60,8 +63,37 @@ public class EventListFragment extends Fragment {
                 positionToEdit = position;
                 Event clickedEvent = (Event) adapterView.getAdapter().getItem(position);
                 EventDetailFragment addCityFragment = EventDetailFragment.newInstance(clickedEvent);
+                addCityFragment.setTargetFragment(EventListFragment.this, 0);
                 addCityFragment.show(getParentFragmentManager(), "Event Detail");
+                fetchData();
             }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Event eventToBeDeleted = eventDataList.get(position);
+                // Event(eventId, eventTitle.getText().toString(), "", "",
+                //  new Date(), new GeoPoint(location.getLatitude(), location.getLongitude()), eventId, "", 0)
+
+                // Call FirebaseUtil.deleteEvent to delete the event
+                FirebaseUtil.deleteEvent(eventToBeDeleted.getId(),
+                        aVoid -> {
+                            // Successfully deleted event from Firestore
+                            eventDataList.remove(position); // Remove event from the local list
+                            eventArrayAdapter.notifyDataSetChanged(); // Notify the adapter to update the list
+                            fetchData();
+                            // Optionally, show a confirmation message
+                            Toast.makeText(getActivity(), "Event " + eventToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
+
+                            //Toast.makeText(getActivity(), "Event deleted successfully", Toast.LENGTH_SHORT).show();
+                        },
+                        e -> {
+                            Toast.makeText(getActivity(), "Failed to delete event", Toast.LENGTH_SHORT).show();
+                        });
+                fetchData();
+                return true; // Return true to indicate that the click was handled
+            }
+
         });
 
         // Close button to go back to the previous screen
@@ -70,6 +102,7 @@ public class EventListFragment extends Fragment {
             if (isAdded() && getActivity() != null) {
                 getActivity().onBackPressed();
             }
+
         });
 
         return view;

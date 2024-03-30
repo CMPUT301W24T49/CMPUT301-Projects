@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Profile Settings"
+        android:padding="16dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFFFF" />
-
 
     <!-- Profile Settings Form -->
     <LinearLayout

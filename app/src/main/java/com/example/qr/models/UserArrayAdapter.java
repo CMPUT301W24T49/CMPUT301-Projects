@@ -1,6 +1,7 @@
 package com.example.qr.models;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,10 +54,13 @@ public class UserArrayAdapter extends ArrayAdapter<Event> {
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.fragment_profile_list_view_info, parent, false);
         }
-
+        // Once user profile pic is implemented add pic as well
         User user = profile.get(position);
-        TextView eventName = view.findViewById(R.id.profile_list_info);
-        eventName.setText(user.getName());
+        TextView userId = view.findViewById(R.id.profile_list_info);
+        TextView userName = view.findViewById(R.id.user_name);
+
+        userId.setText(user.getId());
+        userName.setText(user.getName());
 
         return view;
     }

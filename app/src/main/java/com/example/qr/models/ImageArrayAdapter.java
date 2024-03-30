@@ -1,10 +1,13 @@
 package com.example.qr.models;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.example.qr.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -22,11 +26,11 @@ public class ImageArrayAdapter extends ArrayAdapter<Image> {
 
     private ArrayList<Image> images;
     private Context context;
-
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
      * Constructs an ImageArrayAdapter.
-     * 
+     *
      * @param context The current context, used to inflate the layout file.
      * @param profile An ArrayList of Image objects to be displayed.
      */
@@ -55,7 +59,11 @@ public class ImageArrayAdapter extends ArrayAdapter<Image> {
 
         Image image = images.get(position);
         TextView imageID = view.findViewById(R.id.image_list_info);
+        TextView imagePic = view.findViewById(R.id.image_picture);
+
         imageID.setText(image.getId());
+        imagePic.setText(image.getUrl());
+
 
         return view;
     }

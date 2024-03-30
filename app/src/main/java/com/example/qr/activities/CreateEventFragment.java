@@ -114,7 +114,7 @@ public class CreateEventFragment extends Fragment {
                             FirebaseUtil.addEvent(new Event(eventId, eventTitle.getText().toString(), "", "",
                                                     new Date(), new GeoPoint(location.getLatitude(),
                                                     location.getLongitude()), eventId, "", 0),
-                                    documentReference -> {
+                                    aVoid -> {
                                         // GPT given code to switch back to organizer screen
                                         switchToOrganizerFragment();
                                     }, e -> {

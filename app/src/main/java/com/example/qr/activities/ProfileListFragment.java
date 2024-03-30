@@ -9,10 +9,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
+import com.example.qr.models.Event;
 import com.example.qr.models.User;
 import com.example.qr.models.UserArrayAdapter;
 import com.example.qr.utils.FirebaseUtil;
@@ -58,6 +60,27 @@ public class ProfileListFragment extends Fragment {
                 AdminUserProfileDetailFragment addCityFragment = AdminUserProfileDetailFragment.newInstance(clickedProfile);
                 addCityFragment.show(getParentFragmentManager(), "Profile Detail");
             }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                User userToBeDeleted = userDataList.get(position);
+
+                FirebaseUtil.deleteUser(userToBeDeleted.getId(),
+                        aVoid -> {
+
+                            userDataList.remove(position);
+                            userArrayAdapter.notifyDataSetChanged();
+                            fetchData();
+                            Toast.makeText(getActivity(), "User " + userToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
+                        },
+                        e -> {
+                            Toast.makeText(getActivity(), "Failed to delete user", Toast.LENGTH_SHORT).show();
+                        });
+                fetchData();
+                return true; // Return true to indicate that the click was handled
+            }
+
         });
 
         btnClose.setOnClickListener(v -> {

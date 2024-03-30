@@ -3,14 +3,17 @@ package com.example.qr.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.qr.R;
 import com.example.qr.models.Event;
+import com.example.qr.models.EventArrayAdapter;
 import com.example.qr.models.User;
 import com.example.qr.models.Image;
+import com.example.qr.utils.FirebaseUtil;
 
 public class MainActivity extends AppCompatActivity implements EventDetailFragment.EventDetailDialogListener, AdminUserProfileDetailFragment.UserDetailDialogListener, ImageDetailDialogFragment.ImageDetailDialogListener {
-
+    EventArrayAdapter eventArrayAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,20 +36,6 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                     .add(R.id.fragment_container, firstFragment).commit();
         }
 
-
-    }
-    @Override
-    public void onDeleteEvent(Event event) {
-        // Code to delete the event goes here
-        // You may need to communicate with your database or a ViewModel to perform the deletion
     }
 
-    @Override
-    public void onDeleteUser(User user){
-
-    }
-    @Override
-    public void onDeleteImage(Image image){
-
-    }
 }
