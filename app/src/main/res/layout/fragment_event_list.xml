@@ -28,7 +28,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="33dp"
         android:layout_marginEnd="126dp"
-        android:layout_toStartOf="@id/btn_close_event_list"
+<!--        android:layout_toStartOf="@id/btn_close_event_list"-->
         android:text="Events List"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF" />
@@ -37,7 +37,7 @@
         android:id="@+id/listview_events"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/btn_close_event_list"
+<!--        android:layout_below="@id/btn_close_event_list"-->
         android:layout_marginTop="16dp"
         android:background="#424242"
         android:divider="@android:color/darker_gray"
