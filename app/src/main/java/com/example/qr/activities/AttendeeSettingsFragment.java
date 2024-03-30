@@ -33,7 +33,7 @@ public class AttendeeSettingsFragment extends DialogFragment {
 
             // profile settings
             btnProfile.setOnClickListener(v -> {
-                ProfileSettingsFragment profileSettingsFragment = new ProfileSettingsFragment();
+                AttendeeProfileSettingsFragment profileSettingsFragment = new AttendeeProfileSettingsFragment();
                 if (getActivity() != null) {
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, profileSettingsFragment)
