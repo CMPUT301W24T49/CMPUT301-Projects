@@ -7,18 +7,18 @@
     android:background="#10283B">
 
     <!-- Close (X) Button at the top right -->
-    <Button
-        android:id="@+id/btn_close_event_list"
-        style="@style/AppRoundedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="X" />
+<!--    <Button-->
+<!--        android:id="@+id/btn_close_event_list"-->
+<!--        style="@style/AppRoundedButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:text="X" />-->
 
     <!-- ListView for the events -->
     <TextView
