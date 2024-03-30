@@ -1,5 +1,6 @@
 package com.example.qr.activities;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,14 +43,32 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_attendee_profile_settings, container, false);
 
-        // Set up the button to open the image picker
+
         Button uploadProfilePicture = view.findViewById(R.id.uploadButton);
+        Button removeProfilePicture = view.findViewById(R.id.removeButton);
+
         uploadProfilePicture.setOnClickListener(v -> {
             Log.d("ProfileSettings", "Upload button clicked");
             // Launch the photo picker to let the user choose only images
             pickMedia.launch(new PickVisualMediaRequest.Builder()
                     .setMediaType(PickVisualMedia.ImageOnly.INSTANCE)
                     .build());
+        });
+
+        removeProfilePicture.setOnClickListener(v -> {
+            Log.d("ProfileSettings", "Remove button clicked");
+
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Remove Profile Picture")
+                    .setMessage("Are you sure you want to remove the profile picture?")
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                        // User clicked YES button
+                        ImageView profileImageView = requireView().findViewById(R.id.profileImageView);
+                        profileImageView.setImageResource(R.drawable.default_pfp);
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         });
 
         return view;
