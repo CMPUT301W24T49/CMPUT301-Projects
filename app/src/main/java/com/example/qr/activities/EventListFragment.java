@@ -20,8 +20,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
 /**
  * EventListFragment displays a list of events, allowing users to view detailed information or edit them.
  */
@@ -30,6 +33,8 @@ public class EventListFragment extends Fragment {
     ListView eventList;
     ArrayList<Event> eventDataList;
     EventArrayAdapter eventArrayAdapter;
+    String message;
+    Map<String, Object> notificationMessage;
 
     private int positionToEdit;
     private FirebaseFirestore db;
@@ -65,7 +70,6 @@ public class EventListFragment extends Fragment {
                 EventDetailFragment addCityFragment = EventDetailFragment.newInstance(clickedEvent);
                 addCityFragment.setTargetFragment(EventListFragment.this, 0);
                 addCityFragment.show(getParentFragmentManager(), "Event Detail");
-                fetchData();
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -74,7 +78,19 @@ public class EventListFragment extends Fragment {
                 Event eventToBeDeleted = eventDataList.get(position);
                 // Event(eventId, eventTitle.getText().toString(), "", "",
                 //  new Date(), new GeoPoint(location.getLatitude(), location.getLongitude()), eventId, "", 0)
-
+                /////////////////////////////////////////
+                message = eventToBeDeleted.getTitle() + " is cancelled.";
+                notificationMessage = new HashMap<>();
+                notificationMessage.put("message", message);
+//                notificationMessage.put("from", )
+                FirebaseUtil.addEventNotification(eventToBeDeleted, notificationMessage,
+                        aVoid -> {
+                            Toast.makeText(getActivity(), "Event cancellation notification has been sent to attnedees", Toast.LENGTH_SHORT).show();
+                        },
+                        e -> {
+                            Toast.makeText(getActivity(), "Failed to send notification", Toast.LENGTH_SHORT).show();
+                        });
+                /////////////////////////////////////////
                 // Call FirebaseUtil.deleteEvent to delete the event
                 FirebaseUtil.deleteEvent(eventToBeDeleted.getId(),
                         aVoid -> {

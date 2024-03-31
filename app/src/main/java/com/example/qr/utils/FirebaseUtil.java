@@ -19,6 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Utility class to handle Firebase Firestore and Storage operations.
@@ -53,6 +54,13 @@ public class FirebaseUtil {
     public static void deleteEvent(String eventId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
         db.collection("Events").document(eventId)
                 .delete()
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+    public static void addEventNotification(Event event, Map<String, Object> notificationMessage, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener){
+        db.collection("Events").document(event.getId()).collection("Notifications")
+                .document("notification" + System.currentTimeMillis())
+                .set(notificationMessage)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
