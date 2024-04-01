@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -77,11 +78,17 @@ public class ReuseQrCodeFragment extends Fragment {
         eventSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                eventId = eventDataList.get(position).getId();
+                // Check if the placeholder "Select one:" is selected
+                if(position == 0) {
+                    // Placeholder selected, do nothing or reset the QR code image
+                    eventQrCode.setImageResource(android.R.color.transparent); // Hide QR code
+                    return;
+                }
 
+                // Your existing logic for when a real event is selected
+                eventId = eventDataList.get(position).getId();
                 if(eventId != null) {
                     Bitmap img = GenerateQRCode.generateQR(eventId);
-
                     eventQrCode.setImageBitmap(img);
                 }
             }
@@ -124,6 +131,7 @@ public class ReuseQrCodeFragment extends Fragment {
                         fragmentTransaction.replace(R.id.fragment_container, organizerFragment);
 
                         fragmentTransaction.commit(); // Commit the transaction
+                        Toast.makeText(getContext(), "Event created successfully", Toast.LENGTH_SHORT).show();
                     }, e -> {
                         // Handle event creation failure
                     });
@@ -134,6 +142,12 @@ public class ReuseQrCodeFragment extends Fragment {
     }
 
     private void fetchData() {
+
+        // Placeholder for "Select one:"
+        Event placeholderEvent = new Event();
+        placeholderEvent.setTitle("Select one:");
+        placeholderEvent.setId("");
+        eventDataList.add(placeholderEvent);
 
         FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
             @Override

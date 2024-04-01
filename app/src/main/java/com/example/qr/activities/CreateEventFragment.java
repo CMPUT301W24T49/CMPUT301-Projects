@@ -2,6 +2,8 @@ package com.example.qr.activities;
 
 import static com.example.qr.utils.GenericUtils.getLocationFromAddress;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -28,17 +30,23 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.type.LatLng;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Consumer;
 
 public class CreateEventFragment extends Fragment {
     private ImageView eventPoster;
-    private EditText eventTitle, eventLocation;
+    private EditText eventTitle, eventLocation, startDate, endDate, startTime, endTime, maxAttendees;
     private Button btnUseExistingQr, btnGenerateQr, btnCancel;
 
     private ImagePickerUtil image;
     private CollectionReference eventsRef;
+
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+    private SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm", Locale.US);
 
     public CreateEventFragment() {
         // Required empty public constructor
@@ -53,10 +61,20 @@ public class CreateEventFragment extends Fragment {
         eventPoster = view.findViewById(R.id.ivEventPoster);
         eventTitle = view.findViewById(R.id.eventTitle);
         eventLocation = view.findViewById(R.id.eventLocation);
+        startDate = view.findViewById(R.id.startDate);
+        endDate = view.findViewById(R.id.endDate);
+        startTime = view.findViewById(R.id.startTime);
+        endTime = view.findViewById(R.id.endTime);
+        maxAttendees = view.findViewById(R.id.maxAttendees);
 
         btnUseExistingQr = view.findViewById(R.id.btnUseExistingQr);
         btnGenerateQr = view.findViewById(R.id.btnGenerateQr);
         btnCancel = view.findViewById(R.id.btnCancel);
+
+        setUpDateTimePicker(startDate, dateFormatter);
+        setUpDateTimePicker(endDate, dateFormatter);
+        setUpDateTimePicker(startTime, timeFormatter);
+        setUpDateTimePicker(endTime, timeFormatter);
 
         // buttons
         btnUseExistingQr.setOnClickListener(v -> {
@@ -117,6 +135,7 @@ public class CreateEventFragment extends Fragment {
                                     aVoid -> {
                                         // GPT given code to switch back to organizer screen
                                         switchToOrganizerFragment();
+                                        Toast.makeText(getContext(), "Event created successfully", Toast.LENGTH_SHORT).show();
                                     }, e -> {
                                         // else toast that it failed to create
                                         Toast.makeText(getContext(), "Failed to create event",
@@ -156,6 +175,26 @@ public class CreateEventFragment extends Fragment {
         // Add listeners or any additional initialization for other views as needed
         return view;
     }
+
+    // Utility method to set up date and time pickers
+    private void setUpDateTimePicker(final EditText editText, final SimpleDateFormat formatter) {
+        final Calendar calendar = Calendar.getInstance();
+        editText.setOnClickListener(v -> {
+            if (formatter == dateFormatter) { // Date picker
+                new DatePickerDialog(getContext(), (view, year, month, dayOfMonth) -> {
+                    calendar.set(year, month, dayOfMonth);
+                    editText.setText(formatter.format(calendar.getTime()));
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+            } else { // Time picker
+                new TimePickerDialog(getContext(), (view, hourOfDay, minute) -> {
+                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                    calendar.set(Calendar.MINUTE, minute);
+                    editText.setText(formatter.format(calendar.getTime()));
+                }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
+            }
+        });
+    }
+
     // citation: OpenAI, ChatGPT 4, 2024: how do I check if a user input is a valid location
     // in android studio
     private void checkLocationValidity(String locationString, Consumer<Boolean> callback) {
