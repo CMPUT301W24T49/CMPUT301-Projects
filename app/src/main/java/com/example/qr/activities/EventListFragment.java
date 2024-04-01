@@ -15,15 +15,25 @@ import androidx.fragment.app.Fragment;
 import com.example.qr.R;
 import com.example.qr.models.Event;
 import com.example.qr.models.EventArrayAdapter;
+import com.example.qr.models.Notification;
 import com.example.qr.utils.FirebaseUtil;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 
 /**
  * EventListFragment displays a list of events, allowing users to view detailed information or edit them.
@@ -34,7 +44,7 @@ public class EventListFragment extends Fragment {
     ArrayList<Event> eventDataList;
     EventArrayAdapter eventArrayAdapter;
     String message;
-    Map<String, Object> notificationMessage;
+    Map<String, Object> notificationTokenId;
 
     private int positionToEdit;
     private FirebaseFirestore db;
@@ -70,6 +80,28 @@ public class EventListFragment extends Fragment {
                 EventDetailFragment addCityFragment = EventDetailFragment.newInstance(clickedEvent);
                 addCityFragment.setTargetFragment(EventListFragment.this, 0);
                 addCityFragment.show(getParentFragmentManager(), "Event Detail");
+/////////////////////////////////////////
+                // This is for testing only as User can not checkIn into event rn March 31st
+                // move below code to where attendee checks IN for an event also instead of random ID use user ID to store token, inside event
+               FirebaseMessaging.getInstance().getToken().
+                   addOnCompleteListener(new OnCompleteListener<String>() {
+                   @Override
+                   public void onComplete( Task<String> task) {
+                       if (!task.isSuccessful()) {
+                           Log.w("FCM", "Fetching FCM registration token failed", task.getException());
+                           return;
+                       }
+                       String idToken = task.getResult();
+                       notificationTokenId = new HashMap<>();
+                       notificationTokenId.put("token Id", idToken);
+                       // add attendee id as one of the input when its setup
+                       FirebaseUtil.addUserTokenIdNotification(clickedEvent, notificationTokenId, aVoid -> {}, e -> {});
+                   }
+                });
+                message = clickedEvent.getTitle() + " is viewed just for testing.";
+                Notification notification = new Notification("notification" + System.currentTimeMillis(), clickedEvent.getId(), message, new Date());
+                FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
+/////////////////////////////////////////
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -78,19 +110,11 @@ public class EventListFragment extends Fragment {
                 Event eventToBeDeleted = eventDataList.get(position);
                 // Event(eventId, eventTitle.getText().toString(), "", "",
                 //  new Date(), new GeoPoint(location.getLatitude(), location.getLongitude()), eventId, "", 0)
-                /////////////////////////////////////////
+/////////////////////////////////////////
                 message = eventToBeDeleted.getTitle() + " is cancelled.";
-                notificationMessage = new HashMap<>();
-                notificationMessage.put("message", message);
-//                notificationMessage.put("from", )
-                FirebaseUtil.addEventNotification(eventToBeDeleted, notificationMessage,
-                        aVoid -> {
-                            Toast.makeText(getActivity(), "Event cancellation notification has been sent to attnedees", Toast.LENGTH_SHORT).show();
-                        },
-                        e -> {
-                            Toast.makeText(getActivity(), "Failed to send notification", Toast.LENGTH_SHORT).show();
-                        });
-                /////////////////////////////////////////
+                Notification notification = new Notification("notification" + System.currentTimeMillis(), eventToBeDeleted.getId(), message, new Date());
+                FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
+/////////////////////////////////////////
                 // Call FirebaseUtil.deleteEvent to delete the event
                 FirebaseUtil.deleteEvent(eventToBeDeleted.getId(),
                         aVoid -> {

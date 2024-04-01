@@ -57,13 +57,6 @@ public class FirebaseUtil {
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
-    public static void addEventNotification(Event event, Map<String, Object> notificationMessage, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener){
-        db.collection("Events").document(event.getId()).collection("Notifications")
-                .document("notification" + System.currentTimeMillis())
-                .set(notificationMessage)
-                .addOnSuccessListener(onSuccessListener)
-                .addOnFailureListener(onFailureListener);
-    }
 
     /**
      * Adds a new user to the Firestore database.
@@ -137,8 +130,19 @@ public class FirebaseUtil {
      * @param onSuccessListener Callback for successful operation.
      * @param onFailureListener Callback for operation failure.
      */
-    public static void sendNotification(Notification notification, OnSuccessListener<DocumentReference> onSuccessListener, OnFailureListener onFailureListener) {
-        db.collection("Notifications").add(notification)
+    public static void addNotification(Notification notification, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("Events").document(notification.getEventId()).collection("Notifications")
+                .document(notification.getId())
+                .set(notification)
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
+    public static void addUserTokenIdNotification(Event event, Map<String, Object> notificationTokenId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener){
+        db.collection("Events").document(event.getId()).collection("Notification User TokenID")
+                // when user id is working change this to user ID
+                .document("useuserIDhere" + System.currentTimeMillis())
+                .set(notificationTokenId)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
