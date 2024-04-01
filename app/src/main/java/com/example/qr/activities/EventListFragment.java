@@ -93,7 +93,7 @@ public class EventListFragment extends Fragment {
                        }
                        String idToken = task.getResult();
                        notificationTokenId = new HashMap<>();
-                       notificationTokenId.put("token Id", idToken);
+                       notificationTokenId.put("tokenId", idToken);
                        // add attendee id as one of the input when its setup
                        FirebaseUtil.addUserTokenIdNotification(clickedEvent, notificationTokenId, aVoid -> {}, e -> {});
                    }
