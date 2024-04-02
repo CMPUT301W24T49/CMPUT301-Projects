@@ -36,6 +36,10 @@ exports.sendNotification = functions.firestore
               title: "You have a new notification!",
               body: message,
             },
+            data: {
+              title: "You have a new notification!",
+              body: message,
+            },
           };
           return Promise.all(tokens.map((userToken) => {
             return admin.messaging().sendToDevice(userToken, payload)
