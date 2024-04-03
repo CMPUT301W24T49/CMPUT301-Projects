@@ -19,79 +19,144 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tvCreateNewEvent"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_below="@id/tvCreateNewEvent">
+        android:padding="16dp">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="297dp">
+
             <ImageView
                 android:id="@+id/ivEventPoster"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:src="@drawable/ic_launcher_background"
+                android:layout_width="280dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:clickable="true"
-                android:focusable="true"/>
-
+                android:focusable="true"
+                android:src="@drawable/ic_launcher_background" />
         </FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Event poster"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:text="Event poster" />
 
         <EditText
             android:id="@+id/eventTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:hint="Event Title"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/eventLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="Location"
-            android:layout_marginTop="8dp"/>
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+            <EditText
+                android:id="@+id/startDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Start Date (e.g., DD/MM/YYYY)"
+                android:inputType="date"
+                android:textSize="12sp"/>
+            <EditText
+                android:id="@+id/endDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="End Date (e.g., DD/MM/YYYY)"
+                android:inputType="date"
+                android:layout_marginStart="8dp"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please use 24-hour time format"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            android:gravity="center_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <EditText
+                android:id="@+id/startTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Start Time (e.g., HH:MM)"
+                android:inputType="time"
+                android:textSize="12sp"/>
+            <EditText
+                android:id="@+id/endTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="End Time (e.g., HH:MM)"
+                android:inputType="time"
+                android:layout_marginStart="8dp"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/maxAttendees"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Maximum Attendees (Optional)"
+            android:inputType="number"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+            <Button
+                android:id="@+id/btnUseExistingQr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button_dark"
+                android:text="Use existing QR code"
+                android:textColor="#FFFFFF" />
+            <Button
+                android:id="@+id/btnGenerateQr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button_dark"
+                android:text="Generate QR code"
+                android:textColor="#FFFFFF"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
 
         <Button
-            android:id="@+id/btnUseExistingQr"
-            android:layout_width="match_parent"
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/rounded_button_dark"
+            android:text="Cancel"
             android:textColor="#FFFFFF"
-            android:text="Use existing QR code" />
-
-        <!-- Button for Generating QR Code -->
-        <Button
-            android:id="@+id/btnGenerateQr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Generate QR code"
-            android:background="@drawable/rounded_button_dark"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="8dp"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
-
-            <Button
-                android:id="@+id/btnCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cancel"
-                android:background="@drawable/rounded_button_dark"
-                android:textColor="#FFFFFF"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="16dp"/>
-        </RelativeLayout>
+            android:textSize="18sp"/>
     </LinearLayout>
-
 </RelativeLayout>
