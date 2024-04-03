@@ -99,7 +99,7 @@ public class EventListFragment extends Fragment {
                    }
                 });
                 message = clickedEvent.getTitle() + " is viewed just for testing.";
-                Notification notification = new Notification("notification" + System.currentTimeMillis(), clickedEvent.getId(), message, new Date());
+                Notification notification = new Notification("notification" + System.currentTimeMillis(), clickedEvent.getId(), message, new Date(), false);
                 FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
 /////////////////////////////////////////
             }
@@ -112,7 +112,7 @@ public class EventListFragment extends Fragment {
                 //  new Date(), new GeoPoint(location.getLatitude(), location.getLongitude()), eventId, "", 0)
 /////////////////////////////////////////
                 message = eventToBeDeleted.getTitle() + " is cancelled.";
-                Notification notification = new Notification("notification" + System.currentTimeMillis(), eventToBeDeleted.getId(), message, new Date());
+                Notification notification = new Notification("notification" + System.currentTimeMillis(), eventToBeDeleted.getId(), message, new Date(), false);
                 FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
 /////////////////////////////////////////
                 // Call FirebaseUtil.deleteEvent to delete the event
@@ -162,7 +162,6 @@ public class EventListFragment extends Fragment {
             @Override
             public void onError(Exception e) {
             }
-
 
         });
     }

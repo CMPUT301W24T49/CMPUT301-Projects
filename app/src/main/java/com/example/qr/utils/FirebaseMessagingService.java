@@ -3,7 +3,6 @@ package com.example.qr.utils;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.util.Log;
-import android.app.NotificationManager;
 // or for AndroidX
 import androidx.core.app.NotificationCompat;
 
@@ -43,5 +42,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         // Build and show the notification
         mNotifyMgr.notify(mNotificationId, mBuilder.build());
+    }
+
+    @Override
+    public void onNewToken(String token) {
     }
 }
