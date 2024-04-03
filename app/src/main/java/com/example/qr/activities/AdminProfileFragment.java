@@ -9,12 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.qr.R;
+import com.example.qr.models.SharedViewModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,11 +25,16 @@ import java.util.Map;
  * AdminProfileFragment provides an interface for viewing and editing administrative user profile details.
  */
 public class AdminProfileFragment extends Fragment {
-
+    private SharedViewModel viewModel;
     public AdminProfileFragment() {
         // Required empty public constructor
     }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -37,37 +44,64 @@ public class AdminProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         EditText editTextFirstName = view.findViewById(R.id.editText_firstName);
         EditText editTextLastName = view.findViewById(R.id.editText_lastName);
         EditText editTextEmail = view.findViewById(R.id.editText_email);
         EditText editTextPhone = view.findViewById(R.id.editText_phone);
         Button saveButton = view.findViewById(R.id.button_save);
 
-        Bundle args = getArguments();
-        if (args != null) {
-            if (args.containsKey("firstName")) {
-                editTextFirstName.setText(args.getString("firstName"));
+        viewModel.getFirstName().observe(getViewLifecycleOwner(), firstName -> {
+            // This will be called every time the first name in the ViewModel changes
+            if (firstName != null) {
+                editTextFirstName.setText(firstName);
             }
-            if (args.containsKey("lastName")) {
-                editTextLastName.setText(args.getString("lastName"));
-            }
-            if (args.containsKey("email")) {
-                editTextEmail.setText(args.getString("email"));
-            }
-            if (args.containsKey("phone")) {
-                editTextPhone.setText(args.getString("phone"));
-            }
-        }
-
-        saveButton.setOnClickListener(v -> {
-            String firstName = editTextFirstName.getText().toString();
-            String lastName = editTextLastName.getText().toString();
-            String email = editTextEmail.getText().toString();
-            String phone = editTextPhone.getText().toString();
-
-            //need to implement saving these details
         });
 
+        // Repeat for last name, email, and phone
+        viewModel.getLastName().observe(getViewLifecycleOwner(), lastName -> {
+            if (lastName != null) {
+                editTextLastName.setText(lastName);
+            }
+        });
+
+        viewModel.getEmailAddress().observe(getViewLifecycleOwner(), email -> {
+            if (email != null) {
+                editTextEmail.setText(email);
+            }
+        });
+
+        viewModel.getPhoneNumber().observe(getViewLifecycleOwner(), phone -> {
+            if (phone != null) {
+                editTextPhone.setText(phone);
+            }
+        });
+
+        saveButton.setOnClickListener(v -> {
+            viewModel.setFirstName(editTextFirstName.getText().toString());
+            viewModel.setLastName(editTextLastName.getText().toString());
+            viewModel.setEmailAddress(editTextEmail.getText().toString());
+            viewModel.setPhoneNumber(editTextPhone.getText().toString());
+        });
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        // Retrieve the current text from each EditText
+        View view = getView(); // Get the root view for the fragment
+        if (view != null) {
+            EditText editTextFirstName = view.findViewById(R.id.editText_firstName);
+            EditText editTextLastName = view.findViewById(R.id.editText_lastName);
+            EditText editTextEmail = view.findViewById(R.id.editText_email);
+            EditText editTextPhone = view.findViewById(R.id.editText_phone);
+
+            // Update the ViewModel with the current values
+            viewModel.setFirstName(editTextFirstName.getText().toString());
+            viewModel.setLastName(editTextLastName.getText().toString());
+            viewModel.setEmailAddress(editTextEmail.getText().toString());
+            viewModel.setPhoneNumber(editTextPhone.getText().toString());
+        }
+    }
+
 }
