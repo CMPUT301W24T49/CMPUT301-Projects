@@ -1,5 +1,6 @@
 package com.example.qr.activities;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,22 +67,31 @@ public class ProfileListFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 User userToBeDeleted = userDataList.get(position);
 
-                FirebaseUtil.deleteUser(userToBeDeleted.getId(),
-                        aVoid -> {
+                // Construct an AlertDialog for confirmation
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Delete User") // Set the dialog title
+                        .setMessage("Are you sure you want to delete " + userToBeDeleted.getName() + "?") // Set the dialog message
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            // Proceed with deletion if "Yes" is clicked
+                            FirebaseUtil.deleteUser(userToBeDeleted.getId(),
+                                    aVoid -> {
+                                        userDataList.remove(position); // Remove the user from the list
+                                        userArrayAdapter.notifyDataSetChanged(); // Notify the adapter to refresh the list
+                                        fetchData(); // Refresh data
+                                        Toast.makeText(getActivity(), "User " + userToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
+                                    },
+                                    e -> {
+                                        Toast.makeText(getActivity(), "Failed to delete user", Toast.LENGTH_SHORT).show();
+                                    });
+                        })
+                        .setNegativeButton("No", null) // No action if "No" is clicked
+                        .setIcon(android.R.drawable.ic_dialog_alert) // Set an icon for the dialog
+                        .show(); // Display the dialog
 
-                            userDataList.remove(position);
-                            userArrayAdapter.notifyDataSetChanged();
-                            fetchData();
-                            Toast.makeText(getActivity(), "User " + userToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
-                        },
-                        e -> {
-                            Toast.makeText(getActivity(), "Failed to delete user", Toast.LENGTH_SHORT).show();
-                        });
-                fetchData();
-                return true; // Return true to indicate that the click was handled
+                return true; // Indicate the click was handled
             }
-
         });
+
 
 //        btnClose.setOnClickListener(v -> {
 //            if (isAdded() && getActivity() != null) {

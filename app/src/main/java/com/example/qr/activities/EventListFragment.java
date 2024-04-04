@@ -1,5 +1,6 @@
 package com.example.qr.activities;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,18 +60,11 @@ public class EventListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_event_list, container, false);
 
         ListView listView = view.findViewById(R.id.listview_events);
-//        Button btnClose = view.findViewById(R.id.btn_close_event_list);
-
-
         eventDataList = new ArrayList<>();
         eventArrayAdapter = new EventArrayAdapter(getContext(), eventDataList);
         listView.setAdapter(eventArrayAdapter);
-
         fetchData();
 
-//        listView.setOnItemClickListener((adapterView, view1, i, l) -> {
-//            // Handle list item click
-//        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -80,61 +74,45 @@ public class EventListFragment extends Fragment {
                 EventDetailFragment addCityFragment = EventDetailFragment.newInstance(clickedEvent);
                 addCityFragment.setTargetFragment(EventListFragment.this, 0);
                 addCityFragment.show(getParentFragmentManager(), "Event Detail");
-/////////////////////////////////////////
-                // This is for testing only as User can not checkIn into event rn March 31st
-                // move below code to where attendee checks IN for an event also instead of random ID use user ID to store token, inside event
-               FirebaseMessaging.getInstance().getToken().
-                   addOnCompleteListener(new OnCompleteListener<String>() {
-                   @Override
-                   public void onComplete( Task<String> task) {
-                       if (!task.isSuccessful()) {
-                           Log.w("FCM", "Fetching FCM registration token failed", task.getException());
-                           return;
-                       }
-                       String idToken = task.getResult();
-                       notificationTokenId = new HashMap<>();
-                       notificationTokenId.put("tokenId", idToken);
-                       // add attendee id as one of the input when its setup
-                       FirebaseUtil.addUserTokenIdNotification(clickedEvent, notificationTokenId, aVoid -> {}, e -> {});
-                   }
-                });
-                message = clickedEvent.getTitle() + " is viewed just for testing.";
-                Notification notification = new Notification("notification" + System.currentTimeMillis(), clickedEvent.getId(), message, new Date(), false);
-                FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
-/////////////////////////////////////////
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Event eventToBeDeleted = eventDataList.get(position);
-                // Event(eventId, eventTitle.getText().toString(), "", "",
-                //  new Date(), new GeoPoint(location.getLatitude(), location.getLongitude()), eventId, "", 0)
-/////////////////////////////////////////
-                message = eventToBeDeleted.getTitle() + " is cancelled.";
-                Notification notification = new Notification("notification" + System.currentTimeMillis(), eventToBeDeleted.getId(), message, new Date(), false);
-                FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
-/////////////////////////////////////////
-                // Call FirebaseUtil.deleteEvent to delete the event
-                FirebaseUtil.deleteEvent(eventToBeDeleted.getId(),
-                        aVoid -> {
-                            // Successfully deleted event from Firestore
-                            eventDataList.remove(position); // Remove event from the local list
-                            eventArrayAdapter.notifyDataSetChanged(); // Notify the adapter to update the list
-                            fetchData();
-                            // Optionally, show a confirmation message
-                            Toast.makeText(getActivity(), "Event " + eventToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
 
-                            //Toast.makeText(getActivity(), "Event deleted successfully", Toast.LENGTH_SHORT).show();
-                        },
-                        e -> {
-                            Toast.makeText(getActivity(), "Failed to delete event", Toast.LENGTH_SHORT).show();
-                        });
-                fetchData();
+                // Create an AlertDialog to confirm deletion
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Delete Event") // Set the title of the dialog
+                        .setMessage("Are you sure you want to delete " + eventToBeDeleted.getTitle() + "?") // Set the message to show to the user
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            // Notify attendee that event has been cancelled.
+                            String message = eventToBeDeleted.getTitle() + " is cancelled.";
+                            Notification notification = new Notification("notification" + System.currentTimeMillis(), eventToBeDeleted.getId(), message, new Date(), false);
+                            FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
+
+                            // Call FirebaseUtil.deleteEvent to delete the event
+                            FirebaseUtil.deleteEvent(eventToBeDeleted.getId(),
+                                    aVoid -> {
+                                        // Successfully deleted event from Firestore
+                                        eventDataList.remove(position); // Remove event from the local list
+                                        eventArrayAdapter.notifyDataSetChanged(); // Notify the adapter to update the list
+                                        fetchData();
+                                        // Optionally, show a confirmation message
+                                        Toast.makeText(getActivity(), "Event " + eventToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
+                                    },
+                                    e -> {
+                                        Toast.makeText(getActivity(), "Failed to delete event", Toast.LENGTH_SHORT).show();
+                                    });
+                        })
+                        .setNegativeButton("No", null) // Set the negative button with no additional actions
+                        .setIcon(android.R.drawable.ic_dialog_alert) // Set an icon for the dialog
+                        .show(); // Display the AlertDialog
+
                 return true; // Return true to indicate that the click was handled
             }
-
         });
+
 
         // Close button to go back to the previous screen
 //        btnClose.setOnClickListener(v -> {

@@ -56,21 +56,17 @@ public class NotificationArrayAdapter extends ArrayAdapter<Notification> {
             public void onClick(View v) {
                 Boolean currentStatus = notification.getReadStatus();
                 boolean newStatus;
-
                 if (currentStatus == null) {
-                    // Decide on a default behavior if readStatus is null. For example, consider it as false (unread):
-                    newStatus = true; // If it was null (presumably unread), we mark it as read
+                    newStatus = true;
                 } else {
-                    newStatus = !currentStatus; // Otherwise, just flip the status
+                    newStatus = !currentStatus;
                 }
-
-                notification.setReadStatus(newStatus); // Update the notification's read status
-                notifyDataSetChanged(); // Notify the adapter to refresh the ListView
+                notification.setReadStatus(newStatus);
+                notifyDataSetChanged();
             }
         });
 
-        // Set the visibility of the blue dot based on the book's read status
-//        readIndicator.setVisibility(notification.getReadStatus() ? View.GONE : View.VISIBLE);
+
         Boolean readStatus = notification.getReadStatus();
         if (readStatus != null) {
             readButton.setVisibility(readStatus ? View.GONE : View.VISIBLE);
@@ -79,14 +75,12 @@ public class NotificationArrayAdapter extends ArrayAdapter<Notification> {
             readButton.setVisibility(View.GONE);
         }
 
+        timeText.setText(dateFormat.format(notification.getSentTime()));
 
 
-        // Example time setting, you may need to adjust based on your data model
-        timeText.setText(dateFormat.format(notification.getSentTime())); // Set this text dynamically based on your requirements
-
-        // Assuming you want to populate the spinner with some details about the book
         ArrayList<String> bookDetails = new ArrayList<>();
-        bookDetails.add("Change later: " + "not sure what it should show rn.");
+        bookDetails.add("Message");
+        bookDetails.add(notification.getMessage());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, bookDetails);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
