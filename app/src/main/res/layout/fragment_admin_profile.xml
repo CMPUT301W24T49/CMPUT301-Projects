@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Profile Settings"
+        android:padding="16dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFFFF" />
-
 
     <!-- Profile Settings Form -->
     <LinearLayout
@@ -55,6 +55,13 @@
             android:background="@android:drawable/edit_text"
             android:hint="Phone Number"
             android:inputType="phone" />
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp" />
 
     </LinearLayout>
 

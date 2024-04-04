@@ -36,7 +36,7 @@ public class EventListOrganizerFragment extends Fragment {
         
         // Button initialization
         ListView listView = view.findViewById(R.id.listview_events);
-        Button btnClose = view.findViewById(R.id.btn_close_event_list);
+//        Button btnClose = view.findViewById(R.id.btn_close_event_list);
         
         eventDataList = new ArrayList<>();
         eventArrayAdapter = new EventArrayAdapter(getContext(), eventDataList);
@@ -68,12 +68,12 @@ public class EventListOrganizerFragment extends Fragment {
         });
         
         // Close button going back previous screen
-        btnClose.setOnClickListener(v -> {
-            // Check if fragment is added to an activity and if activity has a FragmentManager
-            if (isAdded() && getActivity() != null) {
-                getActivity().onBackPressed();
-            }
-        });
+//        btnClose.setOnClickListener(v -> {
+//            // Check if fragment is added to an activity and if activity has a FragmentManager
+//            if (isAdded() && getActivity() != null) {
+//                getActivity().onBackPressed();
+//            }
+//        });
 
         return view;
     }

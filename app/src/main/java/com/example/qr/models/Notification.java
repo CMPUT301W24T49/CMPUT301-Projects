@@ -12,6 +12,7 @@ public class Notification {
     private String eventId; // Reference to Event document ID
     private String message;
     private Date sentTime;
+    private Boolean readStatus;
 
     /**
      * Default constructor required for Firestore data mapping.
@@ -27,11 +28,12 @@ public class Notification {
      * @param message The notification message content.
      * @param sentTime The date and time when the notification was sent.
      */
-    public Notification(String id, String eventId, String message, Date sentTime) {
+    public Notification(String id, String eventId, String message, Date sentTime, Boolean readStatus) {
         this.id = id;
         this.eventId = eventId;
         this.message = message;
         this.sentTime = sentTime;
+        this.readStatus = readStatus;
     }
 
     /**
@@ -105,7 +107,9 @@ public class Notification {
     public void setSentTime(Date sentTime) {
         this.sentTime = sentTime;
     }
+    public void setReadStatus(Boolean readStatus){this.readStatus = readStatus;}
 
+    public Boolean getReadStatus(){return this.readStatus;}
     @NonNull
     @Override
     public String toString() {

@@ -13,20 +13,15 @@
     android:background="@android:color/white"
     android:layout_centerInParent="true">
 
+
+
     <TextView
+        android:id="@+id/image_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Image 1"
+        android:text="Image Detail"
         android:padding="16dp"
         android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/image_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Image Detail"
-            android:padding="16dp"
-            android:gravity="center"/>
 
     <ImageView
         android:id="@+id/image_detail"
@@ -34,6 +29,29 @@
         android:layout_height="200dp"
         android:scaleType="centerCrop"
          /> <!-- Replace with your image reference -->
+    <TextView
+        android:id="@+id/image_uploadedBy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Image Uploaded By"
+        android:padding="16dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/image_uploadTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Image Upload Time"
+        android:padding="16dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/image_relatedTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Image Relateed To"
+        android:padding="16dp"
+        android:gravity="center"/>
 
     <Button
         android:id="@+id/btn_delete_image"

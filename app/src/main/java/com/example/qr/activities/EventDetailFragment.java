@@ -51,17 +51,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
 import com.example.qr.models.Event;
+import com.example.qr.models.EventArrayAdapter;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 /**
  * EventDetailFragment presents detailed information about an event and provides options to delete or cancel.
  */
 public class EventDetailFragment extends DialogFragment {
     interface EventDetailDialogListener {
-        void onDeleteEvent(Event event);
+
     }
 
     private EventDetailDialogListener listener;
@@ -91,16 +96,46 @@ public class EventDetailFragment extends DialogFragment {
         event = (Event) getArguments().getSerializable("event");
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_event_detail, null);
 
-        TextView textTitle = view.findViewById(R.id.textview_event_detail);
-        textTitle.setText(event.getTitle());
+//        TextView textTitle = view.findViewById(R.id.textview_event_detail);
+//        textTitle.setText(event.getTitle());
+        TextView eventTitleTextView = view.findViewById(R.id.eventTitleTextView);
+        TextView eventDescriptionTextView = view.findViewById(R.id.eventDescriptionTextView);
+        TextView eventDateTextView = view.findViewById(R.id.eventDateTextView);
+        TextView eventAttendeeLimitTextView = view.findViewById(R.id.eventAttendeeLimitTextView);
+
+        eventTitleTextView.setText(event.getTitle());
+        eventDescriptionTextView.setText(event.getDescription());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        eventDateTextView.setText(sdf.format(event.getEventDate()));
+        eventAttendeeLimitTextView.setText(event.getAttendeeLimit() != null ? event.getAttendeeLimit().toString() : "No limit");
+
+
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
                 .setView(view)
-                .setTitle("Event Details")
-                .setNegativeButton("Cancel", (dialog, which) -> dismiss())
-                .setPositiveButton("Delete", (dialog, which) -> listener.onDeleteEvent(event))
+                .setPositiveButton("Notification", (dialog, which) -> {
+                    // Create an instance of your fragment that takes an Event input
+                    NotificationListFragment notificationFragment = new NotificationListFragment();
+
+                    // Prepare a Bundle to pass the Event object as an argument
+                    Bundle args = new Bundle();
+
+                    // Assume 'event' is an instance of your Event class that you want to pass to the fragment
+                     // You should replace this with your actual Event object
+                    args.putSerializable("event_key", event.getId());  // Make sure your Event class implements Serializable
+                    args.putSerializable("event", event);
+                    // Set arguments on your fragment
+                    notificationFragment.setArguments(args);
+
+                    // Replace the content of your container with the new fragment
+                    // Assuming 'getFragmentManager()' is how you obtain the FragmentManager, and 'R.id.fragment_container' is your container ID
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, notificationFragment)
+                            .addToBackStack(null)  // Optional: Add transaction to back stack
+                            .commit();
+                })
                 .create();
     }
 }

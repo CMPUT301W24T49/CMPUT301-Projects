@@ -7,17 +7,21 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
+
 
 import com.example.qr.R;
 import com.example.qr.models.Event;
+import com.example.qr.models.EventArrayAdapter;
 import com.example.qr.models.User;
 import com.example.qr.models.Image;
 import com.example.qr.utils.FirebaseUtil;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements EventDetailFragment.EventDetailDialogListener, AdminUserProfileDetailFragment.UserDetailDialogListener, ImageDetailDialogFragment.ImageDetailDialogListener {
 
+public class MainActivity extends AppCompatActivity implements EventDetailFragment.EventDetailDialogListener, AdminUserProfileDetailFragment.UserDetailDialogListener, ImageDetailDialogFragment.ImageDetailDialogListener {
+    EventArrayAdapter eventArrayAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +74,6 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
 
 
 
-
-
     @Override
     public void onDeleteEvent(Event event) {
         // Code to delete the event goes here
@@ -82,8 +84,5 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
     public void onDeleteUser(User user){
 
     }
-    @Override
-    public void onDeleteImage(Image image){
 
-    }
 }

@@ -1,6 +1,7 @@
 package com.example.qr.models;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import androidx.annotation.Nullable;
 
 import com.example.qr.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * An ArrayAdapter for displaying event objects.
@@ -55,8 +58,13 @@ public class EventArrayAdapter extends ArrayAdapter<Event> {
         }
 
         Event event = events.get(position);
-        TextView eventName = view.findViewById(R.id.event_list_info);
-        eventName.setText(event.getTitle());
+//        TextView eventName = view.findViewById(R.id.event_list_info);
+//        eventName.setText(event.getTitle());
+        TextView tvEventId = view.findViewById(R.id.tvEventId);
+        TextView tvEventName = view.findViewById(R.id.tvEventName);
+
+        tvEventId.setText(event.getId());
+        tvEventName.setText(event.getTitle());
 
         return view;
     }

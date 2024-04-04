@@ -19,6 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Utility class to handle Firebase Firestore and Storage operations.
@@ -36,8 +37,23 @@ public class FirebaseUtil {
      * @param onSuccessListener Callback for successful operation.
      * @param onFailureListener Callback for operation failure.
      */
-    public static void addEvent(Event event, OnSuccessListener<DocumentReference> onSuccessListener, OnFailureListener onFailureListener) {
-        db.collection("Events").add(event)
+    public static void addEvent(Event event, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("Events")
+                .document(event.getId())
+                .set(event)
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+    /**
+     * Deletes an event from the Firestore database.
+     *
+     * @param eventId The ID of the event to delete.
+     * @param onSuccessListener Callback for successful operation.
+     * @param onFailureListener Callback for operation failure.
+     */
+    public static void deleteEvent(String eventId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("Events").document(eventId)
+                .delete()
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
@@ -49,8 +65,23 @@ public class FirebaseUtil {
      * @param onSuccessListener Callback for successful operation.
      * @param onFailureListener Callback for operation failure.
      */
-    public static void addUser(User user, OnSuccessListener<DocumentReference> onSuccessListener, OnFailureListener onFailureListener) {
-        db.collection("Users").add(user)
+    public static void addUser(User user, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("Users")
+                .document(user.getId())
+                .set(user)
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+    /**
+     * Deletes a user from the Firestore database.
+     *
+     * @param userId The ID of the user to delete.
+     * @param onSuccessListener Callback for successful operation.
+     * @param onFailureListener Callback for operation failure.
+     */
+    public static void deleteUser(String userId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("Users").document(userId)
+                .delete()
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
@@ -62,9 +93,33 @@ public class FirebaseUtil {
      * @param onSuccessListener Callback for successful operation.
      * @param onFailureListener Callback for operation failure.
      */
-    public static void addCheckIn(CheckIn checkIn, OnSuccessListener<DocumentReference> onSuccessListener, OnFailureListener onFailureListener) {
-        db.collection("Check-Ins").add(checkIn)
+    public static void addCheckIn(CheckIn checkIn, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("Check-Ins")
+                .document(checkIn.getId())
+                .set(checkIn)
                 .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
+    /**
+     * Deletes an image from both Firestore database and Firebase Storage.
+     *
+     * @param imageId The ID of the image to delete from Firestore.
+     * @param imagePath The path of the image file to delete from Firebase Storage.
+     * @param onSuccessListener Callback for successful operation.
+     * @param onFailureListener Callback for operation failure.
+     */
+    public static void deleteImage(String imageId, String imagePath, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        // Delete the reference from Firestore
+        db.collection("Images").document(imageId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    // Upon successful deletion from Firestore, delete from Firebase Storage
+                    StorageReference imageRef = storage.getReference().child(imagePath);
+                    imageRef.delete()
+                            .addOnSuccessListener(onSuccessListener)
+                            .addOnFailureListener(onFailureListener);
+                })
                 .addOnFailureListener(onFailureListener);
     }
 
@@ -75,8 +130,19 @@ public class FirebaseUtil {
      * @param onSuccessListener Callback for successful operation.
      * @param onFailureListener Callback for operation failure.
      */
-    public static void sendNotification(Notification notification, OnSuccessListener<DocumentReference> onSuccessListener, OnFailureListener onFailureListener) {
-        db.collection("Notifications").add(notification)
+    public static void addNotification(Notification notification, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("Events").document(notification.getEventId()).collection("Notifications")
+                .document(notification.getId())
+                .set(notification)
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
+    public static void addUserTokenIdNotification(Event event, Map<String, Object> notificationTokenId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener){
+        db.collection("Events").document(event.getId()).collection("Notification User TokenID")
+                // when user id is working change this to user ID
+                .document("useuserIDhere" + System.currentTimeMillis())
+                .set(notificationTokenId)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }

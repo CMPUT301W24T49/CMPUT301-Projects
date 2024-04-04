@@ -215,7 +215,7 @@ public class Event implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return getTitle() + "(" + getId() + ")";
+        return getTitle() + " " + getId();
     }
 
 }

@@ -53,6 +53,7 @@
 //}
 package com.example.qr.activities;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -61,11 +62,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
 import com.example.qr.models.Image;
 import com.example.qr.models.ImageArrayAdapter;
+import com.example.qr.models.User;
 import com.example.qr.utils.FirebaseUtil;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -93,7 +97,7 @@ public class ImageListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_image_list, container, false);
 
         ListView listView = view.findViewById(R.id.listview_images);
-        Button btnClose = view.findViewById(R.id.btn_close_image_list);
+//        Button btnClose = view.findViewById(R.id.btn_close_image_list);
 
 
         imageDataList = new ArrayList<>();
@@ -116,11 +120,42 @@ public class ImageListFragment extends Fragment {
             }
         });
 
-        btnClose.setOnClickListener(v -> {
-            if (isAdded() && getActivity() != null) {
-                getActivity().onBackPressed();
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Image imageToBeDeleted = imageDataList.get(position);
+
+                // Create an AlertDialog for confirmation
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Delete Image") // Set the title
+                        .setMessage("Are you sure you want to delete this image?") // Set the message
+                        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                            // Delete the image if the user confirms
+                            FirebaseUtil.deleteUser(imageToBeDeleted.getId(),
+                                    aVoid -> {
+                                        imageDataList.remove(position); // Remove the image from the list
+                                        imageArrayAdapter.notifyDataSetChanged(); // Notify the adapter
+                                        fetchData(); // Refresh the data
+                                        Toast.makeText(getActivity(), "Image " + imageToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
+                                    },
+                                    e -> {
+                                        Toast.makeText(getActivity(), "Failed to delete image", Toast.LENGTH_SHORT).show();
+                                    });
+                        })
+                        .setNegativeButton(android.R.string.no, null) // No action on "No"
+                        .setIcon(android.R.drawable.ic_dialog_alert) // Set an icon
+                        .show(); // Show the dialog
+
+                return true; // Indicate that the click was handled
             }
         });
+
+
+//        btnClose.setOnClickListener(v -> {
+//            if (isAdded() && getActivity() != null) {
+//                getActivity().onBackPressed();
+//            }
+//        });
 
         return view;
     }
