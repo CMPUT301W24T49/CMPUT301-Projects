@@ -8,7 +8,7 @@
         android:id="@+id/profileImageView"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@drawable/default_pfp"
+        android:src=""
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp" />
 
@@ -23,25 +23,54 @@
         android:layout_marginTop="10dp"
         android:text="Upload Picture" />
 
+
+    <Button
+        android:id="@+id/editButton"
+        style="@style/BlueAppRoundedButton"
+        android:layout_width="140dp"
+        android:layout_height="60dp"
+        android:layout_above="@+id/lastNameEditText"
+        android:layout_below="@id/uploadButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="340dp"
+        android:layout_marginBottom="70dp"
+        android:minHeight="20dip"
+        android:text="Edit" />
+
+    <Button
+        android:id="@+id/saveButton"
+        style="@style/BlueAppRoundedButton"
+        android:layout_width="140dp"
+        android:layout_height="60dp"
+        android:layout_above="@+id/lastNameEditText"
+        android:layout_below="@id/uploadButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="265dp"
+        android:layout_marginBottom="70dp"
+        android:minHeight="20dip"
+        android:text="SAVE" />
+
     <Button
         android:id="@+id/removeButton"
         style="@style/BlueAppRoundedButton"
-        android:layout_width="120dp"
+        android:layout_width="140dp"
         android:layout_height="60dp"
         android:layout_below="@id/profileImageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="90dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="89dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="25dp"
+        android:layout_toEndOf="@+id/uploadButton"
         android:text="Remove Picture" />
 
-    <Button
-        android:id="@+id/generateButton"
-        style="@style/BlueAppRoundedButton"
-        android:layout_width="140dp"
-        android:layout_below="@id/profileImageView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="25dp"
-        android:text="Generate Picture" />
+
 
     <EditText
         android:id="@+id/firstNameEditText"
@@ -75,6 +104,14 @@
         android:inputType="phone"
         android:hint="Phone Number"
         android:layout_below="@id/emailEditText"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/homePage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Home Page"
+        android:layout_below="@id/phoneEditText"
         android:layout_marginTop="10dp"/>
 
 </RelativeLayout>
