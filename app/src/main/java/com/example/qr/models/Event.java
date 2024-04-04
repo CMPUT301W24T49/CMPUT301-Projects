@@ -24,6 +24,7 @@ public class Event implements Serializable {
     private Integer attendeeLimit; // Optional
 
 
+
     /**
      * Default constructor required for Firestore data mapping.
      */

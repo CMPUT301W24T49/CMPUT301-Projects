@@ -65,7 +65,7 @@ public class FirebaseUtilTest {
 
         String id = UUID.randomUUID().toString();
 
-        User mockUser = new User(id, "name", "role", "profilePicture", null, "homepage");
+        User mockUser = new User(id, "firstName", "lastName", "userRole", "userProfilePicture", "userPhoneNumber", "userEmail", "userHomepage");
 
         // Add a user
         FirebaseUtil.addUser(mockUser, documentReference -> {
