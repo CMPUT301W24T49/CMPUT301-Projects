@@ -62,8 +62,8 @@ public class AdminUserProfileDetailFragment extends DialogFragment {
 //        textTitle.setText(user.getName());
         userNameTextView.setText(user.getName());
         userRoleTextView.setText(user.getRole());
-        userEmailTextView.setText(user.getContactInfo().get("email")); // Assuming the map has an "email" key
-        userPhoneTextView.setText(user.getContactInfo().get("phone")); // Assuming the map has a "phone" key
+        userEmailTextView.setText(user.getEmail()); // Assuming the map has an "email" key
+        userPhoneTextView.setText(user.getPhoneNumber()); // Assuming the map has a "phone" key
         userHomepageTextView.setText(user.getHomepage());
 
         // ... Initialize other TextViews for details as needed ...

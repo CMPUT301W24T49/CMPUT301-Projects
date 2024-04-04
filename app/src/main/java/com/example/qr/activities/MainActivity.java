@@ -2,19 +2,14 @@ package com.example.qr.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.widget.Toast;
 
 
 import com.example.qr.R;
 import com.example.qr.models.Event;
 import com.example.qr.models.EventArrayAdapter;
 import com.example.qr.models.User;
-import com.example.qr.models.Image;
 import com.example.qr.utils.FirebaseUtil;
 
 import java.util.List;
