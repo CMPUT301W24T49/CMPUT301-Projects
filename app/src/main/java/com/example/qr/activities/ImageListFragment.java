@@ -53,6 +53,7 @@
 //}
 package com.example.qr.activities;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -124,22 +125,31 @@ public class ImageListFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Image imageToBeDeleted = imageDataList.get(position);
 
-                FirebaseUtil.deleteUser(imageToBeDeleted.getId(),
-                        aVoid -> {
+                // Create an AlertDialog for confirmation
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Delete Image") // Set the title
+                        .setMessage("Are you sure you want to delete this image?") // Set the message
+                        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                            // Delete the image if the user confirms
+                            FirebaseUtil.deleteUser(imageToBeDeleted.getId(),
+                                    aVoid -> {
+                                        imageDataList.remove(position); // Remove the image from the list
+                                        imageArrayAdapter.notifyDataSetChanged(); // Notify the adapter
+                                        fetchData(); // Refresh the data
+                                        Toast.makeText(getActivity(), "Image " + imageToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
+                                    },
+                                    e -> {
+                                        Toast.makeText(getActivity(), "Failed to delete image", Toast.LENGTH_SHORT).show();
+                                    });
+                        })
+                        .setNegativeButton(android.R.string.no, null) // No action on "No"
+                        .setIcon(android.R.drawable.ic_dialog_alert) // Set an icon
+                        .show(); // Show the dialog
 
-                            imageDataList.remove(position);
-                            imageArrayAdapter.notifyDataSetChanged();
-                            fetchData();
-                            Toast.makeText(getActivity(), "Image " + imageToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
-                        },
-                        e -> {
-                            Toast.makeText(getActivity(), "Failed to delete image", Toast.LENGTH_SHORT).show();
-                        });
-                fetchData();
-                return true; // Return true to indicate that the click was handled
+                return true; // Indicate that the click was handled
             }
-
         });
+
 
 //        btnClose.setOnClickListener(v -> {
 //            if (isAdded() && getActivity() != null) {

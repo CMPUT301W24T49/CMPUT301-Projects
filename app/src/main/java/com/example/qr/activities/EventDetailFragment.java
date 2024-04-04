@@ -51,6 +51,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
 import com.example.qr.models.Event;
@@ -114,6 +115,27 @@ public class EventDetailFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
                 .setView(view)
+                .setPositiveButton("Notification", (dialog, which) -> {
+                    // Create an instance of your fragment that takes an Event input
+                    NotificationListFragment notificationFragment = new NotificationListFragment();
+
+                    // Prepare a Bundle to pass the Event object as an argument
+                    Bundle args = new Bundle();
+
+                    // Assume 'event' is an instance of your Event class that you want to pass to the fragment
+                     // You should replace this with your actual Event object
+                    args.putSerializable("event_key", event.getId());  // Make sure your Event class implements Serializable
+                    args.putSerializable("event", event);
+                    // Set arguments on your fragment
+                    notificationFragment.setArguments(args);
+
+                    // Replace the content of your container with the new fragment
+                    // Assuming 'getFragmentManager()' is how you obtain the FragmentManager, and 'R.id.fragment_container' is your container ID
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, notificationFragment)
+                            .addToBackStack(null)  // Optional: Add transaction to back stack
+                            .commit();
+                })
                 .create();
     }
 }
