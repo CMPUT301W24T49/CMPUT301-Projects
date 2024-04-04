@@ -1,6 +1,9 @@
 package com.example.qr.activities;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.qr.R;
+import com.example.qr.models.User;
 
 public class HomeFragment extends Fragment {
     @Override
@@ -47,6 +51,7 @@ public class HomeFragment extends Fragment {
         attendeeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // Replace the HomeFragment with AttendeeFragment
                 AttendeeFragment attendeeFragment = new AttendeeFragment();
                 FragmentManager fragmentManager = getFragmentManager();
