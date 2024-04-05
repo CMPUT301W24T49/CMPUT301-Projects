@@ -23,7 +23,7 @@
     <!-- ListView for the events -->
     <TextView
         android:id="@+id/event_title_notification"
-        android:layout_width="181dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="5dp"
