@@ -2,8 +2,10 @@ package com.example.qr.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import com.example.qr.R;
@@ -40,9 +42,6 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                     // check which user has the same Android ID, androidId is the id of the user
                     for (User user : userList) {
                         if (user.getId().equals(androidId)) {
-                            // If the user is an admin, display the AdminMenuFragment
-                            // If the user is an attendee, display the AttendeeFragment
-                            // If the user is an organizer, display the OrganizerFragment
                             if (user.getRole().equals("admin")) {
                                 AdministratorFragment adminMenuFragment = new AdministratorFragment();
                                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, adminMenuFragment).commit();
@@ -69,10 +68,39 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                     Log.e("MainActivity", "Error fetching user collection", e);
                 }
             });
+
         }
+        handleIntent(getIntent());
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
 
+        // Handle intent if the activity is already running and it receives a new intent
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (intent != null && "notification_list_fragment".equals(intent.getStringExtra("open_fragment"))) {
+            String eventID = intent.getStringExtra("event_key");
+            Event event = (Event) intent.getSerializableExtra("event");
+
+            NotificationListFragment fragment = new NotificationListFragment();
+            Bundle args = new Bundle();
+            args.putSerializable("event_key", eventID);
+            args.putSerializable("event", event);
+            fragment.setArguments(args);
+            Toast.makeText(this, "Event pplessssss deleted successfully", Toast.LENGTH_SHORT).show();
+
+            // Perform the fragment transaction to replace your container with the NotificationListFragment
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+    }
 
     @Override
     public void onDeleteEvent(Event event) {

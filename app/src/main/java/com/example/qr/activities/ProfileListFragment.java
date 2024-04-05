@@ -109,6 +109,7 @@ public class ProfileListFragment extends Fragment {
             @Override
             public void onCollectionFetched(List<User> userList) {
                 // Handle the fetched user here
+                userDataList.clear();
                 userDataList.addAll(userList);
                 userArrayAdapter.notifyDataSetChanged();
 //                Toast.makeText(getActivity(), String.valueOf(userDataList.size()), Toast.LENGTH_SHORT).show();
