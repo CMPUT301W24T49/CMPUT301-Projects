@@ -7,16 +7,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia;
 import androidx.fragment.app.DialogFragment;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.qr.R;
+import com.example.qr.models.User;
+import com.example.qr.utils.FirebaseUtil;
+
+import org.json.JSONException;
+
+import java.util.List;
 
 public class AttendeeProfileSettingsFragment extends DialogFragment {
+
+    private EditText firstNameEditText;
+    private EditText lastNameEditText;
+    private EditText emailEditText;
+    private EditText phoneEditText;
+    private EditText homePageEditText;
+    private Button editButton;
+    private Button saveButton;
+    private User currentUser;
+    private RelativeLayout profileSettingsLayout;
 
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
 
@@ -45,52 +67,115 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_attendee_profile_settings, container, false);
 
+        profileSettingsLayout = view.findViewById(R.id.profile_settings_layout);
 
-        Button uploadProfilePicture = view.findViewById(R.id.uploadButton);
-        Button removeProfilePicture = view.findViewById(R.id.removeButton);
-        //Button generateButton = view.findViewById(R.id.generateButton);
+        // Initialize the EditText fields and buttons
+        firstNameEditText = view.findViewById(R.id.firstNameEditText);
+        lastNameEditText = view.findViewById(R.id.lastNameEditText);
+        emailEditText = view.findViewById(R.id.emailEditText);
+        phoneEditText = view.findViewById(R.id.phoneEditText);
+        homePageEditText = view.findViewById(R.id.homePage);
+        editButton = view.findViewById(R.id.editButton);
+        saveButton = view.findViewById(R.id.saveButton);
 
-        uploadProfilePicture.setOnClickListener(v -> {
-            Log.d("ProfileSettings", "Upload button clicked");
-            // Launch the photo picker to let the user choose only images
-            pickMedia.launch(new PickVisualMediaRequest.Builder()
-                    .setMediaType(PickVisualMedia.ImageOnly.INSTANCE)
-                    .build());
+        ImageView profileImageView = view.findViewById(R.id.profileImageView);
+        Button uploadButton = view.findViewById(R.id.uploadButton);
+        Button removeButton = view.findViewById(R.id.removeButton);
+
+        // Make the EditText fields read-only by default
+        setEditTextEnabled(false);
+
+        // Get the Android ID of the device
+        String androidId = android.provider.Settings.Secure.getString(getContext().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+
+        // Fetch the user data from Firebase
+        FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
+            @Override
+            public void onCollectionFetched(List<User> userList) {
+                for (User user : userList) {
+                    if (user.getId().equals(androidId)) {
+                        // Populate the EditText fields with the user data
+                        firstNameEditText.setText(user.getFirstName());
+                        lastNameEditText.setText(user.getLastName());
+                        emailEditText.setText(user.getEmail());
+                        phoneEditText.setText(user.getPhoneNumber());
+                        homePageEditText.setText(user.getHomepage());
+
+                        // Load the profile picture
+                        Glide.with(getContext()).load(user.getProfilePicture()).into(profileImageView);
+
+                        // Save the current user
+                        currentUser = user;
+
+                        profileSettingsLayout.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Log.e("AttendeeProfileSettings", "Error fetching user collection", e);
+            }
         });
 
-        removeProfilePicture.setOnClickListener(v -> {
-            Log.d("ProfileSettings", "Remove button clicked");
+        // Add a click listener to the Edit button
+        editButton.setOnClickListener(v -> {
+            // Enable the EditText fields
+            setEditTextEnabled(true);
+        });
 
+        // Add a click listener to the Save button
+        saveButton.setOnClickListener(v -> {
+            // Update the user data
+            currentUser.setFirstName(firstNameEditText.getText().toString());
+            currentUser.setLastName(lastNameEditText.getText().toString());
+            currentUser.setEmail(emailEditText.getText().toString());
+            currentUser.setPhoneNumber(phoneEditText.getText().toString());
+            currentUser.setHomepage(homePageEditText.getText().toString());
+
+            // Generate the URL for the profile picture based on the updated first and last name
+            String profilePictureUrl = "https://github.com/identicons/" + (currentUser.getFirstName().toLowerCase()).replace(" ", "") + ".png";
+            currentUser.setProfilePicture(profilePictureUrl);
+
+            // Update the user data in Firebase
+            FirebaseUtil.updateUser(currentUser, aVoid -> {
+                // Disable the EditText fields
+                setEditTextEnabled(false);
+
+                Glide.with(getContext()).load(profilePictureUrl).into(profileImageView);
+            }, e -> {
+                Log.e("AttendeeProfileSettings", "Error updating user", e);
+            });
+        });
+
+        // Add a click listener to the Upload button
+        uploadButton.setOnClickListener(v -> {
+            // Launch the photo picker
+            pickMedia.launch(new PickVisualMediaRequest());
+        });
+
+        // Add a click listener to the Remove button
+        removeButton.setOnClickListener(v -> {
+            // Create a confirmation dialog
             new AlertDialog.Builder(getContext())
                     .setTitle("Remove Profile Picture")
-                    .setMessage("Are you sure you want to remove the profile picture?")
-                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                        // User clicked YES button
-                        ImageView profileImageView = requireView().findViewById(R.id.profileImageView);
-                        profileImageView.setImageResource(R.drawable.default_pfp);
+                    .setMessage("Are you sure you want to remove your profile picture?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        // If the user confirms, remove the profile picture
+                        profileImageView.setImageResource(R.drawable.default_pfp); // Set to your default image
                     })
-                    .setNegativeButton(android.R.string.no, null)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setNegativeButton("No", null)
                     .show();
         });
 
-
-//        /*
-//            // github, August 14, 2013, github.blog, by Jason Long,
-//            // source URL: https://github.blog/2013-08-14-identicons/
-//            // Usage: this blog post explains how to generate Identicons
-//        */
-//        generateButton.setOnClickListener(v -> {
-//            Log.d("ProfileSettings", "Generate button clicked");
-//            // Assume the username is always "john"
-//            String username = "basharharash";
-//            // Use the username to generate a URL to an Identicon
-//            String url = "https://github.com/identicons/" + username + ".png";
-//            // Load the Identicon into the ImageView
-//            ImageView profileImageView = requireView().findViewById(R.id.profileImageView);
-//            Glide.with(this).load(url).into(profileImageView);
-//        });
-
         return view;
+    }
+
+    private void setEditTextEnabled(boolean enabled) {
+        firstNameEditText.setEnabled(enabled);
+        lastNameEditText.setEnabled(enabled);
+        emailEditText.setEnabled(enabled);
+        phoneEditText.setEnabled(enabled);
+        homePageEditText.setEnabled(enabled);
     }
 }
