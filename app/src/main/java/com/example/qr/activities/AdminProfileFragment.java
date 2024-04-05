@@ -6,20 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.qr.R;
 import com.example.qr.models.SharedViewModel;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * AdminProfileFragment provides an interface for viewing and editing administrative user profile details.
