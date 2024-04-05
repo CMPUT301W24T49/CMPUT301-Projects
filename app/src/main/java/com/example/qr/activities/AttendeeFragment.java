@@ -1,5 +1,7 @@
 package com.example.qr.activities;
 
+import static com.example.qr.activities.MainActivity.androidId;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +16,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.qr.R;
+import com.example.qr.models.CheckIn;
+import com.example.qr.utils.FirebaseUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -91,8 +95,13 @@ public class AttendeeFragment extends Fragment {
                             if (scanResult.getContents() == null) {
                                 Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(getContext(), "Scanned: " + scanResult.getContents(), Toast.LENGTH_LONG).show();
-                                // Handle the scanned QR code content
+                                CheckIn checkIn = new CheckIn(scanResult.getContents(), androidId,new java.util.Date() , null);
+
+                                FirebaseUtil.addCheckIn(checkIn, aVoid -> {
+                                    Toast.makeText(getContext(), "Checked in successfully!", Toast.LENGTH_LONG).show();
+                                }, e -> {
+                                    Toast.makeText(getContext(), "Error checking in: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                });
                             }
                         }
                     }

@@ -89,9 +89,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Start Date (e.g., DD/MM/YYYY)"
+                    android:hint="Start Date (DD/MM/YYYY)"
                     android:inputType="date"
-                    android:textSize="12sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/endDate"
@@ -99,15 +99,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="End Date (e.g., DD/MM/YYYY)"
+                    android:hint="End Date (DD/MM/YYYY)"
                     android:inputType="date"
-                    android:textSize="12sp" />
+                    android:textSize="17sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -115,9 +115,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Start Time (e.g., HH:MM)"
+                    android:hint="Start Time (HH:MM)"
                     android:inputType="time"
-                    android:textSize="12sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/endTime"
@@ -125,16 +125,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="End Time (e.g., HH:MM)"
+                    android:hint="End Time (HH:MM)"
                     android:inputType="time"
-                    android:textSize="12sp" />
+                    android:textSize="17sp" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/maxAttendees"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:hint="Maximum Attendees"
                 android:inputType="number"
                 android:textSize="18sp" />
