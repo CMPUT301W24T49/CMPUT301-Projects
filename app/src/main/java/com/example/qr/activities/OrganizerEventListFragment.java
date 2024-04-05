@@ -1,5 +1,7 @@
 package com.example.qr.activities;
 
+import static com.example.qr.activities.MainActivity.androidId;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,18 +16,17 @@ import com.example.qr.R;
 import com.example.qr.models.Event;
 import com.example.qr.models.EventArrayAdapter;
 import com.example.qr.utils.FirebaseUtil;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventListOrganizerFragment extends Fragment {
+public class OrganizerEventListFragment extends Fragment {
     
     ArrayList<Event> eventDataList;
     EventArrayAdapter eventArrayAdapter;
 
 
-    public EventListOrganizerFragment() {
+    public OrganizerEventListFragment() {
         // Required empty public constructor
     }
 
@@ -36,7 +37,7 @@ public class EventListOrganizerFragment extends Fragment {
         
         // Button initialization
         ListView listView = view.findViewById(R.id.listview_events);
-//        Button btnClose = view.findViewById(R.id.btn_close_event_list);
+        Button btnClose = view.findViewById(R.id.close_btn);
         
         eventDataList = new ArrayList<>();
         eventArrayAdapter = new EventArrayAdapter(getContext(), eventDataList);
@@ -68,12 +69,12 @@ public class EventListOrganizerFragment extends Fragment {
         });
         
         // Close button going back previous screen
-//        btnClose.setOnClickListener(v -> {
-//            // Check if fragment is added to an activity and if activity has a FragmentManager
-//            if (isAdded() && getActivity() != null) {
-//                getActivity().onBackPressed();
-//            }
-//        });
+        btnClose.setOnClickListener(v -> {
+            // Check if fragment is added to an activity and if activity has a FragmentManager
+            if (isAdded() && getActivity() != null) {
+                getActivity().onBackPressed();
+            }
+        });
 
         return view;
     }
@@ -86,7 +87,14 @@ public class EventListOrganizerFragment extends Fragment {
             @Override
             public void onCollectionFetched(List<Event> eventList) {
                 // Handle the fetched events
-                eventDataList.addAll(eventList);
+
+                //only add the events which have the same organizerid
+                for(Event event : eventList){
+                    if(event.getOrganizerId().equals(androidId)){
+                        eventDataList.add(event);
+                    }
+                }
+
                 eventArrayAdapter.notifyDataSetChanged();   // Update event array adapter
                 Log.d("EventListFragment", "Fetched " + eventList.size() + " events");
             }

@@ -33,9 +33,14 @@
             android:text="Check In" />
 
         <Button
-            android:id="@+id/btnEvents"
+            android:id="@+id/btnMyEvents"
             style="@style/AppRoundedButton"
-            android:text="Events" />
+            android:text="My Events" />
+
+        <Button
+            android:id="@+id/btnBrowseEvents"
+            style="@style/AppRoundedButton"
+            android:text="Browse Events" />
 
         <Button
             android:id="@+id/btnSettings"
