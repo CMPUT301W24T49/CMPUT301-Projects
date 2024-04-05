@@ -46,21 +46,15 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                             if (user.getRole().equals("admin")) {
                                 AdministratorFragment adminMenuFragment = new AdministratorFragment();
                                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, adminMenuFragment).commit();
+                                break;
                             } else if (user.getRole().equals("attendee")) {
-                                if (user.getProfilePicture().isEmpty()) {
-                                    String profilePictureUrl = "https://github.com/identicons/" + user.getFirstName().replace(" ", "").toLowerCase() + ".png";
-                                    user.setProfilePicture(profilePictureUrl);
-                                    FirebaseUtil.updateUser(user, aVoid -> {
-                                        Log.d("MainActivity", "Profile picture updated successfully");
-                                    }, e -> {
-                                        Log.e("MainActivity", "Error updating profile picture", e);
-                                    });
-                                }
                                 AttendeeFragment attendeeFragment = new AttendeeFragment();
                                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, attendeeFragment).commit();
+                                break;
                             } else if (user.getRole().equals("organizer")) {
                                 OrganizerFragment organizerFragment = new OrganizerFragment();
                                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, organizerFragment).commit();
+                                break;
                             }
                         } else {
                             // If the user is not found, display the HomeFragment
