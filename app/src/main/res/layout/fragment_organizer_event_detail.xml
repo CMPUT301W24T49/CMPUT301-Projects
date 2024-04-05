@@ -75,6 +75,14 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/eventDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Event Description"
+                android:textSize="18sp" />
+
+            <TextView
                 android:id="@+id/eventLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -143,10 +151,22 @@
                 android:inputType="number"
                 android:textSize="18sp" />
 
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button_dark"
+                android:text="Announcments"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp">
+                
 
                 <ImageView
                     android:id="@+id/ivQrCode"

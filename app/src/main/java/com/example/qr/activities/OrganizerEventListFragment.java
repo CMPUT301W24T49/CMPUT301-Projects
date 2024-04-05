@@ -50,13 +50,12 @@ public class OrganizerEventListFragment extends Fragment {
 
             // Get position and Id of event clicked
             Event event = eventDataList.get(position);
-            String eventId = event.getId();
 
             // Send eventId to AttendeeListFragment
             // Adapted from answer given by João Marcos
             // https://stackoverflow.com/questions/24555417/how-to-send-data-from-one-fragment-to-another-fragment
             Bundle args = new Bundle();
-            args.putString("Id", eventId);
+            args.putSerializable("Event", event);
 
             AttendeeListFragment attendeeListFragment = new AttendeeListFragment();
             attendeeListFragment.setArguments(args); // Pass data to attendeeListFragment
