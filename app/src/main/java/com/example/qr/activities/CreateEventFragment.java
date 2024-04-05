@@ -134,7 +134,7 @@ public class CreateEventFragment extends Fragment {
                             long currentTimeMillis = System.currentTimeMillis();
                             String eventId = Long.toString(currentTimeMillis);
                             if(maxAttendees.getText().toString().isEmpty()) {
-                                maxAttendeesValue = null;
+                                maxAttendeesValue = 0;
                             } else {
                                 maxAttendeesValue = Integer.parseInt(maxAttendees.getText().toString());
                             }
