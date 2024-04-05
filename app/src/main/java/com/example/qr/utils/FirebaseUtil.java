@@ -1,11 +1,14 @@
 package com.example.qr.utils;
 
+import static com.example.qr.activities.MainActivity.androidId;
+
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
 import com.example.qr.models.CheckIn;
 import com.example.qr.models.Event;
 import com.example.qr.models.Notification;
+import com.example.qr.models.SignUp;
 import com.example.qr.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,6 +24,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Utility class to handle Firebase Firestore and Storage operations.
@@ -96,7 +100,7 @@ public class FirebaseUtil {
      */
     public static void addCheckIn(CheckIn checkIn, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
         db.collection("Check-Ins")
-                .document(checkIn.getId())
+                .document(UUID.randomUUID().toString())
                 .set(checkIn)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
@@ -146,6 +150,15 @@ public class FirebaseUtil {
                 .set(notificationTokenId)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
+    }
+
+    public static void addSignUp(SignUp signUp, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("SignUp")
+                .document(UUID.randomUUID().toString())
+                .set(signUp)
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+
     }
 
     /**

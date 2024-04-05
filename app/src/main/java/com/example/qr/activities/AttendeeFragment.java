@@ -26,10 +26,20 @@ public class AttendeeFragment extends Fragment {
         Button btnSettings = view.findViewById(R.id.btnSettings);
 
         btnBrowseEvents.setOnClickListener(v -> {
-            EventListFragment eventListFragment = new EventListFragment();
+            AttendeeBrowseEventListFragment eventListFragment = new AttendeeBrowseEventListFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, eventListFragment)
+                        .addToBackStack(null)  // Optional: Add transaction to back stack
+                        .commit();
+            }
+        });
+
+        btnMyEvents.setOnClickListener(v -> {
+            AttendeeMyEventListFragment myEventListFragment = new AttendeeMyEventListFragment();
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, myEventListFragment)
                         .addToBackStack(null)  // Optional: Add transaction to back stack
                         .commit();
             }
