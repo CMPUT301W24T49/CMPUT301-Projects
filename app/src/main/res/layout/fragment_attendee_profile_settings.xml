@@ -1,17 +1,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/profile_settings_layout"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_settings_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:visibility="invisible">
 
     <ImageView
         android:id="@+id/profileImageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/default_pfp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp" />
+        android:layout_marginTop="15dp"
+        android:src="@drawable/default_pfp" />
 
     <Button
         android:id="@+id/uploadButton"
@@ -74,10 +76,10 @@
         android:id="@+id/firstNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_alignTop="@id/firstNameLabel"
-        android:layout_toEndOf="@id/firstNameLabel"
         android:layout_alignStart="@+id/firstNameLabel"
+        android:layout_alignTop="@id/firstNameLabel"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/firstNameLabel"
         android:hint="First Name" />
 
     <TextView
@@ -95,10 +97,10 @@
         android:id="@+id/lastNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/firstNameEditText"
+        android:layout_alignTop="@id/lastNameLabel"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@id/lastNameLabel"
-        android:layout_alignTop="@id/lastNameLabel"
-        android:layout_alignStart="@+id/firstNameEditText"
         android:hint="Last Name" />
 
     <TextView
@@ -116,12 +118,12 @@
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
+        android:layout_alignStart="@+id/firstNameEditText"
+        android:layout_alignTop="@id/emailLabel"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@id/emailLabel"
-        android:layout_alignTop="@id/emailLabel"
-        android:layout_alignStart="@+id/firstNameEditText"
-        android:hint="Email" />
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
 
     <TextView
         android:id="@+id/phoneLabel"
@@ -138,12 +140,12 @@
         android:id="@+id/phoneEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:inputType="phone"
-        android:layout_toEndOf="@id/phoneLabel"
-        android:layout_alignTop="@id/phoneLabel"
         android:layout_alignStart="@+id/firstNameEditText"
-        android:hint="Phone Number" />
+        android:layout_alignTop="@id/phoneLabel"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/phoneLabel"
+        android:hint="Phone Number"
+        android:inputType="phone" />
 
     <TextView
         android:id="@+id/homePageLabel"
@@ -160,10 +162,10 @@
         android:id="@+id/homePage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/firstNameEditText"
+        android:layout_alignTop="@id/homePageLabel"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@id/homePageLabel"
-        android:layout_alignTop="@id/homePageLabel"
-        android:layout_alignStart="@+id/firstNameEditText"
         android:hint="Home Page" />
 
 </RelativeLayout>

@@ -39,9 +39,9 @@ import java.util.function.Consumer;
 
 public class CreateEventFragment extends Fragment {
     private ImageView eventPoster;
-    private EditText eventTitle, eventLocation, startDate, endDate, startTime, endTime, maxAttendees;
+    private EditText eventTitle, eventLocation, startDate, endDate, startTime, endTime, maxAttendees, description;
     private Button btnUseExistingQr, btnGenerateQr, btnCancel;
-
+    private Integer maxAttendeesValue;
     private ImagePickerUtil image;
     private CollectionReference eventsRef;
 
@@ -66,6 +66,7 @@ public class CreateEventFragment extends Fragment {
         startTime = view.findViewById(R.id.startTime);
         endTime = view.findViewById(R.id.endTime);
         maxAttendees = view.findViewById(R.id.maxAttendees);
+        description = view.findViewById(R.id.eventDescription);
 
         btnUseExistingQr = view.findViewById(R.id.btnUseExistingQr);
         btnGenerateQr = view.findViewById(R.id.btnGenerateQr);
@@ -79,9 +80,10 @@ public class CreateEventFragment extends Fragment {
         // buttons
         btnUseExistingQr.setOnClickListener(v -> {
             // if fields are empty
-            if (eventTitle.getText().toString().isEmpty() || eventLocation.getText().toString().isEmpty()) {
-                Toast.makeText(getContext(), "Event title or location cannot be empty",
-                                Toast.LENGTH_SHORT).show();
+            if (eventTitle.getText().toString().isEmpty() || eventLocation.getText().toString().isEmpty()
+                    || startDate.getText().toString().isEmpty() || endDate.getText().toString().isEmpty()
+                    || startTime.getText().toString().isEmpty() || endTime.getText().toString().isEmpty()) {
+                Toast.makeText(getContext(), "Please fill empty fields", Toast.LENGTH_SHORT).show();
                 return;
             }
             // convert geolocation to string
@@ -114,9 +116,10 @@ public class CreateEventFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Check if textviews are empty
-                if (eventTitle.getText().toString().isEmpty() || eventLocation.getText().toString().isEmpty()) {
-                    Toast.makeText(getContext(), "Event title or location cannot be empty",
-                                    Toast.LENGTH_SHORT).show();
+                if (eventTitle.getText().toString().isEmpty() || eventLocation.getText().toString().isEmpty()
+                        || startDate.getText().toString().isEmpty() || endDate.getText().toString().isEmpty()
+                        || startTime.getText().toString().isEmpty() || endTime.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), "Please fill empty fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 // convert location to string
@@ -128,18 +131,26 @@ public class CreateEventFragment extends Fragment {
                         LatLng location = getLocation();
                         if (location != null) {
                             // if location exists
-                            String eventId = "event" + System.currentTimeMillis();
-                            FirebaseUtil.addEvent(new Event(eventId, eventTitle.getText().toString(), "", "",
-                                                    new Date(), new GeoPoint(location.getLatitude(),
-                                                    location.getLongitude()), eventId, "", 0),
+                            long currentTimeMillis = System.currentTimeMillis();
+                            String eventId = Long.toString(currentTimeMillis);
+                            // value setting for maxAttendees blank or not
+                            if(maxAttendees.getText().toString().isEmpty()) {
+                                maxAttendeesValue = 0;
+                            } else {
+                                maxAttendeesValue = Integer.parseInt(maxAttendees.getText().toString());
+                            }
+
+                            FirebaseUtil.addEvent(new Event(eventId, eventTitle.getText().toString(), description.getText().toString(), "",
+                                                    new Date(startDate.getText().toString()), new Date(endDate.getText().toString()),
+                                                    startTime.getText().toString(), endTime.getText().toString(), new GeoPoint(location.getLatitude(),
+                                                    location.getLongitude()), eventId, "", maxAttendeesValue),
                                     aVoid -> {
                                         // GPT given code to switch back to organizer screen
                                         switchToOrganizerFragment();
                                         Toast.makeText(getContext(), "Event created successfully", Toast.LENGTH_SHORT).show();
                                     }, e -> {
                                         // else toast that it failed to create
-                                        Toast.makeText(getContext(), "Failed to create event",
-                                                        Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), "Failed to create event", Toast.LENGTH_SHORT).show();
                                     });
                         } else {
                             Toast.makeText(getContext(), "Invalid location", Toast.LENGTH_SHORT).show();

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
@@ -107,8 +108,10 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                         phoneEditText.setText(user.getPhoneNumber());
                         homePageEditText.setText(user.getHomepage());
 
+                        currentUser = user;
                         // Load the profile picture
                         if(user.getProfilePicture().equals("")) {
+
                             String profilePictureUrl = "https://github.com/identicons/" + (currentUser.getFirstName().toLowerCase()).replace(" ", "") + ".png";
                             currentUser.setProfilePicture(profilePictureUrl);
                         }
@@ -153,6 +156,9 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                     FirebaseUtil.updateUser(currentUser, aVoid -> {
                         // Disable the EditText fields
                         setEditTextEnabled(false);
+                        // Show a success message
+                        Toast.makeText(getContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
+
 
                     }, e -> {
                         Log.e("AttendeeProfileSettings", "Error updating user", e);
@@ -161,10 +167,15 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                     Log.e("AttendeeProfileSettings", "Error uploading profile picture", e);
                 });
             }else {
-                currentUser.setProfilePicture(currentUser.getProfilePicture());
+                currentUser.setProfilePicture("https://github.com/identicons/" + (currentUser.getFirstName().toLowerCase()).replace(" ", "") + ".png");
+                Glide.with(getContext()).load(currentUser.getProfilePicture()).into(profileImageView);
+
                 FirebaseUtil.updateUser(currentUser, aVoid -> {
                     // Disable the EditText fields
                     setEditTextEnabled(false);
+                    // Show a success message
+                    Toast.makeText(getContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
+
 
                 }, e -> {
                     Log.e("AttendeeProfileSettings", "Error updating user", e);
@@ -190,6 +201,7 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                         String profilePictureUrl = "https://github.com/identicons/" + (currentUser.getFirstName().toLowerCase()).replace(" ", "") + ".png";
                         currentUser.setProfilePicture(profilePictureUrl);
                         Glide.with(getContext()).load(currentUser.getProfilePicture()).into(profileImageView);
+                        profileImageView.setTag(null);
                     })
                     .setNegativeButton("No", null)
                     .show();
