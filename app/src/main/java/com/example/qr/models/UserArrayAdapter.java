@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * Creates views for each User object within a ListView.
  * Each item in the list represents a single user.
  */
-public class UserArrayAdapter extends ArrayAdapter<Event> {
+public class UserArrayAdapter extends ArrayAdapter<User> {
 
     private ArrayList<User> profile;
     private Context context;
@@ -32,7 +32,7 @@ public class UserArrayAdapter extends ArrayAdapter<Event> {
      * @param profile An ArrayList of User objects to be displayed.
      */
     public UserArrayAdapter(Context context, ArrayList<User> profile) {
-        super(context, 0);
+        super(context, 0, profile);
         this.context = context;
         this.profile = profile;
     }
@@ -56,10 +56,8 @@ public class UserArrayAdapter extends ArrayAdapter<Event> {
         }
         // Once user profile pic is implemented add pic as well
         User user = profile.get(position);
-        TextView userId = view.findViewById(R.id.profile_list_info);
-        TextView userName = view.findViewById(R.id.user_name);
 
-        userId.setText(user.getId());
+        TextView userName = view.findViewById(R.id.user_name);
         userName.setText(user.getName());
 
         return view;

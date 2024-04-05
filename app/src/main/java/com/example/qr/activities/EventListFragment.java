@@ -71,9 +71,9 @@ public class EventListFragment extends Fragment {
                 listView.setItemChecked(position, true);
                 positionToEdit = position;
                 Event clickedEvent = (Event) adapterView.getAdapter().getItem(position);
-                EventDetailFragment addCityFragment = EventDetailFragment.newInstance(clickedEvent);
-                addCityFragment.setTargetFragment(EventListFragment.this, 0);
-                addCityFragment.show(getParentFragmentManager(), "Event Detail");
+                EventDetailFragment eventFragment = EventDetailFragment.newInstance(clickedEvent);
+                eventFragment.setTargetFragment(EventListFragment.this, 0);
+                eventFragment.show(getParentFragmentManager(), "Event Detail");
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
