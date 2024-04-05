@@ -38,7 +38,10 @@ public class ReuseQrCodeFragment extends Fragment {
 
     private ArrayAdapter<Event> eventAdapter;
 
-    private String eventId, name, location;
+    private String eventId, name, location, prevStartTime, prevEndTime;
+    private Integer prevMaxAttendees;
+
+    private Date prevStartDate, prevEndDate;
 
     public ReuseQrCodeFragment() {
         // Required empty public constructor
@@ -64,6 +67,9 @@ public class ReuseQrCodeFragment extends Fragment {
         if (args != null) {
             name = args.getString("name");
             location = args.getString("location");
+            prevStartTime = args.getString("prevStartTime");
+            prevEndTime = args.getString("prevEndTime");
+
         }
 
         // Setup ArrayAdapter using the default spinner layout and your events list
@@ -118,8 +124,8 @@ public class ReuseQrCodeFragment extends Fragment {
         });
 
         chooseQrCode.setOnClickListener(v -> {
-            FirebaseUtil.addEvent(new Event (eventId, name, "", "", new Date(), new GeoPoint(1,1)
-                            , eventId, "", 0),
+            FirebaseUtil.addEvent(new Event (eventId, name, "", "", new Date(), new Date(),
+                            prevStartTime, prevEndTime, new GeoPoint(1,1), eventId, "", 0),
                     documentReference -> {
 
                         // Create a new instance of OrganizerFragment

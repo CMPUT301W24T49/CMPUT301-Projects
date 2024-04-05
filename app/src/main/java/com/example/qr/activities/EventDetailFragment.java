@@ -109,8 +109,8 @@ public class EventDetailFragment extends DialogFragment {
 
         eventTitleTextView.setText(event.getTitle());
         eventDescriptionTextView.setText(event.getDescription());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        eventDateTextView.setText(sdf.format(event.getEventDate()));
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+//        eventDateTextView.setText(sdf.format(event.getStartDate()));
         eventAttendeeLimitTextView.setText(event.getAttendeeLimit() != null ? event.getAttendeeLimit().toString() : "No limit");
 
 
