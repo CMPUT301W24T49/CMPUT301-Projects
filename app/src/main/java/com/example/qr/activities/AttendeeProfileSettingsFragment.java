@@ -4,6 +4,8 @@ import static com.example.qr.utils.FirebaseUtil.uploadImageAndGetUrl;
 
 import android.app.AlertDialog;
 import android.net.Uri;
+
+import java.net.URI;
 import   java.net.URL;
 import android.os.Bundle;
 import android.util.Log;
@@ -118,6 +120,8 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
 
                         Glide.with(getContext()).load(user.getProfilePicture()).into(profileImageView);
 
+                        profileImageView.setTag(1);
+
                         // Save the current user
                         currentUser = user;
 
@@ -147,10 +151,11 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
             currentUser.setPhoneNumber(phoneEditText.getText().toString());
             currentUser.setHomepage(homePageEditText.getText().toString());
 
+            Object returnValue = profileImageView.getTag();
 
-            if(profileImageView.getTag() != null) {
+            if(returnValue instanceof Uri) {
                 // Upload the profile picture to Firebase Storage
-                Uri profilePicture = (Uri) profileImageView.getTag();
+                Uri profilePicture = (Uri) returnValue;
                 uploadImageAndGetUrl(profilePicture, androidId, downloadUrl -> {
                     currentUser.setProfilePicture(downloadUrl.toString());
                     FirebaseUtil.updateUser(currentUser, aVoid -> {
@@ -166,7 +171,22 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                 }, e -> {
                     Log.e("AttendeeProfileSettings", "Error uploading profile picture", e);
                 });
-            }else {
+            } else if ((Integer) returnValue == 1 ) {
+
+                FirebaseUtil.updateUser(currentUser, aVoid -> {
+                    // Disable the EditText fields
+                    setEditTextEnabled(false);
+                    // Show a success message
+                    Toast.makeText(getContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
+
+
+                }, e -> {
+                    Log.e("AttendeeProfileSettings", "Error updating user", e);
+                });
+
+
+            }
+            else {
                 currentUser.setProfilePicture("https://github.com/identicons/" + (currentUser.getFirstName().toLowerCase()).replace(" ", "") + ".png");
                 Glide.with(getContext()).load(currentUser.getProfilePicture()).into(profileImageView);
 

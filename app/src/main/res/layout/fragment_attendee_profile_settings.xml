@@ -3,13 +3,14 @@
     android:id="@+id/profile_settings_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10sp"
     android:background="@color/white"
     android:visibility="invisible">
 
     <ImageView
         android:id="@+id/profileImageView"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
@@ -23,31 +24,10 @@
         android:layout_below="@id/profileImageView"
         android:layout_alignParentStart="true"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="25sp"
+        android:layout_marginEnd="61sp"
+        android:layout_toStartOf="@+id/removeButton"
         android:text="Upload Picture" />
-
-    <Button
-        android:id="@+id/editButton"
-        style="@style/BlueAppRoundedButton"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:layout_below="@+id/homePage"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Edit" />
-
-    <Button
-        android:id="@+id/saveButton"
-        style="@style/BlueAppRoundedButton"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:layout_below="@+id/homePage"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/editButton"
-        android:minHeight="20dip"
-        android:text="SAVE" />
 
     <Button
         android:id="@+id/removeButton"
@@ -56,8 +36,8 @@
         android:layout_height="60dp"
         android:layout_below="@id/profileImageView"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25sp"
         android:layout_marginBottom="10dp"
         android:text="Remove Picture" />
 
@@ -67,7 +47,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/uploadButton"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         android:text="First Name:"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -76,10 +55,12 @@
         android:id="@+id/firstNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/firstNameLabel"
         android:layout_alignTop="@id/firstNameLabel"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@id/firstNameLabel"
+        android:layout_marginEnd="10dp"
         android:hint="First Name" />
 
     <TextView
@@ -97,10 +78,12 @@
         android:id="@+id/lastNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/firstNameEditText"
         android:layout_alignTop="@id/lastNameLabel"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@id/lastNameLabel"
+        android:layout_marginEnd="10dp"
         android:hint="Last Name" />
 
     <TextView
@@ -118,10 +101,12 @@
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/firstNameEditText"
         android:layout_alignTop="@id/emailLabel"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@id/emailLabel"
+        android:layout_marginEnd="10dp"
         android:hint="Email"
         android:inputType="textEmailAddress" />
 
@@ -140,10 +125,12 @@
         android:id="@+id/phoneEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/firstNameEditText"
         android:layout_alignTop="@id/phoneLabel"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@id/phoneLabel"
+        android:layout_marginEnd="10dp"
         android:hint="Phone Number"
         android:inputType="phone" />
 
@@ -162,10 +149,37 @@
         android:id="@+id/homePage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/firstNameEditText"
         android:layout_alignTop="@id/homePageLabel"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@id/homePageLabel"
+        android:layout_marginEnd="10dp"
         android:hint="Home Page" />
+
+    <Button
+        android:id="@+id/editButton"
+        style="@style/BlueAppRoundedButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/homePage"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="33sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="75sp"
+        android:text="Edit" />
+
+    <Button
+        android:id="@+id/saveButton"
+        style="@style/BlueAppRoundedButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/homePage"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="75sp"
+        android:layout_marginTop="16dp"
+        android:text="Save" />
 
 </RelativeLayout>
