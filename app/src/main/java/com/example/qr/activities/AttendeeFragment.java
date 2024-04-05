@@ -21,10 +21,11 @@ public class AttendeeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_attendee, container, false);
 
         Button btnClose = view.findViewById(R.id.btn_close);
-        Button btnEvents = view.findViewById(R.id.btnEvents);
+        Button btnMyEvents = view.findViewById(R.id.btnMyEvents);
+        Button btnBrowseEvents = view.findViewById(R.id.btnBrowseEvents);
         Button btnSettings = view.findViewById(R.id.btnSettings);
 
-        btnEvents.setOnClickListener(v -> {
+        btnBrowseEvents.setOnClickListener(v -> {
             EventListFragment eventListFragment = new EventListFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
