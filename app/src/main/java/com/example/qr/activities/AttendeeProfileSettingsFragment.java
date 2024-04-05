@@ -78,6 +78,10 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
         editButton = view.findViewById(R.id.editButton);
         saveButton = view.findViewById(R.id.saveButton);
 
+        ImageView profileImageView = view.findViewById(R.id.profileImageView);
+        Button uploadButton = view.findViewById(R.id.uploadButton);
+        Button removeButton = view.findViewById(R.id.removeButton);
+
         // Make the EditText fields read-only by default
         setEditTextEnabled(false);
 
@@ -96,6 +100,9 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                         emailEditText.setText(user.getEmail());
                         phoneEditText.setText(user.getPhoneNumber());
                         homePageEditText.setText(user.getHomepage());
+
+                        // Load the profile picture
+                        Glide.with(getContext()).load(user.getProfilePicture()).into(profileImageView);
 
                         // Save the current user
                         currentUser = user;
@@ -126,13 +133,39 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
             currentUser.setPhoneNumber(phoneEditText.getText().toString());
             currentUser.setHomepage(homePageEditText.getText().toString());
 
+            // Generate the URL for the profile picture based on the updated first and last name
+            String profilePictureUrl = "https://github.com/identicons/" + (currentUser.getFirstName().toLowerCase()).replace(" ", "") + ".png";
+            currentUser.setProfilePicture(profilePictureUrl);
+
             // Update the user data in Firebase
             FirebaseUtil.updateUser(currentUser, aVoid -> {
                 // Disable the EditText fields
                 setEditTextEnabled(false);
+
+                Glide.with(getContext()).load(profilePictureUrl).into(profileImageView);
             }, e -> {
                 Log.e("AttendeeProfileSettings", "Error updating user", e);
             });
+        });
+
+        // Add a click listener to the Upload button
+        uploadButton.setOnClickListener(v -> {
+            // Launch the photo picker
+            pickMedia.launch(new PickVisualMediaRequest());
+        });
+
+        // Add a click listener to the Remove button
+        removeButton.setOnClickListener(v -> {
+            // Create a confirmation dialog
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Remove Profile Picture")
+                    .setMessage("Are you sure you want to remove your profile picture?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        // If the user confirms, remove the profile picture
+                        profileImageView.setImageResource(R.drawable.default_pfp); // Set to your default image
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         });
 
         return view;
