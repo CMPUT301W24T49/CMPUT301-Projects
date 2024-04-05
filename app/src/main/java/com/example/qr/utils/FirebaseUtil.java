@@ -99,7 +99,7 @@ public class FirebaseUtil {
      * @param onFailureListener Callback for operation failure.
      */
     public static void addCheckIn(CheckIn checkIn, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
-        db.collection("Check-Ins")
+        db.collection("CheckIn")
                 .document(UUID.randomUUID().toString())
                 .set(checkIn)
                 .addOnSuccessListener(onSuccessListener)

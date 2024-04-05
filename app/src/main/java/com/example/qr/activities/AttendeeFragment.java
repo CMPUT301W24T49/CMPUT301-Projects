@@ -105,15 +105,16 @@ public class AttendeeFragment extends Fragment {
                                     if (location != null) {
                                         GeoPoint geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
                                         checkIn.setLocation(geoPoint);
-
                                     }
+
+                                    FirebaseUtil.addCheckIn(checkIn, aVoid -> {
+                                        Toast.makeText(getContext(), "Checked in successfully!", Toast.LENGTH_LONG).show();
+                                    }, e -> {
+                                        Toast.makeText(getContext(), "Error checking in: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    });
                                 });
 
-                                FirebaseUtil.addCheckIn(checkIn, aVoid -> {
-                                    Toast.makeText(getContext(), "Checked in successfully!", Toast.LENGTH_LONG).show();
-                                }, e -> {
-                                    Toast.makeText(getContext(), "Error checking in: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                });
+
                             }
                         }
                     }
