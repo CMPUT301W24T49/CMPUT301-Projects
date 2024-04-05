@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import com.example.qr.utils.FirebaseUtil;
 import com.google.firebase.firestore.GeoPoint;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ import java.util.Map;
  * Represents a user in the system with various attributes like name, role, profile picture,
  * contact information, and homepage. This class is used for managing user data within the application.
  */
-public class User {
+public class User implements Serializable {
     private String id; // Document ID in Firestore
     private String firstName;
     private String name;

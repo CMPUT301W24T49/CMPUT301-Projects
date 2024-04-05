@@ -17,7 +17,10 @@ public class Event implements Serializable {
     private String title;
     private String description;
     private String organizerId; // Reference to User document ID
-    private Date eventDate;
+    private Date startDate;
+    private Date endDate;
+    private String startTime;
+    private String endTime;
     private GeoPoint location;
     private String qrCode;
     private String eventPoster;
@@ -34,13 +37,17 @@ public class Event implements Serializable {
 
     }
 
-    public Event(String id, String title, String description, String organizerId, Date eventDate,
-                 GeoPoint location, String qrCode, String eventPoster, Integer attendeeLimit) {
+    public Event(String id, String title, String description, String organizerId, Date startDate,
+                 Date endDate, String startTime, String endTime, GeoPoint location, String qrCode,
+                 String eventPoster, Integer attendeeLimit) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.organizerId = organizerId;
-        this.eventDate = eventDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.location = location;
         this.qrCode = qrCode;
         this.eventPoster = eventPoster;
@@ -125,17 +132,66 @@ public class Event implements Serializable {
      *
      * @return The date of the event.
      */
-    public Date getEventDate() {
-        return eventDate;
+    public Date getStartDate() {
+        return startDate;
     }
 
     /**
      * Sets the date of the event.
      *
-     * @param eventDate The date of the event.
+     * @param startDate The date of the event.
      */
-    public void setEventDate(Date eventDate) {
-        this.eventDate = eventDate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    /**
+     * Sets the date of the event.
+     *
+     * @param endDate The date of the event.
+     */
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    /**
+     * Returns the start time of the event.
+     *
+     * @return The start time of the event.
+     */
+    public String getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * Sets the start time of the event.
+     *
+     * @param startTime The date of the event.
+     */
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    /**
+     * Returns the end time of the event.
+     *
+     * @return The end time of the event.
+     */
+    public String getEndTime() {
+        return endTime;
+    }
+
+    /**
+     * Sets the end time of the event.
+     *
+     * @param endTime The time of the event.
+     */
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     /**

@@ -71,7 +71,6 @@ public class AdminUserProfileDetailFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
                 .setView(view)
-                .setTitle("Profile Details")
                 .create();
     }
 }
