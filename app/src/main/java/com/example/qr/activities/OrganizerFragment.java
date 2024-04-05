@@ -42,7 +42,7 @@ public class OrganizerFragment extends Fragment {
 
         // Events button onclick listener
         eventsBtn.setOnClickListener(v -> {
-            EventListOrganizerFragment eventListOrganizerFragment = new EventListOrganizerFragment();
+            OrganizerEventListFragment eventListOrganizerFragment = new OrganizerEventListFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, eventListOrganizerFragment)

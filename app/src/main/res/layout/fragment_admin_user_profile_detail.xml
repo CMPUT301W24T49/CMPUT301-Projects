@@ -1,61 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_admin_settings"
+android:id="@+id/fragment_admin_settings"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:padding="16dp"
+android:background="@android:color/white"
+android:elevation="4dp">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="User Details"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:textStyle="bold"
+    android:layout_marginBottom="16dp"/>
+
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#10283B"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="User Profile List"
-        android:padding="16dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#FFFFFF"/>
-    
+        android:text="Name: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:orientation="vertical"
-        android:padding="16dp">
+    <TextView
+        android:id="@+id/userNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="upper bound"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+</LinearLayout>
 
-        <TextView
-            android:id="@+id/userNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/userRoleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Role"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Role: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/userEmailTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+    <TextView
+        android:id="@+id/userRoleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+</LinearLayout>
 
-        <TextView
-            android:id="@+id/userPhoneTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Phone"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/userHomepageTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Homepage"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/userEmailTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/userPhoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Homepage: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/userHomepageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+</LinearLayout>
+
 </LinearLayout>

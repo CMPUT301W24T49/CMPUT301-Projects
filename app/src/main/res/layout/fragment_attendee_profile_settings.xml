@@ -1,16 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/profile_settings_layout"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_settings_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:visibility="invisible">
 
     <ImageView
         android:id="@+id/profileImageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/default_pfp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp" />
+        android:layout_marginTop="15dp"
+        android:src="@drawable/default_pfp" />
 
     <Button
         android:id="@+id/uploadButton"
@@ -24,57 +26,145 @@
         android:text="Upload Picture" />
 
     <Button
-        android:id="@+id/removeButton"
+        android:id="@+id/editButton"
         style="@style/BlueAppRoundedButton"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/profileImageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="90dp"
-        android:text="Remove Picture" />
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/homePage"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Edit" />
 
     <Button
-        android:id="@+id/generateButton"
+        android:id="@+id/saveButton"
+        style="@style/BlueAppRoundedButton"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/homePage"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/editButton"
+        android:minHeight="20dip"
+        android:text="SAVE" />
+
+    <Button
+        android:id="@+id/removeButton"
         style="@style/BlueAppRoundedButton"
         android:layout_width="140dp"
+        android:layout_height="60dp"
         android:layout_below="@id/profileImageView"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="25dp"
-        android:text="Generate Picture" />
+        android:layout_marginBottom="10dp"
+        android:text="Remove Picture" />
+
+    <TextView
+        android:id="@+id/firstNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/uploadButton"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="First Name:"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/firstNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/uploadButton"
-        android:layout_marginTop="75dp"
+        android:layout_alignStart="@+id/firstNameLabel"
+        android:layout_alignTop="@id/firstNameLabel"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/firstNameLabel"
         android:hint="First Name" />
+
+    <TextView
+        android:id="@+id/lastNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/firstNameEditText"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Last Name:"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/lastNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Last Name"
-        android:layout_below="@id/firstNameEditText"
-        android:layout_marginTop="10dp"/>
+        android:layout_alignStart="@+id/firstNameEditText"
+        android:layout_alignTop="@id/lastNameLabel"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/lastNameLabel"
+        android:hint="Last Name" />
+
+    <TextView
+        android:id="@+id/emailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lastNameEditText"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Email:"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
+        android:layout_alignStart="@+id/firstNameEditText"
+        android:layout_alignTop="@id/emailLabel"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/emailLabel"
         android:hint="Email"
-        android:layout_below="@id/lastNameEditText"
-        android:layout_marginTop="10dp"/>
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/phoneLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emailEditText"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Phone Number:"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/phoneEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="phone"
+        android:layout_alignStart="@+id/firstNameEditText"
+        android:layout_alignTop="@id/phoneLabel"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/phoneLabel"
         android:hint="Phone Number"
-        android:layout_below="@id/emailEditText"
-        android:layout_marginTop="10dp"/>
+        android:inputType="phone" />
+
+    <TextView
+        android:id="@+id/homePageLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phoneEditText"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Home Page:"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/homePage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/firstNameEditText"
+        android:layout_alignTop="@id/homePageLabel"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/homePageLabel"
+        android:hint="Home Page" />
 
 </RelativeLayout>

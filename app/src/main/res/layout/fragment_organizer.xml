@@ -38,7 +38,7 @@
         <Button
             android:id="@+id/events_btn"
             style="@style/AppRoundedButton"
-            android:text="Events" />
+            android:text="My Events" />
 
         <!-- Settings Button -->
         <Button

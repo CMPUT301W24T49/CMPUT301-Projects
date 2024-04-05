@@ -21,12 +21,15 @@
 <!--        android:text="X" />-->
 
     <!-- ListView for the events -->
+
     <TextView
         android:id="@+id/txt_events_list"
-        android:layout_width="181dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="33dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="126dp"
         android:text="Events List"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -37,11 +40,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="70dp"
-        android:background="#424242"
-        android:divider="@android:color/darker_gray"
+        android:background="@color/white"
+        android:divider="@android:color/black"
         android:dividerHeight="1dp"
         android:padding="8dp"
         android:scrollbars="vertical" />
+
+    <Button
+        android:id="@+id/close_btn"
+        style="@style/AppRoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="X" />
 
 
 </RelativeLayout>

@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -207,6 +208,14 @@ public class FirebaseUtil {
      */
     public interface HasId {
         void setId(String id);
+    }
+
+    public static void updateUser(User user, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("Users")
+                .document(user.getId())
+                .set(user, SetOptions.merge())
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
     }
 
 }

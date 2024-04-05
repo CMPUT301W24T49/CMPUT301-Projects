@@ -32,12 +32,12 @@ public class ImageArrayAdapter extends ArrayAdapter<Image> {
      * Constructs an ImageArrayAdapter.
      *
      * @param context The current context, used to inflate the layout file.
-     * @param profile An ArrayList of Image objects to be displayed.
+     * @param image An ArrayList of Image objects to be displayed.
      */
-    public ImageArrayAdapter(Context context, ArrayList<Image> profile) {
-        super(context, 0);
+    public ImageArrayAdapter(Context context, ArrayList<Image> image) {
+        super(context, 0, image);
         this.context = context;
-        this.images = profile;
+        this.images = image;
     }
 
     /**

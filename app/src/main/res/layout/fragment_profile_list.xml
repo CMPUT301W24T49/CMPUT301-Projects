@@ -1,44 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#10283B"
-    android:padding="16dp"
-    android:id="@+id/fragment_profile_list">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/fragment_profile_list"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#10283B">
 
-    <!-- Close (X) Button at the top right -->
+<!-- Close (X) Button at the top right -->
 <!--    <Button-->
-<!--        android:id="@+id/btn_close_profile_list"-->
+<!--        android:id="@+id/btn_close_event_list"-->
+<!--        style="@style/AppRoundedButton"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="wrap_content"-->
-<!--        android:text="X"-->
 <!--        android:layout_alignParentTop="true"-->
 <!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginStart="16dp"-->
 <!--        android:layout_marginTop="16dp"-->
 <!--        android:layout_marginEnd="16dp"-->
-<!--        style="@style/AppRoundedButton"/>-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:text="X" />-->
 
-    <!-- ListView for the profiles -->
-    <TextView
-        android:id="@+id/txt_image_list_title"
-        android:layout_width="181dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="140dp"
-        android:text=" Profile List"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFFFFF" />
+<!-- ListView for the events -->
+<TextView
+    android:id="@+id/txt_image_list_title"
+    android:layout_width="181dp"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="33dp"
+    android:layout_marginEnd="126dp"
+    android:text="User List"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textColor="#FFFFFF" />
 
-    <ListView
-        android:id="@+id/listview_profiles"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="70dp"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"
-        android:background="#424242"
-        android:padding="8dp"
-        android:scrollbars="vertical" />
+<ListView
+    android:id="@+id/listview_profiles"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="70dp"
+    android:background="#424242"
+    android:divider="@android:color/darker_gray"
+    android:dividerHeight="1dp"
+    android:padding="8dp"
+    android:scrollbars="vertical" />
+
 
 </RelativeLayout>
+

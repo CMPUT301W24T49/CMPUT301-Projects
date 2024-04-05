@@ -6,9 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -18,22 +17,12 @@ import com.example.qr.models.Event;
 import com.example.qr.models.EventArrayAdapter;
 import com.example.qr.models.Notification;
 import com.example.qr.utils.FirebaseUtil;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GetTokenResult;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 
 /**
@@ -71,9 +60,9 @@ public class EventListFragment extends Fragment {
                 listView.setItemChecked(position, true);
                 positionToEdit = position;
                 Event clickedEvent = (Event) adapterView.getAdapter().getItem(position);
-                EventDetailFragment addCityFragment = EventDetailFragment.newInstance(clickedEvent);
-                addCityFragment.setTargetFragment(EventListFragment.this, 0);
-                addCityFragment.show(getParentFragmentManager(), "Event Detail");
+                EventDetailFragment eventFragment = EventDetailFragment.newInstance(clickedEvent);
+                eventFragment.setTargetFragment(EventListFragment.this, 0);
+                eventFragment.show(getParentFragmentManager(), "Event Detail");
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
