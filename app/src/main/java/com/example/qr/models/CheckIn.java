@@ -10,7 +10,6 @@ import java.util.Date;
  * description, organizer, date, location, QR code, event poster, and attendee limit.
  */
 public class CheckIn {
-    private String id; // Document ID in Firestore
     private String eventId; // Reference to Event document ID
     private String userId; // Reference to User document ID
     private Date checkInTime;
@@ -23,30 +22,11 @@ public class CheckIn {
 
     }
 
-    public CheckIn(String id, String eventId, String userId, Date checkInTime, GeoPoint location) {
-        this.id = id;
+    public CheckIn(String eventId, String userId, Date checkInTime, GeoPoint location) {
         this.eventId = eventId;
         this.userId = userId;
         this.checkInTime = checkInTime;
         this.location = location;
-    }
-
-    /**
-     * Returns the document ID of the check-in record.
-     *
-     * @return The document ID of the check-in record.
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the document ID of the check-in record.
-     *
-     * @param id The document ID of the check-in record.
-     */
-    public void setId(String id) {
-        this.id = id;
     }
 
     /**
@@ -118,23 +98,6 @@ public class CheckIn {
      */
     public void setLocation(GeoPoint location) {
         this.location = location;
-    }
-
-    /**
-     * Returns a string representation of the CheckIn object.
-     *
-     * @return A string representation of the CheckIn object.
-     */
-    @NonNull
-    @Override
-    public String toString() {
-        return "CheckIn{" +
-                "id='" + id + '\'' +
-                ", eventId='" + eventId + '\'' +
-                ", userId='" + userId + '\'' +
-                ", checkInTime=" + checkInTime +
-                ", location=" + location +
-                '}';
     }
 
 }

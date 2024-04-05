@@ -27,7 +27,7 @@ public class FirebaseUtilTest {
 
         String id = UUID.randomUUID().toString();
 
-        Event mockEvent = new Event(id, "eventTitle", "eventDescription", "organizerId", null, null, "qrCode", "eventPoster", 100);
+        Event mockEvent = new Event(id, "eventTitle", "eventDescription", "organizerId", null, null, "startTime", "endTime", null, "qrCode", "eventPoster", 100);
 
         // Add an event
         FirebaseUtil.addEvent(mockEvent, documentReference -> {
@@ -103,19 +103,19 @@ public class FirebaseUtilTest {
 
         String id = UUID.randomUUID().toString();
 
-        CheckIn mockCheckIn = new CheckIn(id, "eventId", "userId", null, null);
+        CheckIn mockCheckIn = new CheckIn("eventId", "userId", null, null);
 
         // Add a check-in
         FirebaseUtil.addCheckIn(mockCheckIn, documentReference -> {
 
             // Now fetch check-ins to verify
-            FirebaseUtil.fetchCollection("CheckIns", CheckIn.class, new OnCollectionFetchedListener<CheckIn>() {
+            FirebaseUtil.fetchCollection("CheckIn", CheckIn.class, new OnCollectionFetchedListener<CheckIn>() {
                 @Override
                 public void onCollectionFetched(List<CheckIn> checkInList) {
                     // Verify the check-in is in the fetched list
                     boolean isCheckInPresent = false;
                     for (CheckIn checkIn : checkInList) {
-                        if (checkIn.getId().equals(mockCheckIn.getId())) {
+                        if (checkIn.getUserId().equals(mockCheckIn.getUserId())) {
                             isCheckInPresent = true;
                             break;
                         }

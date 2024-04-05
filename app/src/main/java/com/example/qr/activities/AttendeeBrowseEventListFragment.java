@@ -1,7 +1,5 @@
 package com.example.qr.activities;
 
-import static com.example.qr.activities.MainActivity.androidId;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,13 +18,13 @@ import com.example.qr.utils.FirebaseUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AttendeeEventListFragment extends Fragment {
+public class AttendeeBrowseEventListFragment extends Fragment {
 
     ArrayList<Event> eventDataList;
     EventArrayAdapter eventArrayAdapter;
 
 
-    public AttendeeEventListFragment() {
+    public AttendeeBrowseEventListFragment() {
         // Required empty public constructor
     }
 
@@ -56,6 +54,7 @@ public class AttendeeEventListFragment extends Fragment {
             // https://stackoverflow.com/questions/24555417/how-to-send-data-from-one-fragment-to-another-fragment
             Bundle args = new Bundle();
             args.putSerializable("Event", event);
+            args.putSerializable("NoSignUp", false);
 
             AttendeeEventDetailFragment attendeeEventDetailFragment = new AttendeeEventDetailFragment();
             attendeeEventDetailFragment.setArguments(args); // Pass data to attendeeListFragment

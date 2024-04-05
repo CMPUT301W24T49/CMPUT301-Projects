@@ -24,6 +24,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Utility class to handle Firebase Firestore and Storage operations.
@@ -99,7 +100,7 @@ public class FirebaseUtil {
      */
     public static void addCheckIn(CheckIn checkIn, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
         db.collection("Check-Ins")
-                .document(checkIn.getId())
+                .document(UUID.randomUUID().toString())
                 .set(checkIn)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
@@ -153,10 +154,11 @@ public class FirebaseUtil {
 
     public static void addSignUp(SignUp signUp, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
         db.collection("SignUp")
-                .document(androidId)
+                .document(UUID.randomUUID().toString())
                 .set(signUp)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
+
     }
 
     /**

@@ -20,12 +20,9 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.qr.R;
 import com.example.qr.models.Event;
-import com.example.qr.models.Image;
 import com.example.qr.models.SignUp;
 import com.example.qr.utils.FirebaseUtil;
 import com.example.qr.utils.GenerateQRCode;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +44,7 @@ public class AttendeeEventDetailFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_attendee_event_detail, container, false);
         event = (Event) getArguments().getSerializable("Event");
+        boolean noSignUp = (boolean) getArguments().getSerializable("NoSignUp");
 
         // Intialize all the views
 
@@ -61,6 +59,11 @@ public class AttendeeEventDetailFragment extends Fragment {
         TextView maxAttendees = view.findViewById(R.id.maxAttendees);
         ImageView qrCode = view.findViewById(R.id.ivQrCode);
         Button btnSignUp = view.findViewById(R.id.btnSignUp);
+
+        if(noSignUp){
+            btnSignUp.setVisibility(View.GONE);
+            btnSignUp.setClickable(false);
+        }
 
 
         //fetch data from event object and set it to the views
@@ -95,16 +98,23 @@ public class AttendeeEventDetailFragment extends Fragment {
         }
 
 
-        //format the date and time
-
-        if(event.getEventDate() != null){
-            String startDateText = "Start Date: " + android.text.format.DateFormat.format("dd-MM-yyyy", event.getEventDate());
+        if(event.getStartDate() != null){
+            String startDateText = "Start Date: " + android.text.format.DateFormat.format("dd-MM-yyyy", event.getStartDate());
             startDate.setText(startDateText);
-            String endDateText = "End Date: " + android.text.format.DateFormat.format("dd-MM-yyyy", event.getEventDate());
+        }
+
+        if(event.getEndDate() != null){
+            String endDateText = "End Date: " + android.text.format.DateFormat.format("dd-MM-yyyy", event.getEndDate());
             endDate.setText(endDateText);
-            String startTimeText = "Start Time: " + android.text.format.DateFormat.format("hh:mm a", event.getEventDate());
+        }
+
+        if(!event.getStartTime().isEmpty()){
+            String startTimeText = "Start Time: " + event.getStartTime();
             startTime.setText(startTimeText);
-            String endTimeText = "End Time: " + android.text.format.DateFormat.format("hh:mm a", event.getEventDate());
+        }
+
+        if(!event.getEndTime().isEmpty()){
+            String endTimeText = "End Time: " + event.getEndTime();
             endTime.setText(endTimeText);
         }
 
