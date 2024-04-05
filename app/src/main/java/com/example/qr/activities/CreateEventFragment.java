@@ -133,6 +133,7 @@ public class CreateEventFragment extends Fragment {
                             // if location exists
                             long currentTimeMillis = System.currentTimeMillis();
                             String eventId = Long.toString(currentTimeMillis);
+                            // value setting for maxAttendees blank or not
                             if(maxAttendees.getText().toString().isEmpty()) {
                                 maxAttendeesValue = 0;
                             } else {
