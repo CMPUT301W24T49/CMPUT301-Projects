@@ -44,13 +44,13 @@ public class ProfileListFragment extends Fragment {
         ListView listView = view.findViewById(R.id.listview_profiles);
 //        Button btnClose = view.findViewById(R.id.btn_close_profile_list);
 
-        // TODO: Replace with actual image data
-        db = FirebaseFirestore.getInstance();
+
         userDataList = new ArrayList<>();
         userArrayAdapter = new UserArrayAdapter(getContext(), userDataList);
         listView.setAdapter(userArrayAdapter);
 
         fetchData();
+//        Toast.makeText(getActivity(), userDataList.get(0).getName(), Toast.LENGTH_SHORT).show();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -58,8 +58,9 @@ public class ProfileListFragment extends Fragment {
                 listView.setItemChecked(position, true);
                 positionToEdit = position;
                 User clickedProfile = (User) adapterView.getAdapter().getItem(position);
-                AdminUserProfileDetailFragment addCityFragment = AdminUserProfileDetailFragment.newInstance(clickedProfile);
-                addCityFragment.show(getParentFragmentManager(), "Profile Detail");
+                AdminUserProfileDetailFragment userFragment = AdminUserProfileDetailFragment.newInstance(clickedProfile);
+                userFragment.setTargetFragment(ProfileListFragment.this, 0);
+                userFragment.show(getParentFragmentManager(), "Profile Detail");
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -110,6 +111,8 @@ public class ProfileListFragment extends Fragment {
                 // Handle the fetched user here
                 userDataList.addAll(userList);
                 userArrayAdapter.notifyDataSetChanged();
+//                Toast.makeText(getActivity(), String.valueOf(userDataList.size()), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), userDataList.get(0).getName(), Toast.LENGTH_SHORT).show();
                 Log.d("UserListFragment", "Fetched " + userList.size() + "User");
             }
 
