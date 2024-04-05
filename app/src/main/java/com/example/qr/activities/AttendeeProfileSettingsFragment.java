@@ -1,6 +1,10 @@
 package com.example.qr.activities;
 
+import static com.example.qr.utils.FirebaseUtil.uploadImageAndGetUrl;
+
 import android.app.AlertDialog;
+import android.net.Uri;
+import   java.net.URL;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,6 +60,8 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                 Log.d("PhotoPicker", "Selected URI: " + uri);
                 ImageView profileImageView = requireView().findViewById(R.id.profileImageView);
                 profileImageView.setImageURI(uri);
+                profileImageView.setTag(uri);
+
             } else {
                 Log.d("PhotoPicker", "No media selected");
             }
@@ -102,6 +108,11 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                         homePageEditText.setText(user.getHomepage());
 
                         // Load the profile picture
+                        if(user.getProfilePicture().equals("")) {
+                            String profilePictureUrl = "https://github.com/identicons/" + (currentUser.getFirstName().toLowerCase()).replace(" ", "") + ".png";
+                            currentUser.setProfilePicture(profilePictureUrl);
+                        }
+
                         Glide.with(getContext()).load(user.getProfilePicture()).into(profileImageView);
 
                         // Save the current user
@@ -133,19 +144,33 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
             currentUser.setPhoneNumber(phoneEditText.getText().toString());
             currentUser.setHomepage(homePageEditText.getText().toString());
 
-            // Generate the URL for the profile picture based on the updated first and last name
-            String profilePictureUrl = "https://github.com/identicons/" + (currentUser.getFirstName().toLowerCase()).replace(" ", "") + ".png";
-            currentUser.setProfilePicture(profilePictureUrl);
 
-            // Update the user data in Firebase
-            FirebaseUtil.updateUser(currentUser, aVoid -> {
-                // Disable the EditText fields
-                setEditTextEnabled(false);
+            if(profileImageView.getTag() != null) {
+                // Upload the profile picture to Firebase Storage
+                Uri profilePicture = (Uri) profileImageView.getTag();
+                uploadImageAndGetUrl(profilePicture, androidId, downloadUrl -> {
+                    currentUser.setProfilePicture(downloadUrl.toString());
+                    FirebaseUtil.updateUser(currentUser, aVoid -> {
+                        // Disable the EditText fields
+                        setEditTextEnabled(false);
 
-                Glide.with(getContext()).load(profilePictureUrl).into(profileImageView);
-            }, e -> {
-                Log.e("AttendeeProfileSettings", "Error updating user", e);
-            });
+                    }, e -> {
+                        Log.e("AttendeeProfileSettings", "Error updating user", e);
+                    });
+                }, e -> {
+                    Log.e("AttendeeProfileSettings", "Error uploading profile picture", e);
+                });
+            }else {
+                currentUser.setProfilePicture(currentUser.getProfilePicture());
+                FirebaseUtil.updateUser(currentUser, aVoid -> {
+                    // Disable the EditText fields
+                    setEditTextEnabled(false);
+
+                }, e -> {
+                    Log.e("AttendeeProfileSettings", "Error updating user", e);
+                });
+            }
+
         });
 
         // Add a click listener to the Upload button
@@ -162,7 +187,9 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                     .setMessage("Are you sure you want to remove your profile picture?")
                     .setPositiveButton("Yes", (dialog, which) -> {
                         // If the user confirms, remove the profile picture
-                        profileImageView.setImageResource(R.drawable.default_pfp); // Set to your default image
+                        String profilePictureUrl = "https://github.com/identicons/" + (currentUser.getFirstName().toLowerCase()).replace(" ", "") + ".png";
+                        currentUser.setProfilePicture(profilePictureUrl);
+                        Glide.with(getContext()).load(currentUser.getProfilePicture()).into(profileImageView);
                     })
                     .setNegativeButton("No", null)
                     .show();
