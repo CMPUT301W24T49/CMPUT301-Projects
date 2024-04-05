@@ -108,8 +108,10 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                         phoneEditText.setText(user.getPhoneNumber());
                         homePageEditText.setText(user.getHomepage());
 
+                        currentUser = user;
                         // Load the profile picture
                         if(user.getProfilePicture().equals("")) {
+
                             String profilePictureUrl = "https://github.com/identicons/" + (currentUser.getFirstName().toLowerCase()).replace(" ", "") + ".png";
                             currentUser.setProfilePicture(profilePictureUrl);
                         }
