@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import android.content.Intent;
+import android.widget.Toast;
 
 import com.example.qr.R;
 import com.example.qr.models.Event;
@@ -86,9 +88,37 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                 }
             });
         }
+        handleIntent(getIntent());
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
 
+        // Handle intent if the activity is already running and it receives a new intent
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (intent != null && "notification_list_fragment".equals(intent.getStringExtra("open_fragment"))) {
+            String eventID = intent.getStringExtra("event_key");
+            Event event = (Event) intent.getSerializableExtra("event");
+
+            NotificationListFragment fragment = new NotificationListFragment();
+            Bundle args = new Bundle();
+            args.putSerializable("event_key", eventID);
+            args.putSerializable("event", event);
+            fragment.setArguments(args);
+            Toast.makeText(this, "Event pplessssss deleted successfully", Toast.LENGTH_SHORT).show();
+
+            // Perform the fragment transaction to replace your container with the NotificationListFragment
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+    }
 
     @Override
     public void onDeleteEvent(Event event) {
@@ -102,3 +132,4 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
     }
 
 }
+
