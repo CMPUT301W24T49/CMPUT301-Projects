@@ -23,6 +23,8 @@ public class Event implements Serializable {
     private String eventPoster;
     private Integer attendeeLimit; // Optional
 
+    private Integer attendeeCount;
+
 
 
     /**
@@ -43,6 +45,7 @@ public class Event implements Serializable {
         this.qrCode = qrCode;
         this.eventPoster = eventPoster;
         this.attendeeLimit = attendeeLimit;
+        this.attendeeCount = 0;
     }
 
     /**
@@ -205,6 +208,26 @@ public class Event implements Serializable {
      */
     public void setAttendeeLimit(Integer attendeeLimit) {
         this.attendeeLimit = attendeeLimit;
+    }
+
+
+    /**
+     * Returns the attendee count of the event.
+     *
+     * @return The attendee count of the event.
+     */
+    public Integer getAttendeeCount() {
+        return attendeeCount;
+
+    }
+
+    /**
+     * Sets the attendee count of the event.
+     *
+     * @param attendeeCount The attendee count of the event.
+     */
+    public void setAttendeeCount(Integer attendeeCount) {
+        this.attendeeCount = attendeeCount;
     }
 
     /**

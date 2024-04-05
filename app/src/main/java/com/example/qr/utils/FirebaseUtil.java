@@ -1,11 +1,14 @@
 package com.example.qr.utils;
 
+import static com.example.qr.activities.MainActivity.androidId;
+
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
 import com.example.qr.models.CheckIn;
 import com.example.qr.models.Event;
 import com.example.qr.models.Notification;
+import com.example.qr.models.SignUp;
 import com.example.qr.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -144,6 +147,14 @@ public class FirebaseUtil {
                 // when user id is working change this to user ID
                 .document("useuserIDhere" + System.currentTimeMillis())
                 .set(notificationTokenId)
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
+    public static void addSignUp(SignUp signUp, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        db.collection("SignUp")
+                .document(androidId)
+                .set(signUp)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }

@@ -26,7 +26,7 @@ public class AttendeeFragment extends Fragment {
         Button btnSettings = view.findViewById(R.id.btnSettings);
 
         btnBrowseEvents.setOnClickListener(v -> {
-            EventListFragment eventListFragment = new EventListFragment();
+            AttendeeEventListFragment eventListFragment = new AttendeeEventListFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, eventListFragment)
