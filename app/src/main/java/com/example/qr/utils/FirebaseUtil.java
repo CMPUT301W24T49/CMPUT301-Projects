@@ -231,4 +231,19 @@ public class FirebaseUtil {
                 .addOnFailureListener(onFailureListener);
     }
 
+    public static FirebaseFirestore getDb() {
+        return db;
+    }
+
+    public static List<List<String>> splitListIntoBatches(List<String> originalList, int batchSize) {
+        List<List<String>> batches = new ArrayList<>();
+        for (int i = 0; i < originalList.size(); i += batchSize) {
+            int end = Math.min(originalList.size(), i + batchSize);
+            List<String> batch = originalList.subList(i, end);
+            batches.add(batch);
+        }
+        return batches;
+    }
+
+
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 
@@ -23,6 +24,8 @@ public class AttendeeBrowseEventListFragment extends Fragment {
     ArrayList<Event> eventDataList;
     EventArrayAdapter eventArrayAdapter;
 
+    RelativeLayout fragmentLayout;
+
 
     public AttendeeBrowseEventListFragment() {
         // Required empty public constructor
@@ -32,7 +35,8 @@ public class AttendeeBrowseEventListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate layout
         View view = inflater.inflate(R.layout.fragment_event_list, container, false);
-        
+        fragmentLayout = view.findViewById(R.id.fragment_event_list_layout);
+
         // Button initialization
         ListView listView = view.findViewById(R.id.listview_events);
         Button btnClose = view.findViewById(R.id.close_btn);
@@ -74,6 +78,7 @@ public class AttendeeBrowseEventListFragment extends Fragment {
             }
         });
 
+        fragmentLayout.setVisibility(View.GONE);
         return view;
     }
 
@@ -88,7 +93,9 @@ public class AttendeeBrowseEventListFragment extends Fragment {
 
                 eventDataList.addAll(eventList);   // Add events to data list
 
-                eventArrayAdapter.notifyDataSetChanged();   // Update event array adapter
+                eventArrayAdapter.notifyDataSetChanged();
+
+                fragmentLayout.setVisibility(View.VISIBLE);// Update event array adapter
                 Log.d("EventListFragment", "Fetched " + eventList.size() + " events");
             }
 

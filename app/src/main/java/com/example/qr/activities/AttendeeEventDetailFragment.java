@@ -137,6 +137,10 @@ public class AttendeeEventDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                if(event.getAttendeeCount() == null){
+                    event.setAttendeeCount(0);
+                }
+
                 //check if events has empty spots
                 if(event.getAttendeeCount() >= event.getAttendeeLimit()){
                     Toast.makeText(getContext(), "Event is full!", Toast.LENGTH_SHORT).show();
