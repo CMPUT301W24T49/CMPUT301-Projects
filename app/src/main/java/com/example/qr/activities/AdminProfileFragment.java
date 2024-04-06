@@ -43,13 +43,11 @@ public class AdminProfileFragment extends Fragment {
         Button saveButton = view.findViewById(R.id.button_save);
 
         viewModel.getFirstName().observe(getViewLifecycleOwner(), firstName -> {
-            // This will be called every time the first name in the ViewModel changes
             if (firstName != null) {
                 editTextFirstName.setText(firstName);
             }
         });
 
-        // Repeat for last name, email, and phone
         viewModel.getLastName().observe(getViewLifecycleOwner(), lastName -> {
             if (lastName != null) {
                 editTextLastName.setText(lastName);

@@ -19,10 +19,13 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.qr.R;
 import com.example.qr.models.Event;
 import com.example.qr.models.EventSpinnerAdapter;
+import com.example.qr.models.Notification;
+import com.example.qr.models.SharedViewModel;
 import com.example.qr.utils.FirebaseUtil;
 import com.example.qr.utils.GenerateQRCode;
 import com.google.firebase.firestore.GeoPoint;
@@ -175,6 +178,17 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
                             Toast.makeText(getContext(), "Failed to create event", Toast.LENGTH_SHORT).show();
                         });
             }
+            // DO NOT REMOVE THIS. ITS FOR NOTIFICATION
+            SharedViewModel viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+            viewModel.getOrganizerNotificationStatus().observe(getViewLifecycleOwner(), organizerNotificationStatus -> {
+                if (organizerNotificationStatus != null) {
+                    if (organizerNotificationStatus == Boolean.TRUE){
+                        String message = selectedEvent.getTitle() + "'s details has been updated by organizer.";
+                        Notification notification = new Notification("notification" + System.currentTimeMillis(), selectedEvent.getId(), message, new Date(), false);
+                        FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
+                    }
+                }
+            });
         });
         // end citation
 

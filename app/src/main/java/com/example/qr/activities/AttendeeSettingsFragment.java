@@ -8,8 +8,10 @@ import android.widget.Button;
 import android.widget.Switch;
 import android.content.SharedPreferences;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.qr.R;
+import com.example.qr.models.SharedViewModel;
 
 public class AttendeeSettingsFragment extends DialogFragment {
 
@@ -64,6 +66,9 @@ public class AttendeeSettingsFragment extends DialogFragment {
                 editor.putBoolean("Notifications", isChecked);
                 editor.apply();
             });
+            
+            SharedViewModel viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+            viewModel.setOrganizerNotificationStatus(isNotificationsOn);
 
             switchLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
