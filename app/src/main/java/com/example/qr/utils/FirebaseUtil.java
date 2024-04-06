@@ -11,6 +11,7 @@ import com.example.qr.models.Event;
 import com.example.qr.models.Notification;
 import com.example.qr.models.SignUp;
 import com.example.qr.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -28,6 +30,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -227,15 +230,49 @@ public class FirebaseUtil {
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
-
-    public static void addUserTokenIdNotification(Event event, Map<String, Object> notificationTokenId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener){
-        db.collection("Events").document(event.getId()).collection("Notification User TokenID")
-                // when user id is working change this to user ID
-                .document("useuserIDhere" + System.currentTimeMillis())
-                .set(notificationTokenId)
-                .addOnSuccessListener(onSuccessListener)
-                .addOnFailureListener(onFailureListener);
+    public static void getFCMTokenID(Event event){
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete( Task<String> task) {
+                if (!task.isSuccessful()) {
+                    Log.w("FCM", "Fetching FCM registration token failed", task.getException());
+                    return;
+                }
+                String idToken = task.getResult();
+                HashMap<String, Object> notificationTokenId = new HashMap<>();
+                notificationTokenId.put("tokenId", idToken);
+                // add attendee id as one of the input when its setup
+                FirebaseUtil.addUserTokenIdNotification(event, notificationTokenId, aVoid -> {}, e -> {});
+            }});
     }
+
+//    public static void addUserTokenIdNotification(Event event, Map<String, Object> notificationTokenId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener){
+//        db.collection("Events").document(event.getId()).collection("Notification User TokenID")
+//                // when user id is working change this to user ID
+//                .document(String.valueOf(System.currentTimeMillis()))
+//                .set(notificationTokenId)
+//                .addOnSuccessListener(onSuccessListener)
+//                .addOnFailureListener(onFailureListener);
+//    }
+    public static void addUserTokenIdNotification(Event event, Map<String, Object> notificationTokenId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        String tokenIdToCheck = (String) notificationTokenId.get("tokenId"); // Assuming the key for the token ID in the map is "tokenId"
+        CollectionReference tokenCollectionRef = db.collection("Events").document(event.getId()).collection("Notification User TokenID");
+        tokenCollectionRef.whereEqualTo("tokenId", tokenIdToCheck).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (task.getResult() != null && task.getResult().isEmpty()) {
+                    tokenCollectionRef.document(String.valueOf(System.currentTimeMillis())) // Or use a more specific document ID strategy
+                            .set(notificationTokenId)
+                            .addOnSuccessListener(onSuccessListener)
+                            .addOnFailureListener(onFailureListener);
+                } else {
+                    onFailureListener.onFailure(new Exception("Token ID already exists."));
+                }
+            } else {
+                onFailureListener.onFailure(task.getException());
+            }
+        });
+    }
+
 
     public static void addSignUp(SignUp signUp, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
         db.collection("SignUp")
@@ -336,6 +373,5 @@ public class FirebaseUtil {
         }
         return batches;
     }
-
 
 }

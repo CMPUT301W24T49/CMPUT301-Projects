@@ -102,7 +102,7 @@ public class CreateEventFragment extends Fragment {
                     if (getActivity() != null) {
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container, reuseQrCodeFragment)
-                                .addToBackStack(null)  // Optional: Add transaction to back stack
+                                .addToBackStack(null)
                                 .commit();
                     }
                 } else {
