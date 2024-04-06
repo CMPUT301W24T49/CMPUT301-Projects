@@ -36,7 +36,7 @@ exports.sendNotification = functions.firestore
               title: "You have a new notification!",
               body: message,
               eventID: eventId,
-              action: "android.intent.action.MAIN",
+              click_action: "TARGETNOTIFICATION_SOMETHING",
             },
             data: {
               title: "You have a new notification!",

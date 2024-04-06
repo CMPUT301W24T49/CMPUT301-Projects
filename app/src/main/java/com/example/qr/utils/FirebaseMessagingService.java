@@ -19,9 +19,11 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         String messageTitle = "";
         String messageBody = "";
         String eventId = "";
+        String clickAction = "";
         if (remoteMessage.getNotification() != null) {
             messageTitle = remoteMessage.getNotification().getTitle();
             messageBody = remoteMessage.getNotification().getBody();
+            clickAction = remoteMessage.getNotification().getClickAction();
         }
         if (remoteMessage.getData().size() > 0) {
             messageTitle = remoteMessage.getData().getOrDefault("title", "Default Title");
@@ -29,17 +31,17 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             eventId = remoteMessage.getData().get("eventID");
         }
         if (!messageTitle.isEmpty() && !messageBody.isEmpty()) {
-            sendNotification(messageTitle, messageBody, eventId);
+            sendNotification(messageTitle, messageBody, eventId, clickAction);
         }
     }
 
-    private void sendNotification(String messageTitle, String messageBody, String eventId) {
+    private void sendNotification(String messageTitle, String messageBody, String eventId, String clickAction) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("open_fragment", "notification_list_fragment");
         intent.putExtra("event_key", eventId);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, getString(R.string.default_notification_channel_id))
                 .setSmallIcon(R.mipmap.ic_launcher)
