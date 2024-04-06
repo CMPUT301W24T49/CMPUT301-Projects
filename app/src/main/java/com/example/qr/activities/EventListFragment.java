@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -55,8 +54,6 @@ public class EventListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_event_list, container, false);
 
         ListView listView = view.findViewById(R.id.listview_events);
-        Button btnClose = view.findViewById(R.id.btn_close_event_list);
-
         eventDataList = new ArrayList<>();
         eventArrayAdapter = new EventArrayAdapter(getContext(), eventDataList);
         listView.setAdapter(eventArrayAdapter);
@@ -113,13 +110,13 @@ public class EventListFragment extends Fragment {
 
 
         // Close button to go back to the previous screen
-        btnClose.setOnClickListener(v -> {
-            // Check if the fragment is added to an activity and if the activity has a FragmentManager
-            if (isAdded() && getActivity() != null) {
-                getActivity().onBackPressed();
-            }
-
-        });
+//        btnClose.setOnClickListener(v -> {
+//            // Check if the fragment is added to an activity and if the activity has a FragmentManager
+//            if (isAdded() && getActivity() != null) {
+//                getActivity().onBackPressed();
+//            }
+//
+//        });
 
         return view;
     }
