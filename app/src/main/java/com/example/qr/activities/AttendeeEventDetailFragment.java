@@ -154,18 +154,28 @@ public class AttendeeEventDetailFragment extends Fragment {
                         List<SignUp> eventSignUps = new ArrayList<>();
 
                         for(SignUp signUp : SignUps){
+                            if(signUp.getEventId() == null){
+                                continue;
+                            }
                             if(signUp.getEventId().equals(event.getId())){
+                                //add the signups to the list
                                 eventSignUps.add(signUp);
                             }
                         }
 
-                        //check if the user has already signed up for this event
                         boolean isSignedUp = false;
+
                         for(SignUp signUp : eventSignUps){
-                            if(signUp.getUserId().equals(androidId)){
-                                isSignedUp = true;
-                                break;
+
+                            if(signUp.getUserId() == null) {
+                                continue;
                             }
+
+                            if(signUp.getUserId().equals(androidId)){
+                                    isSignedUp = true;
+                                    break;
+                            }
+
                         }
 
                         if(isSignedUp) {

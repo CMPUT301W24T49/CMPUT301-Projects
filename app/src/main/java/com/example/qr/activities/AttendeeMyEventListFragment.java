@@ -176,32 +176,15 @@ public class AttendeeMyEventListFragment extends Fragment {
                         eventIds.add(signUp.getEventId());
                     }
 
-                    // Fetch CheckIns for the current user
-                    FirebaseUtil.getDb().collection("CheckIn")
-                            .whereEqualTo("userId", androidId)
-                            .get()
-                            .addOnSuccessListener(queryDocumentSnapshots1 -> {
-                                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots1) {
-                                    CheckIn checkIn = documentSnapshot.toObject(CheckIn.class);
-                                    if (!eventIds.contains(checkIn.getEventId())) {
-                                        eventIds.add(checkIn.getEventId());
-                                    }
-                                }
+                    if(eventIds.isEmpty()){
+                        fragmentLayout.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        fetchEvents(eventIds);
+                    }
 
-                                // Remove duplicates if necessary
-                                // eventIds = new ArrayList<>(new HashSet<>(eventIds));
-
-                                // Fetch Events based on IDs
-                                fetchEvents(eventIds);
-                            }).addOnFailureListener(e -> {
-                                // Handle error, possibly decrementing batchesCompleted if you want to ensure all batches finish regardless of success\
-
-                            });
-
-                    fragmentLayout.setVisibility(View.VISIBLE);
                 }).addOnFailureListener(e -> {
                     // Handle error, possibly decrementing batchesCompleted if you want to ensure all batches finish regardless of success
-                    fragmentLayout.setVisibility(View.VISIBLE);
                 });
     }
 
