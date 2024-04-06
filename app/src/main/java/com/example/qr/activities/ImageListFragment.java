@@ -142,20 +142,6 @@ public class ImageListFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Object imageToBeDeleted = imageDataList.get(position);
-                getImageString(new ImageUrlCallback() {
-                    @Override
-                    public void onUrlReceived(String url) {
-                        // Handle the URL, e.g., display it in an ImageView or log it
-                        Log.d("Download URL", url);
-                        // If you want to show a Toast, do it here
-                        Toast.makeText(getActivity(), url + " MAY BE MAY BE NOT", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(Exception exception) {
-                        // Handle error
-                    }
-                });
                 if (imageToBeDeleted instanceof User) {
                     User clickedUser = (User) imageToBeDeleted;
                     new AlertDialog.Builder(getActivity())
@@ -163,7 +149,7 @@ public class ImageListFragment extends Fragment {
                             .setMessage("Are you sure you want to delete this image?") // Set the message
                             .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                                 // Delete the image if the user confirms
-                                FirebaseUtil.updateImage("Users", clickedUser.getId(), "profilePicture", "getImageString()",
+                                FirebaseUtil.updateImage("Users", clickedUser.getId(), "profilePicture", "https://firebasestorage.googleapis.com/v0/b/cmput301-b4a16.appspot.com/o/PV.jpeg?alt=media&token=df642ee7-65df-451d-ae3b-359302fb0dc1",
                                         aVoid -> {
                                             imageDataList.remove(position);
                                             profileAndPosterAdapter.notifyDataSetChanged();
@@ -185,7 +171,7 @@ public class ImageListFragment extends Fragment {
                             .setMessage("Are you sure you want to delete this image?") // Set the message
                             .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                                 // Delete the image if the user confirms
-                                FirebaseUtil.updateImage("Events", clickedEvent.getId(), "eventPoster", "getImageString()",
+                                FirebaseUtil.updateImage("Events", clickedEvent.getId(), "eventPoster", "https://firebasestorage.googleapis.com/v0/b/cmput301-b4a16.appspot.com/o/PV.jpeg?alt=media&token=df642ee7-65df-451d-ae3b-359302fb0dc1",
                                         aVoid -> {
                                             imageDataList.remove(position);
                                             profileAndPosterAdapter.notifyDataSetChanged();
@@ -244,57 +230,6 @@ public class ImageListFragment extends Fragment {
 
             @Override
             public void onError(Exception e) {
-            }
-        });
-    }
-//    private String getImageString(){
-//        FirebaseStorage storage = FirebaseStorage.getInstance();
-//        StorageReference storageRef = storage.getReference();
-//        StorageReference imageRef = storageRef.child("https://firebasestorage.googleapis.com/v0/b/cmput301-b4a16.appspot.com/o/P_V.jpg?alt=media&token=2beecea2-a30d-423c-8378-cec92dd19678");
-//        String downloadUrl = "";
-//        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                String downloadUrl = uri.toString();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(Exception exception) {
-//                Toast.makeText(getContext(), "Error loading image.", Toast.LENGTH_SHORT).show();
-//                }
-//        });
-//        Toast.makeText(getActivity(), getImageString() + "MAY BE MAY BE NOT", Toast.LENGTH_SHORT).show();
-//
-//        return downloadUrl;
-//    }
-
-    interface ImageUrlCallback {
-        void onUrlReceived(String url);
-        void onError(Exception exception);
-    }
-
-    // Modified method to use the callback
-    private void getImageString(ImageUrlCallback callback){
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
-
-        // Use a valid path within your Firebase Storage
-        StorageReference imageRef = storageRef.child("2beecea2-a30d-423c-8378-cec92dd19678");
-
-        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                if (callback != null) {
-                    callback.onUrlReceived(uri.toString());
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(Exception exception) {
-                if (callback != null) {
-                    callback.onError(exception);
-                }
-                Toast.makeText(getContext(), "Error loading image.", Toast.LENGTH_SHORT).show();
             }
         });
     }
