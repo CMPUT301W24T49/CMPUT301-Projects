@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.qr.R;
 import com.example.qr.models.Event;
+import com.example.qr.models.Notification;
 import com.example.qr.utils.FirebaseUtil;
 import com.example.qr.utils.GenerateQRCode;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -124,8 +125,9 @@ public class ReuseQrCodeFragment extends Fragment {
         });
 
         chooseQrCode.setOnClickListener(v -> {
-            FirebaseUtil.addEvent(new Event (eventId, name, "", "", new Date(), new Date(),
-                            prevStartTime, prevEndTime, new GeoPoint(1,1), eventId, "", 0),
+            Event event = new Event (eventId, name, "", "", new Date(), new Date(),
+                    prevStartTime, prevEndTime, new GeoPoint(1,1), eventId, "", 0);
+            FirebaseUtil.addEvent(event,
                     documentReference -> {
 
                         // Create a new instance of OrganizerFragment
@@ -141,6 +143,9 @@ public class ReuseQrCodeFragment extends Fragment {
                     }, e -> {
                         // Handle event creation failure
                     });
+            String message = event.getTitle() + "'s details has been updated by organizer.";
+            Notification notification = new Notification("notification" + System.currentTimeMillis(), event.getId(), message, new Date(), false);
+            FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
         });
         // end citation
 
