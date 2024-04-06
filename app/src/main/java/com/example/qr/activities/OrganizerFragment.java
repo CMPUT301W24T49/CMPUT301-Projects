@@ -19,42 +19,40 @@ public class OrganizerFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate layout
         View view = inflater.inflate(R.layout.fragment_organizer, container, false);
         
-        // Buttons initialization
-        Button btnCreateEvents = view.findViewById(R.id.btn_create_events);
-        Button btnMyEvents = view.findViewById(R.id.btn_my_events);
-        Button btnSettings = view.findViewById(R.id.btn_settings);
-        Button btnClose = view.findViewById(R.id.btn_close);
+        // Button initialization
+        Button createEventsBtn = view.findViewById(R.id.btn_create_events);
+        Button eventsBtn = view.findViewById(R.id.btn_my_events);
+        Button settingsBtn = view.findViewById(R.id.btn_settings);
+        Button closeBtn = view.findViewById(R.id.btn_close);
         
-        // Create Events button
-        btnCreateEvents.setOnClickListener(v -> {
-            CreateEventFragment createEventFragment = new CreateEventFragment();
+        // Create events button onclick listener
+        createEventsBtn.setOnClickListener(v -> {
+            OrganizerCreateEventFragment organizerCreateEventFragment = new OrganizerCreateEventFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, createEventFragment)
+                        .replace(R.id.fragment_container, organizerCreateEventFragment)
                         .addToBackStack(null)  // Optional: Add transaction to back stack
                         .commit();
             }
         });
 
-        // My Events Button
-        btnMyEvents.setOnClickListener(v -> {
-            OrganizerEventListFragment organizerEventListFragment = new OrganizerEventListFragment();
+        // Events button onclick listener
+        eventsBtn.setOnClickListener(v -> {
+            OrganizerEventListFragment eventListOrganizerFragment = new OrganizerEventListFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, organizerEventListFragment)
+                        .replace(R.id.fragment_container, eventListOrganizerFragment)
                         .addToBackStack(null)  // Optional: Add transaction to back stack
                         .commit();
             }
         });
 
-
-        // Settings Button
-        btnSettings.setOnClickListener(v -> {
+        // Settings button onclick listener
+        settingsBtn.setOnClickListener(v -> {
             AttendeeSettingsFragment attendeeSettingsFragment = new AttendeeSettingsFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
@@ -66,7 +64,7 @@ public class OrganizerFragment extends Fragment {
 
         // citation: OpenAI, ChatGPT 4, 2024: How do I click a button to change fragments
         // in android studio
-        btnClose.setOnClickListener(new View.OnClickListener() {
+        closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Create a new instance of OrganizerFragment

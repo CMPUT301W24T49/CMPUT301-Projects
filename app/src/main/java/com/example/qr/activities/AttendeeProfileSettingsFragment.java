@@ -34,6 +34,7 @@ import com.example.qr.utils.FirebaseUtil;
 import org.json.JSONException;
 
 import java.util.List;
+import java.util.UUID;
 
 public class AttendeeProfileSettingsFragment extends DialogFragment {
 
@@ -156,7 +157,7 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
             if(returnValue instanceof Uri) {
                 // Upload the profile picture to Firebase Storage
                 Uri profilePicture = (Uri) returnValue;
-                uploadImageAndGetUrl(profilePicture, androidId, downloadUrl -> {
+                uploadImageAndGetUrl(profilePicture, UUID.randomUUID().toString(), downloadUrl -> {
                     currentUser.setProfilePicture(downloadUrl.toString());
                     FirebaseUtil.updateUser(currentUser, aVoid -> {
                         // Disable the EditText fields
@@ -221,7 +222,7 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                         String profilePictureUrl = "https://github.com/identicons/" + (currentUser.getFirstName().toLowerCase()).replace(" ", "") + ".png";
                         currentUser.setProfilePicture(profilePictureUrl);
                         Glide.with(getContext()).load(currentUser.getProfilePicture()).into(profileImageView);
-                        profileImageView.setTag(null);
+                        profileImageView.setTag(1);
                     })
                     .setNegativeButton("No", null)
                     .show();
