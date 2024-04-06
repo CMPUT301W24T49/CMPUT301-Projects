@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.qr.R;
 import com.example.qr.models.Event;
 
@@ -42,12 +43,15 @@ public class OrganizerEventDetailFragment extends Fragment {
         Button btnAnnouncements = view.findViewById(R.id.btnAnnouncements);
         Button btnAttendeeList = view.findViewById(R.id.btnAttendeeList);
         Button btnSignupList = view.findViewById(R.id.btnSignupList);
+        Button btnClose = view.findViewById(R.id.btn_close);
         
-        
-//        if(event.getEventPoster() != null) {
-//            Glide.with(getContext()).load(event.getEventPoster()).into(profile);
-//        }
-        
+
+        // Load event poster image
+        if(event.getEventPoster() != null) {
+            Glide.with(getContext()).load(event.getEventPoster()).into(profile);
+        }
+
+        // Event title
         if(event.getId() != null) {
             String titleText = "Title: " + event.getTitle();
             title.setText(titleText);
@@ -59,6 +63,14 @@ public class OrganizerEventDetailFragment extends Fragment {
 //
 //            }
 //        });
+
+        // Close button going back previous screen
+        btnClose.setOnClickListener(v -> {
+            // Check if fragment is added to an activity and if activity has a FragmentManager
+            if (isAdded() && getActivity() != null) {
+                getActivity().onBackPressed();
+            }
+        });
         
         return view;
 

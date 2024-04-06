@@ -93,9 +93,9 @@ public class AttendeeBrowseEventListFragment extends Fragment {
 
                 eventDataList.addAll(eventList);   // Add events to data list
 
-                eventArrayAdapter.notifyDataSetChanged();
+                eventArrayAdapter.notifyDataSetChanged(); // Update event array adapter
 
-                fragmentLayout.setVisibility(View.VISIBLE);// Update event array adapter
+                fragmentLayout.setVisibility(View.VISIBLE);
                 Log.d("EventListFragment", "Fetched " + eventList.size() + " events");
             }
 

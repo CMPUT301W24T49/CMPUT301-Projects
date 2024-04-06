@@ -9,7 +9,7 @@
 
     <!-- Close (X) Button in the top right -->
     <Button
-        android:id="@+id/close_btn"
+        android:id="@+id/btn_close"
         style="@style/AppRoundedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,19 +30,19 @@
 
         <!-- Create Events Button -->
         <Button
-            android:id="@+id/create_events_btn"
+            android:id="@+id/btn_create_events"
             style="@style/AppRoundedButton"
             android:text="Create new Event" />
 
         <!-- Events Button -->
         <Button
-            android:id="@+id/events_btn"
+            android:id="@+id/btn_my_events"
             style="@style/AppRoundedButton"
             android:text="My Events" />
 
         <!-- Settings Button -->
         <Button
-            android:id="@+id/settings_btn"
+            android:id="@+id/btn_settings"
             style="@style/AppRoundedButton"
             android:text="Settings" />
     </LinearLayout>
