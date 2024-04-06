@@ -73,6 +73,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.bumptech.glide.Glide;
 import com.example.qr.R;
 import com.example.qr.models.Image;
 import com.example.qr.models.User;
@@ -90,10 +91,12 @@ public class ImageDetailDialogFragment extends DialogFragment {
     private ImageDetailDialogListener listener;
     private Image image;
     // Assume you pass the image details as arguments
-    public static ImageDetailDialogFragment newInstance(String imageUrl) {
+    public static ImageDetailDialogFragment newInstance(String imageUrl, String title, String imageId) {
         ImageDetailDialogFragment fragment = new ImageDetailDialogFragment();
         Bundle args = new Bundle();
         args.putString("image_url", imageUrl);
+        args.putString("title_name", title);
+        args.putString("image_id", imageId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -139,20 +142,27 @@ public class ImageDetailDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        image = (Image) getArguments().getSerializable("image");
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_image_detail, null);
 
-        TextView textTitle = view.findViewById(R.id.image_id);
+        String imageUrl = getArguments().getString("image_url");
+        String name = getArguments().getString("title_name");
+        String imageId = getArguments().getString("image_id");
         ImageView imageDetailView = view.findViewById(R.id.image_detail);
-        TextView imageUploadedBY = view.findViewById(R.id.image_uploadedBy);
-        TextView imageUploadTime = view.findViewById(R.id.image_uploadTime);
+
+        Glide.with(this)
+                .load(imageUrl)
+                .into(imageDetailView);
+
+
+        TextView textTitle = view.findViewById(R.id.image_id);
         TextView imageRelatedTo = view.findViewById(R.id.image_relatedTo);
-        textTitle.setText(image.getId());
-        // this needs to be checked
-        imageDetailView.setImageURI(Uri.parse(image.getUrl()));
-        imageUploadedBY.setText(image.getUploadedBy());
-        imageUploadTime.setText(dateFormat.format(image.getUploadTime()));
-        imageRelatedTo.setText(image.getRelatedTo());
+
+        textTitle.setText(imageId);
+//        // this needs to be checked
+//        imageDetailView.setImageURI(Uri.parse(image.getUrl()));
+//        imageUploadedBY.setText(image.getUploadedBy());
+//        imageUploadTime.setText(dateFormat.format(image.getUploadTime()));
+        imageRelatedTo.setText(name);
 
 
 
@@ -161,7 +171,6 @@ public class ImageDetailDialogFragment extends DialogFragment {
         android.app.AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
                 .setView(view)
-                .setTitle("Profile Details")
                 .create();
     }
 }

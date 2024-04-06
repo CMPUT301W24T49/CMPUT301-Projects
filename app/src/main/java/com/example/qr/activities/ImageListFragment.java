@@ -67,8 +67,10 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
+import com.example.qr.models.Event;
 import com.example.qr.models.Image;
 import com.example.qr.models.ImageArrayAdapter;
+import com.example.qr.models.ProfileAndPosterAdapter;
 import com.example.qr.models.User;
 import com.example.qr.utils.FirebaseUtil;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -81,8 +83,8 @@ import java.util.List;
 public class ImageListFragment extends Fragment {
 
     ListView imageList;
-    ArrayList<Image> imageDataList;
-    ImageArrayAdapter imageArrayAdapter;
+    ArrayList<Object> imageDataList;
+    ProfileAndPosterAdapter profileAndPosterAdapter;
 
     private int positionToEdit;
     private FirebaseFirestore db;
@@ -101,11 +103,11 @@ public class ImageListFragment extends Fragment {
 
 
         imageDataList = new ArrayList<>();
-        imageArrayAdapter = new ImageArrayAdapter(getContext(), imageDataList);
-        listView.setAdapter(imageArrayAdapter);
+        profileAndPosterAdapter = new ProfileAndPosterAdapter(getContext(), imageDataList);
+        listView.setAdapter(profileAndPosterAdapter);
 
-        fetchData();
-
+        fetchUserData();
+        fetchEventData();
 //        listView.setOnItemClickListener((adapterView, view1, i, l) -> {
 //            // Handle list item click
 //        });
@@ -114,38 +116,74 @@ public class ImageListFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 listView.setItemChecked(position, true);
                 positionToEdit = position;
-                Image clickedImage = (Image) adapterView.getAdapter().getItem(position);
-                ImageDetailDialogFragment addCityFragment = ImageDetailDialogFragment.newInstance(String.valueOf(clickedImage));
-                addCityFragment.show(getParentFragmentManager(), "Image Detail");
+
+                Object clickedItem = adapterView.getAdapter().getItem(position);
+                ImageDetailDialogFragment objectDetailDialog;
+                if (clickedItem instanceof User) {
+                    User clickedUser = (User) clickedItem;
+                    objectDetailDialog = ImageDetailDialogFragment.newInstance(clickedUser.getProfilePicture(), clickedUser.getName(), clickedUser.getId());
+                    objectDetailDialog.show(getParentFragmentManager(), "Image Detail");
+                } else if (clickedItem instanceof Event) {
+                    Event clickedEvent = (Event) clickedItem;
+                    objectDetailDialog = ImageDetailDialogFragment.newInstance(clickedEvent.getEventPoster(), clickedEvent.getTitle(), clickedEvent.getId());
+                    objectDetailDialog.show(getParentFragmentManager(), "Event Detail");
+                } else {
+                    Toast.makeText(getContext(), "Item type not recognized", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Image imageToBeDeleted = imageDataList.get(position);
-
-                // Create an AlertDialog for confirmation
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Delete Image") // Set the title
-                        .setMessage("Are you sure you want to delete this image?") // Set the message
-                        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                            // Delete the image if the user confirms
-                            FirebaseUtil.deleteUser(imageToBeDeleted.getId(),
-                                    aVoid -> {
-                                        imageDataList.remove(position); // Remove the image from the list
-                                        imageArrayAdapter.notifyDataSetChanged(); // Notify the adapter
-                                        fetchData(); // Refresh the data
-                                        Toast.makeText(getActivity(), "Image " + imageToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
-                                    },
-                                    e -> {
-                                        Toast.makeText(getActivity(), "Failed to delete image", Toast.LENGTH_SHORT).show();
-                                    });
-                        })
-                        .setNegativeButton(android.R.string.no, null) // No action on "No"
-                        .setIcon(android.R.drawable.ic_dialog_alert) // Set an icon
-                        .show(); // Show the dialog
-
+                Object imageToBeDeleted = imageDataList.get(position);
+                if (imageToBeDeleted instanceof User) {
+                    User clickedUser = (User) imageToBeDeleted;
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("Delete Image") // Set the title
+                            .setMessage("Are you sure you want to delete this image?") // Set the message
+                            .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                                // Delete the image if the user confirms
+                                FirebaseUtil.deleteUser(clickedUser.getProfilePicture(),
+                                        aVoid -> {
+                                            imageDataList.remove(position);
+                                            profileAndPosterAdapter.notifyDataSetChanged();
+                                            fetchUserData();
+                                            fetchEventData();
+                                            //                                        Toast.makeText(getActivity(), "Image " + imageToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
+                                        },
+                                        e -> {
+                                            Toast.makeText(getActivity(), "Failed to delete image", Toast.LENGTH_SHORT).show();
+                                        });
+                            })
+                            .setNegativeButton(android.R.string.no, null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                } else if (imageToBeDeleted instanceof Event) {
+                    Event clickedEvent = (Event) imageToBeDeleted;
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("Delete Image") // Set the title
+                            .setMessage("Are you sure you want to delete this image?") // Set the message
+                            .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                                // Delete the image if the user confirms
+                                FirebaseUtil.deleteUser(clickedEvent.getEventPoster(),
+                                        aVoid -> {
+                                            imageDataList.remove(position);
+                                            profileAndPosterAdapter.notifyDataSetChanged();
+                                            fetchUserData();
+                                            fetchEventData();
+                                            //                                        Toast.makeText(getActivity(), "Image " + imageToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
+                                        },
+                                        e -> {
+                                            Toast.makeText(getActivity(), "Failed to delete image", Toast.LENGTH_SHORT).show();
+                                        });
+                            })
+                            .setNegativeButton(android.R.string.no, null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }else{
+                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
                 return true; // Indicate that the click was handled
             }
         });
@@ -160,21 +198,34 @@ public class ImageListFragment extends Fragment {
         return view;
     }
 
-    private void fetchData() {
-        FirebaseUtil.fetchCollection("Images", Image.class, new FirebaseUtil.OnCollectionFetchedListener<Image>() {
+    private void fetchUserData() {
+        FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
             @Override
-            public void onCollectionFetched(List<Image> ImageList) {
+            public void onCollectionFetched(List<User> UserList) {
                 // Handle the fetched Image here
-                imageDataList.addAll(ImageList);
-                imageArrayAdapter.notifyDataSetChanged();
-                Log.d("ImageListFragment", "Fetched " + ImageList.size() + " images");
+                imageDataList.addAll(UserList);
+                profileAndPosterAdapter.notifyDataSetChanged();
+//                Log.d("ImageListFragment", "Fetched " + ImageList.size() + " images");
             }
 
             @Override
             public void onError(Exception e) {
             }
+        });
+    }
+    private void fetchEventData() {
+        FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
+            @Override
+            public void onCollectionFetched(List<Event> EventList) {
+                // Handle the fetched Image here
+                imageDataList.addAll(EventList);
+                profileAndPosterAdapter.notifyDataSetChanged();
+//                Log.d("ImageListFragment", "Fetched " + ImageList.size() + " images");
+            }
 
-
+            @Override
+            public void onError(Exception e) {
+            }
         });
     }
 }
