@@ -68,27 +68,7 @@ public class EventListFragment extends Fragment {
                 EventDetailFragment eventFragment = EventDetailFragment.newInstance(clickedEvent);
                 eventFragment.setTargetFragment(EventListFragment.this, 0);
                 eventFragment.show(getParentFragmentManager(), "Event Detail");
-
-                FirebaseMessaging.getInstance().getToken().
-                        addOnCompleteListener(new OnCompleteListener<String>() {
-                            @Override
-                            public void onComplete( Task<String> task) {
-                                if (!task.isSuccessful()) {
-                                    Log.w("FCM", "Fetching FCM registration token failed", task.getException());
-                                    return;
-                                }
-                                String idToken = task.getResult();
-                                notificationTokenId = new HashMap<>();
-                                notificationTokenId.put("tokenId", idToken);
-                                // add attendee id as one of the input when its setup
-                                FirebaseUtil.addUserTokenIdNotification(clickedEvent, notificationTokenId, aVoid -> {}, e -> {});
-                            }
-                        });
-                message = clickedEvent.getTitle() + " is viewed just for testing.";
-                Notification notification = new Notification("notification" + System.currentTimeMillis(), clickedEvent.getId(), message, new Date(), false);
-                FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
             }
-
         });
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
