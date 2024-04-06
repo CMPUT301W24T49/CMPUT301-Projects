@@ -41,7 +41,7 @@ public class OrganizerEventListFragment extends Fragment {
         
         // Button initialization
         ListView listView = view.findViewById(R.id.listview_events);
-        Button btnClose = view.findViewById(R.id.close_btn);
+        Button btnClose = view.findViewById(R.id.btn_close_event_list);
         
         eventDataList = new ArrayList<>();
         eventArrayAdapter = new EventArrayAdapter(getContext(), eventDataList);
