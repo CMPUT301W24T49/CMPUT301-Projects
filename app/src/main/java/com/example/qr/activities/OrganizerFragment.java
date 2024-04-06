@@ -31,10 +31,10 @@ public class OrganizerFragment extends Fragment {
         
         // Create events button onclick listener
         createEventsBtn.setOnClickListener(v -> {
-            CreateEventFragment createEventFragment = new CreateEventFragment();
+            OrganizerCreateEventFragment organizerCreateEventFragment = new OrganizerCreateEventFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, createEventFragment)
+                        .replace(R.id.fragment_container, organizerCreateEventFragment)
                         .addToBackStack(null)  // Optional: Add transaction to back stack
                         .commit();
             }

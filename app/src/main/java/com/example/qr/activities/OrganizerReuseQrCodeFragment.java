@@ -1,6 +1,9 @@
 package com.example.qr.activities;
 
+import static com.example.qr.utils.FirebaseUtil.uploadImageAndGetUrl;
+
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,16 +22,17 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.qr.R;
 import com.example.qr.models.Event;
+import com.example.qr.models.EventSpinnerAdapter;
 import com.example.qr.utils.FirebaseUtil;
 import com.example.qr.utils.GenerateQRCode;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
-public class ReuseQrCodeFragment extends Fragment {
+public class OrganizerReuseQrCodeFragment extends Fragment {
 
     private Button btnCancel, chooseQrCode;
     private Spinner eventSpinner;
@@ -38,12 +42,15 @@ public class ReuseQrCodeFragment extends Fragment {
 
     private ArrayAdapter<Event> eventAdapter;
 
-    private String eventId, name, location, prevStartTime, prevEndTime;
+    private Event selectedEvent;
+    private Uri imageUri;
+
+    private String qrCode;
     private Integer prevMaxAttendees;
 
     private Date prevStartDate, prevEndDate;
 
-    public ReuseQrCodeFragment() {
+    public OrganizerReuseQrCodeFragment() {
         // Required empty public constructor
     }
 
@@ -62,20 +69,16 @@ public class ReuseQrCodeFragment extends Fragment {
         
         eventDataList = new ArrayList<>();
 
-        // Get the name and location from the bundle
-        Bundle args = getArguments();
-        if (args != null) {
-            name = args.getString("name");
-            location = args.getString("location");
-            prevStartTime = args.getString("prevStartTime");
-            prevEndTime = args.getString("prevEndTime");
+        //get event object and uri if it exists
 
+        selectedEvent = (Event) getArguments().getSerializable("Event");
+
+        if(getArguments().getParcelable("ImageUri") != null){
+            imageUri = (Uri) getArguments().getParcelable("ImageUri");
         }
 
         // Setup ArrayAdapter using the default spinner layout and your events list
-        eventAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, eventDataList);
-        eventAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
+        eventAdapter = new EventSpinnerAdapter(getContext(), eventDataList);
         // Apply the adapter to your Spinner
         eventSpinner.setAdapter(eventAdapter);
 
@@ -92,9 +95,9 @@ public class ReuseQrCodeFragment extends Fragment {
                 }
 
                 // Your existing logic for when a real event is selected
-                eventId = eventDataList.get(position).getId();
-                if(eventId != null) {
-                    Bitmap img = GenerateQRCode.generateQR(eventId);
+                qrCode = eventDataList.get(position).getId();
+                if(qrCode != null) {
+                    Bitmap img = GenerateQRCode.generateQR(qrCode);
                     eventQrCode.setImageBitmap(img);
                 }
             }
@@ -111,36 +114,67 @@ public class ReuseQrCodeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Create a new instance of OrganizerFragment
-                CreateEventFragment createEventFragment = new CreateEventFragment();
+                OrganizerCreateEventFragment organizerCreateEventFragment = new OrganizerCreateEventFragment();
 
                 // Perform the fragment transaction
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                fragmentTransaction.replace(R.id.fragment_container, createEventFragment);
+                fragmentTransaction.replace(R.id.fragment_container, organizerCreateEventFragment);
 
                 fragmentTransaction.commit(); // Commit the transaction
             }
         });
 
         chooseQrCode.setOnClickListener(v -> {
-            FirebaseUtil.addEvent(new Event (eventId, name, "", "", new Date(), new Date(),
-                            prevStartTime, prevEndTime, new GeoPoint(1,1), eventId, "", 0),
-                    documentReference -> {
 
-                        // Create a new instance of OrganizerFragment
-                        OrganizerFragment organizerFragment = new OrganizerFragment();
+            if(eventSpinner.getSelectedItemPosition() == 0){
+                Toast.makeText(getContext(), "Please select an event", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                        // Perform the fragment transaction
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.fragment_container, organizerFragment);
+            if(qrCode != null) {
+                selectedEvent.setQrCode(qrCode);
+            }
 
-                        fragmentTransaction.commit(); // Commit the transaction
-                        Toast.makeText(getContext(), "Event created successfully", Toast.LENGTH_SHORT).show();
-                    }, e -> {
-                        // Handle event creation failure
-                    });
+
+            if(imageUri != null) {
+                uploadImageAndGetUrl(imageUri, UUID.randomUUID().toString(), downloadUrl -> {
+                    Log.d("CreateEvent", "Uploaded image: " + downloadUrl.toString());
+                    selectedEvent.setEventPoster(downloadUrl.toString());
+                    FirebaseUtil.addEvent(selectedEvent,
+                            aVoid -> {
+                                // GPT given code to switch back to organizer screen
+                                switchToOrganizerFragment();
+                                Toast.makeText(getContext(), "Event created successfully", Toast.LENGTH_SHORT).show();
+                            }, e -> {
+                                // else toast that it failed to create
+                                Toast.makeText(getContext(), "Failed to create event", Toast.LENGTH_SHORT).show();
+                            });
+
+                }, e -> {
+                    Log.e("CreateEvent", "Failed to upload image", e);
+                    FirebaseUtil.addEvent(selectedEvent,
+                            aVoid -> {
+                                // GPT given code to switch back to organizer screen
+                                switchToOrganizerFragment();
+                                Toast.makeText(getContext(), "Event created successfully", Toast.LENGTH_SHORT).show();
+                            }, ee -> {
+                                // else toast that it failed to create
+                                Toast.makeText(getContext(), "Failed to create event", Toast.LENGTH_SHORT).show();
+                            });
+                });
+            }else {
+                FirebaseUtil.addEvent(selectedEvent,
+                        aVoid -> {
+                            // GPT given code to switch back to organizer screen
+                            switchToOrganizerFragment();
+                            Toast.makeText(getContext(), "Event created successfully", Toast.LENGTH_SHORT).show();
+                        }, ee -> {
+                            // else toast that it failed to create
+                            Toast.makeText(getContext(), "Failed to create event", Toast.LENGTH_SHORT).show();
+                        });
+            }
         });
         // end citation
 
@@ -171,5 +205,13 @@ public class ReuseQrCodeFragment extends Fragment {
 
 
         });
+    }
+
+    private void switchToOrganizerFragment() {
+        OrganizerFragment organizerFragment = new OrganizerFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, organizerFragment);
+        fragmentTransaction.commit();
     }
 }
