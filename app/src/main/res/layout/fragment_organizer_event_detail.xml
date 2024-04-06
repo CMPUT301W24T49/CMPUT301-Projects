@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_create_new_event"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tvCreateNewEvent"
@@ -13,6 +14,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
         android:layout_marginEnd="0dp"
         android:background="#10283B"
         android:gravity="center"
@@ -29,11 +31,7 @@
         android:layout_below="@+id/tvCreateNewEvent"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="-3dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="-1dp">
+        android:layout_alignParentBottom="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,30 +39,20 @@
             android:layout_below="@id/tvCreateNewEvent"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="0dp"
+            android:layout_marginTop="0dp"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <FrameLayout
+            <ImageView
+                android:id="@+id/ivEventPoster"
                 android:layout_width="match_parent"
-                android:layout_height="297dp">
-
-                <ImageView
-                    android:id="@+id/ivEventPoster"
-                    android:layout_width="280dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:src="@drawable/ic_launcher_background" />
-
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:text="Event poster" />
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginTop="0dp"
+                android:padding = "0dp"
+                android:src="@drawable/ic_launcher_background" />
 
             <TextView
                 android:id="@+id/eventTitle"
@@ -86,7 +74,7 @@
                 android:id="@+id/eventLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:hint="Location"
                 android:textSize="18sp" />
 
@@ -101,9 +89,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Start Date (e.g., DD/MM/YYYY)"
+                    android:hint="Start Date (DD/MM/YYYY)"
                     android:inputType="date"
-                    android:textSize="12sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/endDate"
@@ -111,15 +99,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="End Date (e.g., DD/MM/YYYY)"
+                    android:hint="End Date (DD/MM/YYYY)"
                     android:inputType="date"
-                    android:textSize="12sp" />
+                    android:textSize="17sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -127,9 +115,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Start Time (e.g., HH:MM)"
+                    android:hint="Start Time (HH:MM)"
                     android:inputType="time"
-                    android:textSize="12sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/endTime"
@@ -137,16 +125,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:hint="End Time (e.g., HH:MM)"
+                    android:hint="End Time (HH:MM)"
                     android:inputType="time"
-                    android:textSize="12sp" />
+                    android:textSize="17sp" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/maxAttendees"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:hint="Maximum Attendees"
                 android:inputType="number"
                 android:textSize="18sp" />
@@ -155,13 +143,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <Button
                     android:id="@+id/btnAnnouncements"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_button_dark"
-                    android:text="Announcments"
+                    android:text="Announcements"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp" />
 
@@ -169,23 +159,40 @@
                     android:id="@+id/btnAttendeeList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_button_dark"
-                    android:text="Attendee List"
+                    android:text="Check In List"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/btnSignupList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_button_dark"
+                    android:text="Sign up List"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+
+
             </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp">
-                
+
 
                 <ImageView
                     android:id="@+id/ivQrCode"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:layout_gravity="center_horizontal"
                     android:clickable="true"
                     android:focusable="true"
@@ -193,23 +200,8 @@
 
             </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Qr Code" />
 
 
-            <Button
-                android:id="@+id/btnSignUp"
-                android:layout_width="173dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="12dp"
-                android:background="@drawable/rounded_button_dark"
-                android:text="Sign Up"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp" />
 
         </LinearLayout>
     </ScrollView>

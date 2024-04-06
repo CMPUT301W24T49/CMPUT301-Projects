@@ -57,11 +57,11 @@ public class OrganizerEventListFragment extends Fragment {
             Bundle args = new Bundle();
             args.putSerializable("Event", event);
 
-            AttendeeListFragment attendeeListFragment = new AttendeeListFragment();
-            attendeeListFragment.setArguments(args); // Pass data to attendeeListFragment
+            OrganizerEventDetailFragment organizerEventDetailFragment = new OrganizerEventDetailFragment();
+            organizerEventDetailFragment.setArguments(args); // Pass data to organizerEventDetailFragment
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, attendeeListFragment)
+                        .replace(R.id.fragment_container, organizerEventDetailFragment)
                         .addToBackStack(null)  // Optional: Add transaction to back stack
                         .commit();
             }

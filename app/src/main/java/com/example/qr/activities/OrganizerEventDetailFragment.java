@@ -39,7 +39,9 @@ public class OrganizerEventDetailFragment extends Fragment {
         TextView endTime = view.findViewById(R.id.endTime);
         TextView maxAttendees = view.findViewById(R.id.maxAttendees);
         ImageView qrCode = view.findViewById(R.id.ivQrCode);
-        Button btnSignUp = view.findViewById(R.id.btnSignUp);
+        Button btnAnnouncements = view.findViewById(R.id.btnAnnouncements);
+        Button btnAttendeeList = view.findViewById(R.id.btnAttendeeList);
+        Button btnSignupList = view.findViewById(R.id.btnSignupList);
         
         
 //        if(event.getEventPoster() != null) {
@@ -50,6 +52,13 @@ public class OrganizerEventDetailFragment extends Fragment {
             String titleText = "Title: " + event.getTitle();
             title.setText(titleText);
         }
+
+//        btnAttendeeList.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
         
         return view;
 
