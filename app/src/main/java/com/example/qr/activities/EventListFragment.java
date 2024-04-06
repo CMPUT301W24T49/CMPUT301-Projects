@@ -17,10 +17,15 @@ import com.example.qr.models.Event;
 import com.example.qr.models.EventArrayAdapter;
 import com.example.qr.models.Notification;
 import com.example.qr.utils.FirebaseUtil;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +70,7 @@ public class EventListFragment extends Fragment {
                 eventFragment.show(getParentFragmentManager(), "Event Detail");
             }
         });
+
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

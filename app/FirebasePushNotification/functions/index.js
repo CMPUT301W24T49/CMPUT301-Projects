@@ -35,10 +35,13 @@ exports.sendNotification = functions.firestore
             notification: {
               title: "You have a new notification!",
               body: message,
+              eventID: eventId,
+              click_action: "TARGETNOTIFICATION_SOMETHING",
             },
             data: {
               title: "You have a new notification!",
               body: message,
+              eventID: eventId,
             },
           };
           return Promise.all(tokens.map((userToken) => {

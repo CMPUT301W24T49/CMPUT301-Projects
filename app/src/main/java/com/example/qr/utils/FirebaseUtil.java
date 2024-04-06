@@ -4,6 +4,7 @@ import static com.example.qr.activities.MainActivity.androidId;
 
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 
 import com.example.qr.models.CheckIn;
 import com.example.qr.models.Event;
@@ -12,9 +13,14 @@ import com.example.qr.models.SignUp;
 import com.example.qr.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -56,10 +62,60 @@ public class FirebaseUtil {
      * @param onSuccessListener Callback for successful operation.
      * @param onFailureListener Callback for operation failure.
      */
-    public static void deleteEvent(String eventId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+    public static void deleteEvent(final String eventId,
+                                   final OnSuccessListener<Void> onSuccessListener,
+                                   final OnFailureListener onFailureListener) {
+        final WriteBatch batch = db.batch();
+        final DocumentReference eventDocRef = db.collection("Events").document(eventId);
+        final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+
+        String[] subcollectionsPaths = {"Notifications", "Attendees"};
+        for (String subcollectionPath : subcollectionsPaths) {
+            tasks.add(eventDocRef.collection(subcollectionPath).get());
+        }
+
+        tasks.add(db.collection("CheckIn").whereEqualTo("eventId", eventId).get());
+
+        tasks.add(db.collection("SignUp").whereEqualTo("eventId", eventId).get());
+        Tasks.whenAllSuccess(tasks).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
+            @Override
+            public void onSuccess(List<Object> list) {
+
+                for (Object obj : list) {
+                    QuerySnapshot querySnapshot = (QuerySnapshot) obj;
+                    for (DocumentSnapshot docSnap : querySnapshot.getDocuments()) {
+                        batch.delete(docSnap.getReference());
+                    }
+                }
+
+                batch.delete(eventDocRef);
+                batch.commit().addOnSuccessListener(onSuccessListener)
+                        .addOnFailureListener(onFailureListener);
+            }
+        }).addOnFailureListener(onFailureListener);
+
+        String[] subcollectionsPath = {"Notifications",};
+
+        // Delete each subcollection
+        for (String collectionPath : subcollectionsPath) {
+            deleteSubcollection(eventId, collectionPath, onSuccessListener, onFailureListener);
+        }
         db.collection("Events").document(eventId)
                 .delete()
                 .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+    private static void deleteSubcollection(String eventId, String subcollectionPath,
+                                            OnSuccessListener<Void> onSuccessListener,
+                                            OnFailureListener onFailureListener) {
+        db.collection("Events").document(eventId).collection(subcollectionPath)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (DocumentSnapshot docSnap : queryDocumentSnapshots) {
+                        docSnap.getReference().delete();
+                    }
+                    onSuccessListener.onSuccess(null);
+                })
                 .addOnFailureListener(onFailureListener);
     }
 
@@ -84,7 +140,36 @@ public class FirebaseUtil {
      * @param onSuccessListener Callback for successful operation.
      * @param onFailureListener Callback for operation failure.
      */
-    public static void deleteUser(String userId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+    public static void deleteUser(final String userId, final OnSuccessListener<Void> onSuccessListener, final OnFailureListener onFailureListener) {
+        final WriteBatch batch = db.batch();
+        final DocumentReference userDocRef = db.collection("Users").document(userId);
+        final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+
+        String[] subcollectionsPaths = {"Notifications", "Attendees"};
+        for (String subcollectionPath : subcollectionsPaths) {
+            tasks.add(userDocRef.collection(subcollectionPath).get());
+        }
+
+        tasks.add(db.collection("CheckIn").whereEqualTo("userId", userId).get());
+
+        tasks.add(db.collection("SignUp").whereEqualTo("userId", userId).get());
+        Tasks.whenAllSuccess(tasks).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
+            @Override
+            public void onSuccess(List<Object> list) {
+
+                for (Object obj : list) {
+                    QuerySnapshot querySnapshot = (QuerySnapshot) obj;
+                    for (DocumentSnapshot docSnap : querySnapshot.getDocuments()) {
+                        batch.delete(docSnap.getReference());
+                    }
+                }
+
+                batch.delete(userDocRef);
+                batch.commit().addOnSuccessListener(onSuccessListener)
+                        .addOnFailureListener(onFailureListener);
+            }
+        }).addOnFailureListener(onFailureListener);
+
         db.collection("Users").document(userId)
                 .delete()
                 .addOnSuccessListener(onSuccessListener)
@@ -99,7 +184,7 @@ public class FirebaseUtil {
      * @param onFailureListener Callback for operation failure.
      */
     public static void addCheckIn(CheckIn checkIn, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
-        db.collection("Check-Ins")
+        db.collection("CheckIn")
                 .document(UUID.randomUUID().toString())
                 .set(checkIn)
                 .addOnSuccessListener(onSuccessListener)

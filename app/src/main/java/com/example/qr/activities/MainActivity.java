@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import android.content.Intent;
+import android.widget.Toast;
 
 import com.example.qr.R;
 import com.example.qr.models.Event;
@@ -86,19 +88,51 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                 }
             });
         }
+        handleIntent(getIntent());
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        handleIntent(intent);
+    }
 
+    private void handleIntent(Intent intent) {
+        if (intent != null && intent.hasExtra("open_fragment") &&
+                "notification_list_fragment".equals(intent.getStringExtra("open_fragment"))) {
+            String eventID = intent.getStringExtra("event_key");
+            Event event = (Event) intent.getSerializableExtra("event");
+
+            if (event != null) {
+                openNotificationListFragment(event);
+            } else {
+                // Handle the case where the event is null
+                Log.e("MainActivity", "Event object is null.");
+            }
+        }
+    }
+
+    private void openNotificationListFragment(Event event) {
+        NotificationListFragment fragment = new NotificationListFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("event_key", event.getId()); // Make sure the event ID is serialized properly
+        args.putSerializable("event", event);
+        fragment.setArguments(args);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
 
     @Override
     public void onDeleteEvent(Event event) {
-        // Code to delete the event goes here
-        // You may need to communicate with your database or a ViewModel to perform the deletion
     }
 
     @Override
     public void onDeleteUser(User user){
-
     }
 
 }
+
