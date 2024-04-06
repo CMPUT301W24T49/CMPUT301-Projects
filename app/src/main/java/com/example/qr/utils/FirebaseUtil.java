@@ -140,7 +140,36 @@ public class FirebaseUtil {
      * @param onSuccessListener Callback for successful operation.
      * @param onFailureListener Callback for operation failure.
      */
-    public static void deleteUser(String userId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+    public static void deleteUser(final String userId, final OnSuccessListener<Void> onSuccessListener, final OnFailureListener onFailureListener) {
+        final WriteBatch batch = db.batch();
+        final DocumentReference userDocRef = db.collection("Users").document(userId);
+        final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+
+        String[] subcollectionsPaths = {"Notifications", "Attendees"};
+        for (String subcollectionPath : subcollectionsPaths) {
+            tasks.add(userDocRef.collection(subcollectionPath).get());
+        }
+
+        tasks.add(db.collection("CheckIn").whereEqualTo("userId", userId).get());
+
+        tasks.add(db.collection("SignUp").whereEqualTo("userId", userId).get());
+        Tasks.whenAllSuccess(tasks).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
+            @Override
+            public void onSuccess(List<Object> list) {
+
+                for (Object obj : list) {
+                    QuerySnapshot querySnapshot = (QuerySnapshot) obj;
+                    for (DocumentSnapshot docSnap : querySnapshot.getDocuments()) {
+                        batch.delete(docSnap.getReference());
+                    }
+                }
+
+                batch.delete(userDocRef);
+                batch.commit().addOnSuccessListener(onSuccessListener)
+                        .addOnFailureListener(onFailureListener);
+            }
+        }).addOnFailureListener(onFailureListener);
+
         db.collection("Users").document(userId)
                 .delete()
                 .addOnSuccessListener(onSuccessListener)

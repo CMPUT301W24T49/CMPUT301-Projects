@@ -95,40 +95,43 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-
-        // Handle intent if the activity is already running and it receives a new intent
         handleIntent(intent);
     }
 
     private void handleIntent(Intent intent) {
-        if (intent != null && "notification_list_fragment".equals(intent.getStringExtra("open_fragment"))) {
+        if (intent != null && intent.hasExtra("open_fragment") &&
+                "notification_list_fragment".equals(intent.getStringExtra("open_fragment"))) {
             String eventID = intent.getStringExtra("event_key");
             Event event = (Event) intent.getSerializableExtra("event");
 
-            NotificationListFragment fragment = new NotificationListFragment();
-            Bundle args = new Bundle();
-            args.putSerializable("event_key", eventID);
-            args.putSerializable("event", event);
-            fragment.setArguments(args);
-            Toast.makeText(this, "Event pplessssss deleted successfully", Toast.LENGTH_SHORT).show();
-
-            // Perform the fragment transaction to replace your container with the NotificationListFragment
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .addToBackStack(null)
-                    .commit();
+            if (event != null) {
+                openNotificationListFragment(event);
+            } else {
+                // Handle the case where the event is null
+                Log.e("MainActivity", "Event object is null.");
+            }
         }
+    }
+
+    private void openNotificationListFragment(Event event) {
+        NotificationListFragment fragment = new NotificationListFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("event_key", event.getId()); // Make sure the event ID is serialized properly
+        args.putSerializable("event", event);
+        fragment.setArguments(args);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
     public void onDeleteEvent(Event event) {
-        // Code to delete the event goes here
-        // You may need to communicate with your database or a ViewModel to perform the deletion
     }
 
     @Override
     public void onDeleteUser(User user){
-
     }
 
 }
