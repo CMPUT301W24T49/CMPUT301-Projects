@@ -193,7 +193,15 @@ public class AttendeeMyEventListFragment extends Fragment {
 
                                 // Fetch Events based on IDs
                                 fetchEvents(eventIds);
+                            }).addOnFailureListener(e -> {
+                                // Handle error, possibly decrementing batchesCompleted if you want to ensure all batches finish regardless of success\
+
                             });
+
+                    fragmentLayout.setVisibility(View.VISIBLE);
+                }).addOnFailureListener(e -> {
+                    // Handle error, possibly decrementing batchesCompleted if you want to ensure all batches finish regardless of success
+                    fragmentLayout.setVisibility(View.VISIBLE);
                 });
     }
 
