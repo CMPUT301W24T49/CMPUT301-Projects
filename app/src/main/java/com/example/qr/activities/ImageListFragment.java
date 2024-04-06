@@ -97,7 +97,7 @@ public class ImageListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_image_list, container, false);
 
         ListView listView = view.findViewById(R.id.listview_images);
-//        Button btnClose = view.findViewById(R.id.btn_close_image_list);
+        Button btnClose = view.findViewById(R.id.btn_close_image_list);
 
 
         imageDataList = new ArrayList<>();
@@ -151,11 +151,11 @@ public class ImageListFragment extends Fragment {
         });
 
 
-//        btnClose.setOnClickListener(v -> {
-//            if (isAdded() && getActivity() != null) {
-//                getActivity().onBackPressed();
-//            }
-//        });
+        btnClose.setOnClickListener(v -> {
+            if (isAdded() && getActivity() != null) {
+                getActivity().onBackPressed();
+            }
+        });
 
         return view;
     }

@@ -42,8 +42,7 @@ public class ProfileListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile_list, container, false);
 
         ListView listView = view.findViewById(R.id.listview_profiles);
-//        Button btnClose = view.findViewById(R.id.btn_close_profile_list);
-
+        Button btnClose = view.findViewById(R.id.btn_close_profile_list);
 
         userDataList = new ArrayList<>();
         userArrayAdapter = new UserArrayAdapter(getContext(), userDataList);
@@ -94,11 +93,11 @@ public class ProfileListFragment extends Fragment {
         });
 
 
-//        btnClose.setOnClickListener(v -> {
-//            if (isAdded() && getActivity() != null) {
-//                getActivity().onBackPressed();
-//            }
-//        });
+        btnClose.setOnClickListener(v -> {
+            if (isAdded() && getActivity() != null) {
+                getActivity().onBackPressed();
+            }
+        });
 
         return view;
     }

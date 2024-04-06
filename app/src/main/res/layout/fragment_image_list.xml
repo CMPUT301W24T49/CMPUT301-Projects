@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="#10283B"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#10283B"
     android:id="@+id/fragment_image_list_layout">
 
 <!-- Close (X) Button at the top right -->
-<!--<Button-->
-<!--    android:id="@+id/btn_close_image_list"-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="X"-->
-<!--    android:layout_alignParentEnd="true"-->
-<!--    android:layout_alignParentTop="true"-->
-<!--    android:layout_margin="16dp"-->
-<!--    style="@style/AppRoundedButton"/>-->
+    <Button
+        android:id="@+id/btn_close_image_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="16dp"
+        style="@style/AppRoundedButton"/>
 
 <!-- ListView for the events -->
 
@@ -23,21 +23,23 @@ android:background="#10283B"
         android:layout_width="181dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="140dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="126dp"
+        android:layout_toStartOf="@id/btn_close_image_list"
         android:text=" Image List"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF" />
 
     <ListView
-    android:id="@+id/listview_images"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:divider="@android:color/darker_gray"
-    android:dividerHeight="1dp"
-    android:layout_marginTop="70dp"
-    android:background="#424242"
-    android:padding="8dp"
-    android:scrollbars="vertical"/>
+        android:id="@+id/listview_images"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn_close_image_list"
+        android:layout_marginTop="16dp"
+        android:background="#424242"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:padding="8dp"
+        android:scrollbars="vertical"/>
 
 </RelativeLayout>
