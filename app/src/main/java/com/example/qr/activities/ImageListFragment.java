@@ -54,6 +54,7 @@
 package com.example.qr.activities;
 
 import android.app.AlertDialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,7 +74,11 @@ import com.example.qr.models.ImageArrayAdapter;
 import com.example.qr.models.ProfileAndPosterAdapter;
 import com.example.qr.models.User;
 import com.example.qr.utils.FirebaseUtil;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,7 +149,7 @@ public class ImageListFragment extends Fragment {
                             .setMessage("Are you sure you want to delete this image?") // Set the message
                             .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                                 // Delete the image if the user confirms
-                                FirebaseUtil.deleteUser(clickedUser.getProfilePicture(),
+                                FirebaseUtil.updateImage("Users", clickedUser.getId(), "profilePicture", "https://firebasestorage.googleapis.com/v0/b/cmput301-b4a16.appspot.com/o/PV.jpeg?alt=media&token=df642ee7-65df-451d-ae3b-359302fb0dc1",
                                         aVoid -> {
                                             imageDataList.remove(position);
                                             profileAndPosterAdapter.notifyDataSetChanged();
@@ -166,7 +171,7 @@ public class ImageListFragment extends Fragment {
                             .setMessage("Are you sure you want to delete this image?") // Set the message
                             .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                                 // Delete the image if the user confirms
-                                FirebaseUtil.deleteUser(clickedEvent.getEventPoster(),
+                                FirebaseUtil.updateImage("Events", clickedEvent.getId(), "eventPoster", "https://firebasestorage.googleapis.com/v0/b/cmput301-b4a16.appspot.com/o/PV.jpeg?alt=media&token=df642ee7-65df-451d-ae3b-359302fb0dc1",
                                         aVoid -> {
                                             imageDataList.remove(position);
                                             profileAndPosterAdapter.notifyDataSetChanged();

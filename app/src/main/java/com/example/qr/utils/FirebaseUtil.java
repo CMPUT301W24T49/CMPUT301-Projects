@@ -267,6 +267,13 @@ public class FirebaseUtil {
         }).addOnSuccessListener(onSuccessListener).addOnFailureListener(onFailureListener);
     }
 
+    public static void updateImage(String collectionName, String documentId, String fieldName,String imageString, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener){
+        db.collection(collectionName).document(documentId)
+                .update(fieldName, imageString)
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
     // Citation: OpenAI, ChatGPT 4, 2024
     // Prompt: How to fetch collection from Firestore database?
     /**
