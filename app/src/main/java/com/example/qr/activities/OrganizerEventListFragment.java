@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 
@@ -25,6 +26,8 @@ public class OrganizerEventListFragment extends Fragment {
     ArrayList<Event> eventDataList;
     EventArrayAdapter eventArrayAdapter;
 
+    RelativeLayout fragmentLayout;
+
 
     public OrganizerEventListFragment() {
         // Required empty public constructor
@@ -34,6 +37,7 @@ public class OrganizerEventListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate layout
         View view = inflater.inflate(R.layout.fragment_event_list, container, false);
+        fragmentLayout = view.findViewById(R.id.fragment_event_list_layout);
         
         // Button initialization
         ListView listView = view.findViewById(R.id.listview_events);
@@ -45,24 +49,23 @@ public class OrganizerEventListFragment extends Fragment {
 
         fetchData();
 
-        // Event list onclick directs to AttendeeListFragment
+        // Events on click direct to OrganizerEventDetailFragment
         listView.setOnItemClickListener((adapterView, view1, position, rowId) -> {
 
             // Get position and Id of event clicked
             Event event = eventDataList.get(position);
-            String eventId = event.getId();
 
             // Send eventId to AttendeeListFragment
             // Adapted from answer given by João Marcos
             // https://stackoverflow.com/questions/24555417/how-to-send-data-from-one-fragment-to-another-fragment
             Bundle args = new Bundle();
-            args.putString("Id", eventId);
+            args.putSerializable("Event", event);
 
-            AttendeeListFragment attendeeListFragment = new AttendeeListFragment();
-            attendeeListFragment.setArguments(args); // Pass data to attendeeListFragment
+            OrganizerEventDetailFragment organizerEventDetailFragment = new OrganizerEventDetailFragment();
+            organizerEventDetailFragment.setArguments(args); // Pass data to organizerEventDetailFragment
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, attendeeListFragment)
+                        .replace(R.id.fragment_container, organizerEventDetailFragment)
                         .addToBackStack(null)  // Optional: Add transaction to back stack
                         .commit();
             }
@@ -76,6 +79,7 @@ public class OrganizerEventListFragment extends Fragment {
             }
         });
 
+        fragmentLayout.setVisibility(View.GONE);
         return view;
     }
 
@@ -88,7 +92,7 @@ public class OrganizerEventListFragment extends Fragment {
             public void onCollectionFetched(List<Event> eventList) {
                 // Handle the fetched events
 
-                //only add the events which have the same organizerid
+                // Only add the events which have the same organizerID
                 for(Event event : eventList){
                     if(event.getOrganizerId().equals(androidId)){
                         eventDataList.add(event);
@@ -96,6 +100,8 @@ public class OrganizerEventListFragment extends Fragment {
                 }
 
                 eventArrayAdapter.notifyDataSetChanged();   // Update event array adapter
+
+                fragmentLayout.setVisibility(View.VISIBLE);
                 Log.d("EventListFragment", "Fetched " + eventList.size() + " events");
             }
 

@@ -24,10 +24,10 @@ public class OrganizerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_organizer, container, false);
         
         // Button initialization
-        Button createEventsBtn = view.findViewById(R.id.create_events_btn);
-        Button eventsBtn = view.findViewById(R.id.events_btn);
-        Button settingsBtn = view.findViewById(R.id.settings_btn);
-        Button closeBtn = view.findViewById(R.id.close_btn);
+        Button createEventsBtn = view.findViewById(R.id.btn_create_events);
+        Button eventsBtn = view.findViewById(R.id.btn_my_events);
+        Button settingsBtn = view.findViewById(R.id.btn_settings);
+        Button closeBtn = view.findViewById(R.id.btn_close);
         
         // Create events button onclick listener
         createEventsBtn.setOnClickListener(v -> {

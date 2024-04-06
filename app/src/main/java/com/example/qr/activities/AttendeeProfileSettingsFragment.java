@@ -222,7 +222,7 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                         String profilePictureUrl = "https://github.com/identicons/" + (currentUser.getFirstName().toLowerCase()).replace(" ", "") + ".png";
                         currentUser.setProfilePicture(profilePictureUrl);
                         Glide.with(getContext()).load(currentUser.getProfilePicture()).into(profileImageView);
-                        profileImageView.setTag(null);
+                        profileImageView.setTag(1);
                     })
                     .setNegativeButton("No", null)
                     .show();
