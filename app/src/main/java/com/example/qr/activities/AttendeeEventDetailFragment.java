@@ -87,7 +87,7 @@ public class AttendeeEventDetailFragment extends Fragment {
         List<Address> addresses = null;
         try {
             addresses = geocoder.getFromLocation(event.getLocation().getLatitude(), event.getLocation().getLongitude(), 1);
-            if(addresses != null) {
+            if(addresses != null && !addresses.isEmpty()) {
                 String address = addresses.get(0).getAddressLine(0);
                 String locationText = "Location: " + address;
                 location.setText(locationText);
@@ -108,12 +108,12 @@ public class AttendeeEventDetailFragment extends Fragment {
             endDate.setText(endDateText);
         }
 
-        if(!event.getStartTime().isEmpty()){
+        if(event.getStartTime() != null &&  !event.getStartTime().isEmpty()){
             String startTimeText = "Start Time: " + event.getStartTime();
             startTime.setText(startTimeText);
         }
 
-        if(!event.getEndTime().isEmpty()){
+        if(event.getEndTime() != null && !event.getEndTime().isEmpty()){
             String endTimeText = "End Time: " + event.getEndTime();
             endTime.setText(endTimeText);
         }
