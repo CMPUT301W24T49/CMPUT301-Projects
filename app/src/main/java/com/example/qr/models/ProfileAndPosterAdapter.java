@@ -48,7 +48,7 @@ public class ProfileAndPosterAdapter extends ArrayAdapter<Object> {
         if (item instanceof User) {
             User user = (User) item;
             String profilePictureUrl = user.getProfilePicture();
-            if (profilePictureUrl != null && !profilePictureUrl.equals("") && user.getName() != null) {
+            if (profilePictureUrl != null && !profilePictureUrl.equals("") && user.getName() != null && !profilePictureUrl.equals(" ")) {
 //                Glide.with(context)
 //                        .load(user.getProfilePicture())
 //                        .into(imageView);
@@ -57,7 +57,7 @@ public class ProfileAndPosterAdapter extends ArrayAdapter<Object> {
         } else if (item instanceof Event) {
             Event event = (Event) item;
             String eventPosterUrl = event.getEventPoster();
-            if (eventPosterUrl != null && !eventPosterUrl.equals("") && event.getTitle() != null) {
+            if (eventPosterUrl != null && !eventPosterUrl.equals("") && !eventPosterUrl.equals(" ")&& event.getTitle() != null) {
 //                Glide.with(context)
 //                        .load(event.getEventPoster())
 //                        .into(imageView);
