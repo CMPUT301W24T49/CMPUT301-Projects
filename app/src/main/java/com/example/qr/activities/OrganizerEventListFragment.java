@@ -49,7 +49,7 @@ public class OrganizerEventListFragment extends Fragment {
 
         fetchData();
 
-        // Event list onclick directs to AttendeeListFragment
+        // Events on click direct to OrganizerEventDetailFragment
         listView.setOnItemClickListener((adapterView, view1, position, rowId) -> {
 
             // Get position and Id of event clicked
