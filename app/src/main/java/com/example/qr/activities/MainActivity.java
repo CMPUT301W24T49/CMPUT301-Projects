@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                 }
             });
         }
+        handleIntent(getIntent());
     }
 
     @Override
