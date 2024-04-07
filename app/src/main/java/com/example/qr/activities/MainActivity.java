@@ -1,9 +1,14 @@
 package com.example.qr.activities;
+import android.Manifest;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -93,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                 }
             });
         }
-        handleIntent(getIntent());
     }
 
     @Override
@@ -130,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                 .addToBackStack(null)
                 .commit();
     }
-
     @Override
     public void onDeleteEvent(Event event) {
     }
