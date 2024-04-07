@@ -21,7 +21,7 @@
         android:id="@+id/selectEventLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select event:"
+        android:text="Existing Events"
         android:textSize="18sp"
         android:textColor="@android:color/white"
         android:layout_below="@id/reuseQRcode"
@@ -39,7 +39,8 @@
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:spinnerMode="dropdown"
-        android:padding="16dp" />
+        android:padding="16dp"
+        android:background="@drawable/spinner_outline"/>
 
     <FrameLayout
         android:id="@+id/frameLayoutQRCode"

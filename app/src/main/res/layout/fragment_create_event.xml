@@ -40,14 +40,16 @@
         android:paddingLeft="12dp"
         android:textSize="18sp" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/eventLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingRight="12dp"
         android:paddingLeft="12dp"
         android:hint="Location"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:completionThreshold="3"/>
+
 
     <EditText
         android:id="@+id/eventDescription"

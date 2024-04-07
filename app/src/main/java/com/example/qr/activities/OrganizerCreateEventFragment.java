@@ -4,8 +4,10 @@ import static com.example.qr.activities.MainActivity.androidId;
 import static com.example.qr.utils.FirebaseUtil.uploadImageAndGetUrl;
 import static com.example.qr.utils.GenericUtils.getLocationFromAddress;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -31,13 +33,23 @@ import com.example.qr.R;
 import com.example.qr.models.Event;
 import com.example.qr.utils.FirebaseUtil;
 import com.example.qr.utils.ImagePickerUtil;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.type.LatLng;
 
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -58,6 +70,9 @@ public class OrganizerCreateEventFragment extends Fragment {
 
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
 
+    private static final int AUTOCOMPLETE_REQUEST_CODE = 1;
+    private static final String TAG = "OrganizerCreateEventFragment";
+
     public OrganizerCreateEventFragment() {
         // Required empty public constructor
     }
@@ -65,6 +80,13 @@ public class OrganizerCreateEventFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!Places.isInitialized()) {
+            Places.initialize(getContext(), "YOUR_API_KEY");
+        }
+
+        PlacesClient placesClient = Places.createClient(getContext());
+
         // Initialize the ActivityResultLauncher for photo picking
         pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
             // Callback is invoked after the user selects a media item or closes the photo picker
@@ -78,6 +100,7 @@ public class OrganizerCreateEventFragment extends Fragment {
                 Log.d("PhotoPicker", "No media selected");
             }
         });
+
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -279,9 +302,32 @@ public class OrganizerCreateEventFragment extends Fragment {
         });
         // end citation
 
-        // Add listeners or any additional initialization for other views as needed
+        eventLocation.setOnClickListener(v -> {
+            List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS);
+            Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
+                    .build(getContext());
+            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+        });
+
         return view;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                eventLocation.setText(place.getAddress());
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.i(TAG, status.getStatusMessage());
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+    }
+
 
     // Utility method to set up date and time pickers
     private void setUpDateTimePicker(final EditText editText, final SimpleDateFormat formatter) {
