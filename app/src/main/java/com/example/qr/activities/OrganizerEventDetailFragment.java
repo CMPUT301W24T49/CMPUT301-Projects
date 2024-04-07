@@ -21,7 +21,6 @@ import com.example.qr.utils.GenerateQRCode;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class OrganizerEventDetailFragment extends Fragment {
 
@@ -50,7 +49,7 @@ public class OrganizerEventDetailFragment extends Fragment {
         TextView maxAttendees = view.findViewById(R.id.maxAttendees);
         ImageView qrCode = view.findViewById(R.id.ivQrCode);
         Button btnAnnouncements = view.findViewById(R.id.btnAnnouncements);
-        Button btnAttendeeList = view.findViewById(R.id.btnAttendeeList);
+        Button btnCheckInList = view.findViewById(R.id.btnCheckInList);
         Button btnSignupList = view.findViewById(R.id.btnSignupList);
         Button btnClose = view.findViewById(R.id.btn_close);
         
@@ -125,16 +124,22 @@ public class OrganizerEventDetailFragment extends Fragment {
             qrCode.setImageBitmap(qrCodeBitmap);
         }
 
-//        // Attendee check in list
-//        btnAttendeeList.setOnClickListener(v -> {
-//            AttendeeListFragment attendeeListFragment = new AttendeeListFragment();
-//            if (getActivity() != null) {
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.fragment_container, attendeeListFragment)
-//                        .addToBackStack(null)  // Optional: Add transaction to back stack
-//                        .commit();
-//            }
-//        });
+        // Attendee check in list
+        btnCheckInList.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("Event", event);  // Store event data in a bundle (key-value pair)
+
+            CheckInListFragment checkInList = new CheckInListFragment();
+            checkInList.setArguments((bundle));  // Pass data to attendeeListFragment
+
+            // Navigate to check in list page
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, checkInList)
+                        .addToBackStack(null)  // Optional: Add transaction to back stack
+                        .commit();
+            }
+        });
 
         // Close button going back previous screen
         btnClose.setOnClickListener(v -> {
