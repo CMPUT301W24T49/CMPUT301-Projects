@@ -6,10 +6,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.qr.R;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileAndPosterAdapter extends ArrayAdapter<Object> {
 
@@ -48,22 +50,26 @@ public class ProfileAndPosterAdapter extends ArrayAdapter<Object> {
         if (item instanceof User) {
             User user = (User) item;
             String profilePictureUrl = user.getProfilePicture();
-            if (profilePictureUrl != null && !profilePictureUrl.equals("") && user.getName() != null && !profilePictureUrl.equals(" ")) {
-//                Glide.with(context)
-//                        .load(user.getProfilePicture())
-//                        .into(imageView);
-                textView.setText(user.getName());
+            String userName = user.getName();
+            if (profilePictureUrl != null && !profilePictureUrl.trim().isEmpty() &&
+                    userName != null && !userName.trim().isEmpty()) {
+                textView.setText(userName);
             }
         } else if (item instanceof Event) {
             Event event = (Event) item;
             String eventPosterUrl = event.getEventPoster();
-            if (eventPosterUrl != null && !eventPosterUrl.equals("") && !eventPosterUrl.equals(" ")&& event.getTitle() != null) {
-//                Glide.with(context)
-//                        .load(event.getEventPoster())
-//                        .into(imageView);
-                textView.setText(event.getTitle());
+            String eventTitle = event.getTitle();
+            if (eventPosterUrl != null && !eventPosterUrl.trim().isEmpty() &&
+                    eventTitle != null && !eventTitle.trim().isEmpty()) {
+                textView.setText(eventTitle);
             }
         }
+
         return view;
+    }
+    public void updateItems(List<Object> newItems) {
+        clear();
+        addAll(newItems);
+        notifyDataSetChanged();
     }
 }

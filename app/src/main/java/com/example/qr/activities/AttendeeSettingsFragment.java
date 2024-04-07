@@ -85,10 +85,10 @@ public class AttendeeSettingsFragment extends DialogFragment {
 
             // exit to fragment_main
             btnExitToMain.setOnClickListener(v -> {
-                HomeFragment homeFragment = new HomeFragment();
+                GuestHomeFragment guestHomeFragment = new GuestHomeFragment();
                 if (getActivity() != null) {
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, homeFragment)
+                            .replace(R.id.fragment_container, guestHomeFragment)
                             .addToBackStack(null)  // Optional: Add transaction to back stack
                             .commit();
                 }

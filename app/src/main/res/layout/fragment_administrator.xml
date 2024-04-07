@@ -3,52 +3,82 @@
     android:id="@+id/fragment_admin_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#10283B"
+    android:background="@drawable/background_gradient"
     android:padding="16dp">
 
-    <!-- Close (X) Button at the top right -->
-<!--    <Button-->
-<!--        android:id="@+id/btn_close"-->
-<!--        style="@style/AppRoundedButton"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:text="X" />-->
 
     <!-- LinearLayout to center the buttons vertically -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#10283B "
+        android:background="#0010283B"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Events Option Button -->
+
+        <!--<a href="https://www.flaticon.com/free-icons/daily" title="daily icons">Daily icons created by Freepik - Flaticon</a> -->
         <Button
             android:id="@+id/btn_events_option"
-            style="@style/AppRoundedButton"
-            android:text="Events Option" />
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/button_style"
+            android:drawableTop="@drawable/my_events_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/merienda_bold"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:text="Event Options" />
 
-        <!-- Profile Option Button -->
+        <!--<a href="https://www.flaticon.com/free-icons/skills" title="skills icons">Skills icons created by Freepik - Flaticon</a>-->
         <Button
             android:id="@+id/btn_profile_option"
-            style="@style/AppRoundedButton"
-            android:text="Profile Option" />
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/button_style"
+            android:drawableTop="@drawable/manage_profiles_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/merienda_bold"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:text="Profile Options" />
 
-        <!-- Images Option Button -->
+        <!--<a href="https://www.flaticon.com/free-icons/picture" title="picture icons">Picture icons created by Freepik - Flaticon</a>-->
         <Button
             android:id="@+id/btn_images_option"
-            style="@style/AppRoundedButton"
-            android:text="Images Option" />
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/button_style"
+            android:drawableTop="@drawable/mage_images_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/merienda_bold"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:text="Image Options" />
 
-        <!-- Settings Button -->
+        <!-- <a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Freepik - Flaticon</a>-->
         <Button
             android:id="@+id/btn_settings"
-            style="@style/AppRoundedButton"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_style"
+            android:drawableTop="@drawable/settings_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/merienda_bold"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="14dp"
+            android:textStyle="bold"
             android:text="Settings" />
 
     </LinearLayout>

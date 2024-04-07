@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+
+    <!--<a href="https://www.flaticon.com/free-icons/attendees" title="attendees icons">Attendees icons created by noomtah - Flaticon</a>-->
+    <Button
+        android:id="@+id/button_attendee"
+        android:layout_width="220dp"
+        android:layout_height="210dp"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/button_style"
+        android:drawableTop="@drawable/attendee_icon"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/merienda_bold"
+        android:gravity="center"
+        android:text="Enter As An Attendee"
+        android:textColor="#000"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+
+
+    <!--<a href="https://www.flaticon.com/free-icons/organize" title="organize icons">Organize icons created by Muhammad_Usman - Flaticon</a>-->
+    <Button
+        android:id="@+id/button_organizer"
+        android:layout_width="220dp"
+        android:layout_height="210dp"
+        android:background="@drawable/button_style"
+        android:drawableTop="@drawable/organizer_icon"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/merienda_bold"
+        android:text="Enter As An Organizer"
+        android:textColor="#000"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+
+</LinearLayout>
+
