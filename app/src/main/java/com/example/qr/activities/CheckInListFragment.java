@@ -41,7 +41,7 @@ public class CheckInListFragment extends Fragment {
 
         // Button initialization
         ListView listView = view.findViewById(R.id.attendee_listview);
-        Button btnClose = view.findViewById(R.id.btn_close_attendee_list);
+        Button btnClose = view.findViewById(R.id.btn_close_checkin_list);
 
         attendeeDataList = new ArrayList<>();
         attendeeArrayAdapter = new AttendeeArrayAdapter(getActivity(), attendeeDataList);
