@@ -48,7 +48,7 @@ public class OrganizerEventDetailFragment extends Fragment {
         TextView endTime = view.findViewById(R.id.endTime);
         TextView maxAttendees = view.findViewById(R.id.maxAttendees);
         ImageView qrCode = view.findViewById(R.id.ivQrCode);
-        Button btnAnnouncements = view.findViewById(R.id.btnAnnouncements);
+        Button btnNotification = view.findViewById(R.id.btnNotifications);
         Button btnCheckInList = view.findViewById(R.id.btnCheckInList);
         Button btnSignupList = view.findViewById(R.id.btnSignupList);
         Button btnClose = view.findViewById(R.id.btn_close);
@@ -71,8 +71,7 @@ public class OrganizerEventDetailFragment extends Fragment {
             description.setText(descText);
         }
 
-        // Set location;
-        // Convert geopoint into an actual address
+        // Set location; Convert geopoint into an actual address
         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
         List<Address> addresses = null;
         try {
@@ -124,22 +123,62 @@ public class OrganizerEventDetailFragment extends Fragment {
             qrCode.setImageBitmap(qrCodeBitmap);
         }
 
-        // Attendee check in list
+        // Attendee check-in list button
         btnCheckInList.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("Event", event);  // Store event data in a bundle (key-value pair)
+            bundle.putSerializable("Event", event);    // Store event data
 
             CheckInListFragment checkInList = new CheckInListFragment();
-            checkInList.setArguments((bundle));  // Pass data to attendeeListFragment
+            checkInList.setArguments((bundle));        // Pass data to Check-In list fragment
 
-            // Navigate to check in list page
+            // Navigate to check-in list page
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, checkInList)
-                        .addToBackStack(null)  // Optional: Add transaction to back stack
+                        .addToBackStack(null)         // Optional: Add transaction to back stack
                         .commit();
             }
         });
+
+        // Attendee sign-up list button
+        btnSignupList.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("Event", event);    // Store event data
+
+            SignUpListFragment signUpList = new SignUpListFragment();
+            signUpList.setArguments((bundle));         // Pass data to Sign-up list fragment
+
+            // Navigate to sign-up list page
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, signUpList)
+                        .addToBackStack(null)         // Optional: Add transaction to back stack
+                        .commit();
+            }
+        });
+
+        // Event notifications button
+        // Slightly altered code snippet from AttendeeEventDetailFragment.java, author: Aryan
+        btnNotification.setOnClickListener(v -> {
+            NotificationListFragment notificationList = new NotificationListFragment();
+            Bundle bundle = new Bundle();
+
+            bundle.putSerializable("event_key", event.getId()); // Store event key
+            bundle.putSerializable("event", event);             // Store event data
+
+            notificationList.setArguments(bundle);              // Pass data to notification list fragment
+
+            // Navigate to notification list page
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, notificationList)
+                        .addToBackStack(null)                 // Optional: Add transaction to back stack
+                        .commit();
+            }
+        });
+
+
+
 
         // Close button going back previous screen
         btnClose.setOnClickListener(v -> {
