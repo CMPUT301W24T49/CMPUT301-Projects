@@ -13,20 +13,23 @@ import androidx.fragment.app.Fragment;
 import com.example.qr.R;
 import com.example.qr.models.AttendeeArrayAdapter;
 import com.example.qr.models.CheckIn;
+import com.example.qr.models.Event;
 import com.example.qr.utils.FirebaseUtil;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AttendeeListFragment extends Fragment {
-    
+public class CheckInListFragment extends Fragment {
+
+    public Event event;
+
     ArrayList<String> attendeeDataList;
     AttendeeArrayAdapter attendeeArrayAdapter;
 
     String eventId;
 
-    public AttendeeListFragment() {
+    public CheckInListFragment() {
         // Required empty public constructor
     }
 
@@ -34,13 +37,12 @@ public class AttendeeListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate layout
         View view = inflater.inflate(R.layout.fragment_attendee_list, container, false);
-        
+        event = (Event) getArguments().getSerializable("Event"); // Retrieve event
+
         // Button initialization
         ListView listView = view.findViewById(R.id.attendee_listview);
         Button btnClose = view.findViewById(R.id.btn_close_attendee_list);
 
-        eventId = getArguments().getString("Id"); // Retrieve eventId data from EventListOrganizerFragment
-        
         attendeeDataList = new ArrayList<>();
         attendeeArrayAdapter = new AttendeeArrayAdapter(getActivity(), attendeeDataList);
         listView.setAdapter(attendeeArrayAdapter);
