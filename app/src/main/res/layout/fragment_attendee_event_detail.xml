@@ -173,7 +173,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="12dp"
                 android:background="@drawable/rounded_button_dark"
-                android:text="Notification"
+                android:text="Announcements"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp" />
 
