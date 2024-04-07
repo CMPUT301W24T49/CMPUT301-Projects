@@ -245,6 +245,33 @@ public class FirebaseUtil {
                 FirebaseUtil.addUserTokenIdNotification(event, notificationTokenId, aVoid -> {}, e -> {});
             }});
     }
+    public static void shareFCMToken(String eventId1, String eventId2){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference sourceCollection = db.collection("Events").document(eventId1).collection("Notification User TokenID");
+
+        sourceCollection.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                List<Task<Void>> writeTasks = new ArrayList<>();
+
+                // Step 2: Write each Notification Token to Event ID 2
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Map<String, Object> data = document.getData();
+                    Task<Void> writeTask = db.collection("Events").document(eventId2).collection("Notification User TokenID")
+                            .document(document.getId())  // Use the same document ID, or generate a new one if preferred
+                            .set(data);
+                    writeTasks.add(writeTask);
+                    writeTask.addOnSuccessListener(aVoid -> sourceCollection.document(document.getId()).delete());
+                }
+                Tasks.whenAllSuccess(writeTasks).addOnSuccessListener(results -> {
+                    Log.d("MoveNotificationTokens", "All Notification Tokens moved successfully.");
+                }).addOnFailureListener(e -> {
+                    Log.e("MoveNotificationTokens", "Error moving Notification Tokens.", e);
+                });
+            } else {
+                Log.e("MoveNotificationTokens", "Error reading Notification Tokens.", task.getException());
+            }
+        });
+    }
 
 //    public static void addUserTokenIdNotification(Event event, Map<String, Object> notificationTokenId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener){
 //        db.collection("Events").document(event.getId()).collection("Notification User TokenID")

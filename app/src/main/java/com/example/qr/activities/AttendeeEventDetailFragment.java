@@ -59,9 +59,14 @@ public class AttendeeEventDetailFragment extends Fragment {
         TextView maxAttendees = view.findViewById(R.id.maxAttendees);
         ImageView qrCode = view.findViewById(R.id.ivQrCode);
         Button btnSignUp = view.findViewById(R.id.btnSignUp);
+        Button btnNotification = view.findViewById(R.id.btnNotification);
 
         if(noSignUp){
             btnSignUp.setVisibility(View.GONE);
+            btnSignUp.setClickable(false);
+        }
+        else{
+            btnNotification.setVisibility(View.GONE);
             btnSignUp.setClickable(false);
         }
 
@@ -132,6 +137,22 @@ public class AttendeeEventDetailFragment extends Fragment {
 
         }
 
+        btnNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotificationListFragment notificationListFragment = new NotificationListFragment();
+                Bundle args = new Bundle();
+                args.putSerializable("event_key", event.getId());
+                args.putSerializable("event", event);
+                notificationListFragment.setArguments(args);
+                if (getActivity() != null) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, notificationListFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            }
+        });
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

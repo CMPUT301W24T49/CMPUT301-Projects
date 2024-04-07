@@ -2,6 +2,7 @@ package com.example.qr.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.example.qr.R;
 import com.example.qr.models.Event;
 import com.example.qr.models.EventArrayAdapter;
+import com.example.qr.models.SharedViewModel;
 import com.example.qr.models.User;
 import com.example.qr.utils.FirebaseUtil;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,6 +30,9 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedViewModel viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        viewModel.setOrganizerNotificationStatus(Boolean.TRUE);
 
         setContentView(R.layout.activity_main);
         if (findViewById(R.id.fragment_container) != null) {

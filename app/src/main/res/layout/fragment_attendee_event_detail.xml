@@ -166,6 +166,16 @@
                 android:text="Sign Up"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp" />
+            <Button
+                android:id="@+id/btnNotification"
+                android:layout_width="173dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="12dp"
+                android:background="@drawable/rounded_button_dark"
+                android:text="Notification"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
 
         </LinearLayout>
     </ScrollView>

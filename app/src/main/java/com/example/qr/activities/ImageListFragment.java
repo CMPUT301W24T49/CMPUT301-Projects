@@ -149,13 +149,12 @@ public class ImageListFragment extends Fragment {
                             .setMessage("Are you sure you want to delete this image?") // Set the message
                             .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                                 // Delete the image if the user confirms
-                                FirebaseUtil.updateImage("Users", clickedUser.getId(), "profilePicture", "https://firebasestorage.googleapis.com/v0/b/cmput301-b4a16.appspot.com/o/PV.jpeg?alt=media&token=df642ee7-65df-451d-ae3b-359302fb0dc1",
+                                FirebaseUtil.updateImage("Users", clickedUser.getId(), "profilePicture", "https://github.com/identicons/" + clickedUser.getName()+".png" ,
                                         aVoid -> {
                                             imageDataList.remove(position);
                                             profileAndPosterAdapter.notifyDataSetChanged();
                                             fetchUserData();
                                             fetchEventData();
-                                            //                                        Toast.makeText(getActivity(), "Image " + imageToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
                                         },
                                         e -> {
                                             Toast.makeText(getActivity(), "Failed to delete image", Toast.LENGTH_SHORT).show();
@@ -171,7 +170,7 @@ public class ImageListFragment extends Fragment {
                             .setMessage("Are you sure you want to delete this image?") // Set the message
                             .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                                 // Delete the image if the user confirms
-                                FirebaseUtil.updateImage("Events", clickedEvent.getId(), "eventPoster", "https://firebasestorage.googleapis.com/v0/b/cmput301-b4a16.appspot.com/o/PV.jpeg?alt=media&token=df642ee7-65df-451d-ae3b-359302fb0dc1",
+                                FirebaseUtil.updateImage("Events", clickedEvent.getId(), "eventPoster", "https://github.com/identicons/" + clickedEvent.getEventPoster()+".png",
                                         aVoid -> {
                                             imageDataList.remove(position);
                                             profileAndPosterAdapter.notifyDataSetChanged();

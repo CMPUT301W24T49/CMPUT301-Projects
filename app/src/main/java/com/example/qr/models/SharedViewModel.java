@@ -11,6 +11,7 @@ public class SharedViewModel extends ViewModel {
     private final MutableLiveData<String> lastName = new MutableLiveData<>();
     private final MutableLiveData<String> emailAddress = new MutableLiveData<>();
     private final MutableLiveData<String> phoneNumber = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> organizerNotificationStatus = new MutableLiveData<>();
 
     public void setFirstName(String name) {
         firstName.setValue(name);
@@ -36,5 +37,12 @@ public class SharedViewModel extends ViewModel {
     }
     public LiveData<String> getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public MutableLiveData<Boolean> getOrganizerNotificationStatus() {
+        return organizerNotificationStatus;
+    }
+    public void setOrganizerNotificationStatus(Boolean status){
+        organizerNotificationStatus.setValue(status);
     }
 }
