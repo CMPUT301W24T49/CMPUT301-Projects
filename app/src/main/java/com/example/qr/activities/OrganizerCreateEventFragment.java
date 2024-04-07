@@ -1,20 +1,26 @@
 package com.example.qr.activities;
 
+import static android.content.ContentValues.TAG;
 import static com.example.qr.activities.MainActivity.androidId;
 import static com.example.qr.utils.FirebaseUtil.uploadImageAndGetUrl;
 import static com.example.qr.utils.GenericUtils.getLocationFromAddress;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,13 +37,33 @@ import com.example.qr.R;
 import com.example.qr.models.Event;
 import com.example.qr.utils.FirebaseUtil;
 import com.example.qr.utils.ImagePickerUtil;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.type.LatLng;
 
+import com.google.android.libraries.places.api.Places;
+
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+
+import static android.app.Activity.RESULT_OK;
+import static android.app.Activity.RESULT_CANCELED;
+
+import android.widget.ArrayAdapter;
+
+import com.android.volley.RequestQueue;
+
 import java.io.IOException;
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +73,8 @@ import java.util.function.Consumer;
 
 public class OrganizerCreateEventFragment extends Fragment {
     private ImageView eventPoster;
-    private EditText eventTitle, eventLocation, startDate, endDate, startTime, endTime, maxAttendees, description;
+    private EditText eventTitle, startDate, endDate, startTime, endTime, maxAttendees, description;
+    private AutoCompleteTextView eventLocation;
     private Button btnUseExistingQr, btnGenerateQr, btnCancel;
     private Integer maxAttendeesValue;
     private ImagePickerUtil image;
@@ -58,6 +85,10 @@ public class OrganizerCreateEventFragment extends Fragment {
 
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
 
+    private RequestQueue requestQueue;
+    private ArrayAdapter<String> placesAdapter;
+    private PlacesClient placesClient;
+
     public OrganizerCreateEventFragment() {
         // Required empty public constructor
     }
@@ -65,6 +96,13 @@ public class OrganizerCreateEventFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!Places.isInitialized()) {
+            Places.initialize(getContext(), "AIzaSyAgri4iQIBsBRP3ZWB9slBTckBpw0kEmVk");
+        }
+        placesClient = Places.createClient(getContext());
+        placesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, new ArrayList<String>());
+
         // Initialize the ActivityResultLauncher for photo picking
         pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
             // Callback is invoked after the user selects a media item or closes the photo picker
@@ -78,6 +116,7 @@ public class OrganizerCreateEventFragment extends Fragment {
                 Log.d("PhotoPicker", "No media selected");
             }
         });
+
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -105,9 +144,13 @@ public class OrganizerCreateEventFragment extends Fragment {
         setUpDateTimePicker(startTime, timeFormatter);
         setUpDateTimePicker(endTime, timeFormatter);
 
+        eventLocation.setAdapter(placesAdapter);
+
         eventPoster.setOnClickListener(v -> {
             pickMedia.launch(new PickVisualMediaRequest());
         });
+
+        setupAutocompleteTextView();
 
         // buttons
         btnUseExistingQr.setOnClickListener(v -> {
@@ -279,8 +322,44 @@ public class OrganizerCreateEventFragment extends Fragment {
         });
         // end citation
 
-        // Add listeners or any additional initialization for other views as needed
         return view;
+    }
+
+    // citation: OpenAI, ChatGPT 4, 2024: How to use google maps places API  to autofill a textbox
+    // showing a list of potential locations based on the text in the textbox android studio
+    private void setupAutocompleteTextView() {
+        eventLocation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                updateAutocompletePredictions(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
+
+    private void updateAutocompletePredictions(String query) {
+        AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
+        FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+                .setSessionToken(token)
+                .setQuery(query)
+                .build();
+
+        placesClient.findAutocompletePredictions(request).addOnSuccessListener(response -> {
+            List<String> suggestions = new ArrayList<>();
+            for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
+                suggestions.add(prediction.getFullText(null).toString());
+            }
+            placesAdapter.clear();
+            placesAdapter.addAll(suggestions);
+            placesAdapter.notifyDataSetChanged();
+        }).addOnFailureListener(e -> Log.e(TAG, "Error getting autocomplete predictions", e));
     }
 
     // Utility method to set up date and time pickers
