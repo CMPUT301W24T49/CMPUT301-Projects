@@ -49,29 +49,7 @@ public class AdminProfileFragment extends Fragment {
 
         String androidId = android.provider.Settings.Secure.getString(getContext().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
 
-        viewModel.getFirstName().observe(getViewLifecycleOwner(), firstName -> {
-            if (firstName != null) {
-                editTextFirstName.setText(firstName);
-            }
-        });
 
-        viewModel.getLastName().observe(getViewLifecycleOwner(), lastName -> {
-            if (lastName != null) {
-                editTextLastName.setText(lastName);
-            }
-        });
-
-        viewModel.getEmailAddress().observe(getViewLifecycleOwner(), email -> {
-            if (email != null) {
-                editTextEmail.setText(email);
-            }
-        });
-
-        viewModel.getPhoneNumber().observe(getViewLifecycleOwner(), phone -> {
-            if (phone != null) {
-                editTextPhone.setText(phone);
-            }
-        });
 
         FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
             @Override
