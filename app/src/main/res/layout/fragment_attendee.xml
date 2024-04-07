@@ -3,48 +3,98 @@
     android:id="@+id/fragment_attendee_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#10283B"
+    android:background="@drawable/background_gradient"
     android:padding="16dp">
 
-    <!-- Close (X) Button at the top right -->
+    <!--<a href="https://www.flaticon.com/free-icons/arrow" title="arrow icons">Arrow icons created by Kirill Kazachek - Flaticon</a>-->
     <Button
         android:id="@+id/btn_close"
-        style="@style/AppRoundedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="X" />
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back_arrow_description"
+        android:drawableStart="@drawable/ic_arrow_back"
+        android:onClick="onBackArrowClicked" />
 
     <!-- Content below (using LinearLayout for vertical alignment) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#10283B "
+        android:background="#0010283B"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp">
 
+
+        <!--<a href="https://www.flaticon.com/free-icons/qr-code-scan" title="qr code scan icons">Qr code scan icons created by Eucalyp - Flaticon</a> -->
         <Button
             android:id="@+id/btnCheckIn"
-            style="@style/AppRoundedButton"
-            android:text="Check In" />
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_style"
+            android:drawableTop="@drawable/check_in_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/merienda_bold"
+            android:gravity="center"
+            android:text="Check In"
+            android:textColor="#000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
 
+
+        <!--<a href="https://www.flaticon.com/free-icons/daily" title="daily icons">Daily icons created by Freepik - Flaticon</a> -->
         <Button
             android:id="@+id/btnMyEvents"
-            style="@style/AppRoundedButton"
-            android:text="My Events" />
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_style"
+            android:drawableTop="@drawable/my_events_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/merienda_bold"
+            android:gravity="center"
+            android:text="My Events"
+            android:textColor="#000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
 
+
+        <!--<a href="https://www.flaticon.com/free-icons/calendar" title="calendar icons">Calendar icons created by Freepik - Flaticon</a> -->
         <Button
             android:id="@+id/btnBrowseEvents"
-            style="@style/AppRoundedButton"
-            android:text="Browse Events" />
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_style"
+            android:drawableTop="@drawable/browse_events_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/merienda_bold"
+            android:gravity="center"
+            android:text="Browse Events"
+            android:textColor="#000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
 
+
+        <!-- <a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Freepik - Flaticon</a>-->
         <Button
             android:id="@+id/btnSettings"
-            style="@style/AppRoundedButton"
-            android:text="Settings" />
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/button_style"
+            android:drawableTop="@drawable/settings_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/merienda_bold"
+            android:gravity="center"
+            android:text="Settings"
+            android:textColor="#000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>

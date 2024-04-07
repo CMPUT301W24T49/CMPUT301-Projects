@@ -91,7 +91,7 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
         ImageView profileImageView = view.findViewById(R.id.profileImageView);
         Button uploadButton = view.findViewById(R.id.uploadButton);
         Button removeButton = view.findViewById(R.id.removeButton);
-
+        Button btnClose = view.findViewById(R.id.btn_close);
         // Make the EditText fields read-only by default
         setEditTextEnabled(false);
 
@@ -226,6 +226,12 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                     })
                     .setNegativeButton("No", null)
                     .show();
+        });
+
+        btnClose.setOnClickListener(v -> {
+            if (isAdded() && getActivity() != null) {
+                getActivity().onBackPressed();
+            }
         });
 
         return view;

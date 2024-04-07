@@ -4,46 +4,78 @@
     android:id="@+id/fragment_organizer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#10283B"
+    android:background="@drawable/background_gradient"
     android:padding="16dp">
 
-    <!-- Close (X) Button in the top right -->
+    <!--<a href="https://www.flaticon.com/free-icons/arrow" title="arrow icons">Arrow icons created by Kirill Kazachek - Flaticon</a>-->
     <Button
         android:id="@+id/btn_close"
-        style="@style/AppRoundedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="X" />
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back_arrow_description"
+        android:drawableStart="@drawable/ic_arrow_back"
+        android:onClick="onBackArrowClicked" />
 
     <!-- LinearLayout to align buttons verically -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#10283B"
+        android:background="#0010283B"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Create Events Button -->
+        <!-- <a href="https://www.flaticon.com/free-icons/add-event" title="add event icons">Add event icons created by juicy_fish - Flaticon</a> -->
         <Button
             android:id="@+id/btn_create_events"
-            style="@style/AppRoundedButton"
-            android:text="Create new Event" />
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="75dp"
+            android:background="@drawable/button_style"
+            android:drawableTop="@drawable/create_event_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/merienda_bold"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:text="Create Event" />
 
-        <!-- Events Button -->
+        <!--<a href="https://www.flaticon.com/free-icons/daily" title="daily icons">Daily icons created by Freepik - Flaticon</a> -->
         <Button
             android:id="@+id/btn_my_events"
-            style="@style/AppRoundedButton"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="75dp"
+            android:background="@drawable/button_style"
+            android:drawableTop="@drawable/my_events_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/merienda_bold"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="14dp"
+            android:textStyle="bold"
             android:text="My Events" />
 
-        <!-- Settings Button -->
+        <!-- <a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Freepik - Flaticon</a>-->
         <Button
             android:id="@+id/btn_settings"
-            style="@style/AppRoundedButton"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_style"
+            android:drawableTop="@drawable/settings_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/merienda_bold"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="14dp"
+            android:textStyle="bold"
             android:text="Settings" />
     </LinearLayout>
 </RelativeLayout>
