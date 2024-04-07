@@ -1,6 +1,7 @@
 package com.example.qr.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.qr.R;
 import com.example.qr.models.SharedViewModel;
+import com.example.qr.models.User;
+import com.example.qr.utils.FirebaseUtil;
+
+import java.util.List;
 
 /**
  * AdminProfileFragment provides an interface for viewing and editing administrative user profile details.
@@ -42,29 +47,25 @@ public class AdminProfileFragment extends Fragment {
         EditText editTextPhone = view.findViewById(R.id.editText_phone);
         Button saveButton = view.findViewById(R.id.button_save);
 
-        viewModel.getFirstName().observe(getViewLifecycleOwner(), firstName -> {
-            // This will be called every time the first name in the ViewModel changes
-            if (firstName != null) {
-                editTextFirstName.setText(firstName);
-            }
-        });
+        String androidId = android.provider.Settings.Secure.getString(getContext().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
 
-        // Repeat for last name, email, and phone
-        viewModel.getLastName().observe(getViewLifecycleOwner(), lastName -> {
-            if (lastName != null) {
-                editTextLastName.setText(lastName);
-            }
-        });
 
-        viewModel.getEmailAddress().observe(getViewLifecycleOwner(), email -> {
-            if (email != null) {
-                editTextEmail.setText(email);
-            }
-        });
 
-        viewModel.getPhoneNumber().observe(getViewLifecycleOwner(), phone -> {
-            if (phone != null) {
-                editTextPhone.setText(phone);
+        FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
+            @Override
+            public void onCollectionFetched(List<User> userList) {
+                for (User user : userList) {
+                    if (user.getId().equals(androidId)) {
+                        editTextFirstName.setText(user.getName());
+                        editTextLastName.setText(user.getName());
+                        editTextEmail.setText(user.getEmail());
+                        editTextPhone.setText(user.getPhoneNumber());
+                    }
+                }
+            }
+            @Override
+            public void onError(Exception e) {
+                Log.e("AttendeeProfileSettings", "Error fetching user collection", e);
             }
         });
 

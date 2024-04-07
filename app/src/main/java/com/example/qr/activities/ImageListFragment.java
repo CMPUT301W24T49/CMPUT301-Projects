@@ -112,7 +112,7 @@ public class ImageListFragment extends Fragment {
         listView.setAdapter(profileAndPosterAdapter);
 
         fetchUserData();
-        fetchEventData();
+
 //        listView.setOnItemClickListener((adapterView, view1, i, l) -> {
 //            // Handle list item click
 //        });
@@ -123,13 +123,14 @@ public class ImageListFragment extends Fragment {
                 positionToEdit = position;
 
                 Object clickedItem = adapterView.getAdapter().getItem(position);
-                ImageDetailDialogFragment objectDetailDialog;
                 if (clickedItem instanceof User) {
                     User clickedUser = (User) clickedItem;
+                    ImageDetailDialogFragment objectDetailDialog;
                     objectDetailDialog = ImageDetailDialogFragment.newInstance(clickedUser.getProfilePicture(), clickedUser.getName(), clickedUser.getId());
                     objectDetailDialog.show(getParentFragmentManager(), "Image Detail");
                 } else if (clickedItem instanceof Event) {
                     Event clickedEvent = (Event) clickedItem;
+                    ImageDetailDialogFragment objectDetailDialog;
                     objectDetailDialog = ImageDetailDialogFragment.newInstance(clickedEvent.getEventPoster(), clickedEvent.getTitle(), clickedEvent.getId());
                     objectDetailDialog.show(getParentFragmentManager(), "Event Detail");
                 } else {
@@ -149,13 +150,12 @@ public class ImageListFragment extends Fragment {
                             .setMessage("Are you sure you want to delete this image?") // Set the message
                             .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                                 // Delete the image if the user confirms
-                                FirebaseUtil.updateImage("Users", clickedUser.getId(), "profilePicture", "https://firebasestorage.googleapis.com/v0/b/cmput301-b4a16.appspot.com/o/PV.jpeg?alt=media&token=df642ee7-65df-451d-ae3b-359302fb0dc1",
+                                FirebaseUtil.updateImage("Users", clickedUser.getId(), "profilePicture", "https://github.com/identicons/" + clickedUser.getName()+".png" ,
                                         aVoid -> {
                                             imageDataList.remove(position);
                                             profileAndPosterAdapter.notifyDataSetChanged();
                                             fetchUserData();
                                             fetchEventData();
-                                            //                                        Toast.makeText(getActivity(), "Image " + imageToBeDeleted.getId() + " deleted successfully", Toast.LENGTH_SHORT).show();
                                         },
                                         e -> {
                                             Toast.makeText(getActivity(), "Failed to delete image", Toast.LENGTH_SHORT).show();
@@ -171,7 +171,7 @@ public class ImageListFragment extends Fragment {
                             .setMessage("Are you sure you want to delete this image?") // Set the message
                             .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                                 // Delete the image if the user confirms
-                                FirebaseUtil.updateImage("Events", clickedEvent.getId(), "eventPoster", "https://firebasestorage.googleapis.com/v0/b/cmput301-b4a16.appspot.com/o/PV.jpeg?alt=media&token=df642ee7-65df-451d-ae3b-359302fb0dc1",
+                                FirebaseUtil.updateImage("Events", clickedEvent.getId(), "eventPoster", "https://github.com/identicons/" + clickedEvent.getEventPoster()+".png",
                                         aVoid -> {
                                             imageDataList.remove(position);
                                             profileAndPosterAdapter.notifyDataSetChanged();
@@ -206,26 +206,35 @@ public class ImageListFragment extends Fragment {
     private void fetchUserData() {
         FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
             @Override
-            public void onCollectionFetched(List<User> UserList) {
-                // Handle the fetched Image here
-                imageDataList.addAll(UserList);
-                profileAndPosterAdapter.notifyDataSetChanged();
-//                Log.d("ImageListFragment", "Fetched " + ImageList.size() + " images");
+            public void onCollectionFetched(List<User> userList) {
+                List<User> filteredUsers = new ArrayList<>();
+                for (User user : userList) {
+                    if (user.getName() != null && !user.getName().trim().isEmpty() && user.getProfilePicture() != null && !user.getProfilePicture().trim().isEmpty()) {
+                        filteredUsers.add(user);
+                    }
+                }
+                imageDataList.clear();
+                imageDataList.addAll(filteredUsers);
+                fetchEventData();
             }
-
             @Override
             public void onError(Exception e) {
             }
         });
     }
+
     private void fetchEventData() {
         FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
             @Override
-            public void onCollectionFetched(List<Event> EventList) {
-                // Handle the fetched Image here
-                imageDataList.addAll(EventList);
+            public void onCollectionFetched(List<Event> eventList) {
+                List<Event> filteredEvents = new ArrayList<>();
+                for (Event event : eventList) {
+                    if (event.getTitle() != null && !event.getTitle().trim().isEmpty() && event.getEventPoster() != null && !event.getEventPoster().trim().isEmpty()) {
+                        filteredEvents.add(event);
+                    }
+                }
+                imageDataList.addAll(filteredEvents);
                 profileAndPosterAdapter.notifyDataSetChanged();
-//                Log.d("ImageListFragment", "Fetched " + ImageList.size() + " images");
             }
 
             @Override
@@ -233,4 +242,5 @@ public class ImageListFragment extends Fragment {
             }
         });
     }
+
 }

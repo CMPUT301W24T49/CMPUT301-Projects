@@ -1,8 +1,14 @@
 package com.example.qr.activities;
+import android.Manifest;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -12,6 +18,7 @@ import android.widget.Toast;
 import com.example.qr.R;
 import com.example.qr.models.Event;
 import com.example.qr.models.EventArrayAdapter;
+import com.example.qr.models.SharedViewModel;
 import com.example.qr.models.User;
 import com.example.qr.utils.FirebaseUtil;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedViewModel viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        viewModel.setOrganizerNotificationStatus(Boolean.TRUE);
 
         setContentView(R.layout.activity_main);
         if (findViewById(R.id.fragment_container) != null) {
@@ -50,12 +60,9 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                             if (user.getRole().equals("admin")) {
                                 AdministratorFragment adminMenuFragment = new AdministratorFragment();
                                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, adminMenuFragment).commit();
-                            } else if (user.getRole().equals("attendee")) {
-                                AttendeeFragment attendeeFragment = new AttendeeFragment();
-                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, attendeeFragment).commit();
-                            } else if (user.getRole().equals("organizer")) {
-                                OrganizerFragment organizerFragment = new OrganizerFragment();
-                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, organizerFragment).commit();
+                            } else  {
+                                GuestHomeFragment guestHomeFragment = new GuestHomeFragment();
+                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, guestHomeFragment).commit();
                             }
                             break;
                         }
@@ -64,14 +71,14 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                         // Create a new user with a unique name and the androidId as the id field
                         String guestLastName= "" + new Random().nextInt(10000); // Generate a random number between 0 and 9999
                         String profilePicture = "https://github.com/identicons/guest.png";
-                        User newUser = new User(androidId, "guest", guestLastName, "attendee", profilePicture, "", "", "");
+                        User newUser = new User(androidId, "guest", guestLastName, "nonAdmin", profilePicture, "", "", "");
                         // Add the new user to the database
                         FirebaseUtil.addUser(newUser, new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 // Display the AttendeeFragment for the new user
-                                AttendeeFragment attendeeFragment = new AttendeeFragment();
-                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, attendeeFragment).commit();
+                                GuestHomeFragment guestHomeFragment = new GuestHomeFragment();
+                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, guestHomeFragment).commit();
                             }
                         }, new OnFailureListener() {
                             @Override
@@ -125,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                 .addToBackStack(null)
                 .commit();
     }
-
     @Override
     public void onDeleteEvent(Event event) {
     }
