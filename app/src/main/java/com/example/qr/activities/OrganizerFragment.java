@@ -40,7 +40,7 @@ public class OrganizerFragment extends Fragment {
             }
         });
 
-        // Events button onclick listener
+        // My events button onclick listener
         eventsBtn.setOnClickListener(v -> {
             OrganizerEventListFragment organizerEventList = new OrganizerEventListFragment();
             if (getActivity() != null) {

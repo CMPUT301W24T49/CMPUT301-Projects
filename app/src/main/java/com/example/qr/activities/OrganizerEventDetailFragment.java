@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,13 +147,13 @@ public class OrganizerEventDetailFragment extends Fragment {
             bundle.putSerializable("Event", event);    // Store event data
 
             SignUpListFragment signUpList = new SignUpListFragment();
-            signUpList.setArguments((bundle));         // Pass data to Sign-up list fragment
+            signUpList.setArguments((bundle));           // Pass data to Sign-up list fragment
 
             // Navigate to sign-up list page
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, signUpList)
-                        .addToBackStack(null)         // Optional: Add transaction to back stack
+                        .addToBackStack(null)      // Optional: Add transaction to back stack
                         .commit();
             }
         });

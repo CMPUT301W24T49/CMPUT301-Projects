@@ -25,7 +25,6 @@ public class SignUpListFragment extends Fragment {
     ArrayList<String> attendeeDataList;
     AttendeeArrayAdapter attendeeArrayAdapter;
 
-
     public SignUpListFragment() {
         // Required empty public constructor
     }
@@ -62,14 +61,12 @@ public class SignUpListFragment extends Fragment {
     // Filter through signUpList and add userIds checked into the clicked event
     private void fetchSignUps() {
         List<String> userIds = new ArrayList<>();               // Initialize userIds list
-        FirebaseUtil.fetchCollection("SignUps", SignUp.class, new FirebaseUtil.OnCollectionFetchedListener<SignUp>() {
+        FirebaseUtil.fetchCollection("SignUp", SignUp.class, new FirebaseUtil.OnCollectionFetchedListener<SignUp>() {
             @Override
             public void onCollectionFetched(List<SignUp> signUpList) {
-
-                Log.d("SignUpListFragment", "Fetched sign-ups: " + signUpList.toString()); // Log fetched sign-ups
                 // If sign-ups match the eventId, add to userIds list
                 for (SignUp signUp : signUpList) {
-                    if (signUp.getEventId().equals(event.getId())) {
+                    if (event.getId().equals(signUp.getEventId())) {
                         userIds.add(signUp.getUserId());
                     }
                 }
@@ -85,6 +82,7 @@ public class SignUpListFragment extends Fragment {
 
             @Override
             public void onError(Exception e) {
+                Log.e("CheckInListFragment", "Error fetching sign-ups: ", e); // Log error
             }
         });
 
