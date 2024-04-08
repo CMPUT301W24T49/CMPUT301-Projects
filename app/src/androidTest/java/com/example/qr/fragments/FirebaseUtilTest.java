@@ -27,7 +27,7 @@ public class FirebaseUtilTest {
 
         String id = UUID.randomUUID().toString();
 
-        Event mockEvent = new Event(id, "eventTitle", "eventDescription", "organizerId", null, null, "startTime", "endTime", null, "qrCode", "eventPoster", 100);
+        Event mockEvent = new Event(id, "eventTitle", "eventDescription", "organizerId", null, null, "startTime", "endTime", null, "qrCode", "qrpcode", "eventPoster", 100);
 
         // Add an event
         FirebaseUtil.addEvent(mockEvent, documentReference -> {
