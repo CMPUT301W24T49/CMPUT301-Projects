@@ -109,6 +109,10 @@ public class Notification {
     }
     public void setReadStatus(Boolean readStatus){this.readStatus = readStatus;}
 
+
+    public void milestonesNotification(Event event){
+
+    }
     public Boolean getReadStatus(){return this.readStatus;}
     @NonNull
     @Override
