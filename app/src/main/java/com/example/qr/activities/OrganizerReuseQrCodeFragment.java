@@ -1,5 +1,6 @@
 package com.example.qr.activities;
 
+import static com.example.qr.activities.MainActivity.androidId;
 import static com.example.qr.utils.FirebaseUtil.uploadImageAndGetUrl;
 
 import android.graphics.Bitmap;
@@ -30,9 +31,13 @@ import com.example.qr.utils.FirebaseUtil;
 import com.example.qr.utils.GenerateQRCode;
 import com.google.firebase.firestore.GeoPoint;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.UUID;
 
 public class OrganizerReuseQrCodeFragment extends Fragment {
@@ -49,6 +54,7 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
     private Uri imageUri;
 
     private String qrCode;
+    private String qrpCode;
     private Integer prevMaxAttendees;
 
     private Date prevStartDate, prevEndDate;
@@ -98,7 +104,8 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
                 }
 
                 // Your existing logic for when a real event is selected
-                qrCode = eventDataList.get(position).getId();
+                qrCode = eventDataList.get(position).getQrCode();
+                qrpCode = eventDataList.get(position).getQrpCode();
                 if(qrCode != null) {
                     Bitmap img = GenerateQRCode.generateQR(qrCode);
                     eventQrCode.setImageBitmap(img);
@@ -138,6 +145,9 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
 
             if(qrCode != null) {
                 selectedEvent.setQrCode(qrCode);
+            }
+            if(qrpCode != null) {
+                selectedEvent.setQrpCode(qrpCode);
             }
 
 
@@ -180,9 +190,11 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
             }
             // DO NOT REMOVE THIS. ITS FOR PUSH NOTIFICATION
             FirebaseUtil.shareFCMToken(selectedEvent.getQrCode(), selectedEvent.getId());
+
             String message = selectedEvent.getTitle() + "'s details has been updated by organizer.";
             Notification notification = new Notification("notification" + System.currentTimeMillis(), selectedEvent.getId(), message, new Date(), false);
             FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
+
         });
         // end citation
 
@@ -190,8 +202,6 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
     }
 
     private void fetchData() {
-
-        // Placeholder for "Select one:"
         Event placeholderEvent = new Event();
         placeholderEvent.setTitle("Select one:");
         placeholderEvent.setId("");
@@ -200,8 +210,16 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
         FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
             @Override
             public void onCollectionFetched(List<Event> eventList) {
-                // Handle the fetched events here
-                eventDataList.addAll(eventList);
+                Date now = new Date(); // Current date and time
+
+                for (Event event : eventList) {
+                    if (event.getOrganizerId().equals(androidId)) {
+                        if (isEventBeforeCurrentTime(event.getEndDate(), event.getEndTime())) {
+                            eventDataList.add(event);
+                        }
+                    }
+                }
+
                 eventAdapter.notifyDataSetChanged();
                 Log.d("EventListFragment", "Fetched " + eventList.size() + " events");
             }
@@ -210,10 +228,38 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
             public void onError(Exception e) {
                 // Handle any errors here
             }
-
-
         });
     }
+
+    // citation: Open MP, GPT 4.0, April 2024: How do I check for current runtime date compared to
+    // the endDate and endTime based on *examples from database*
+    private boolean isEventBeforeCurrentTime(Date endDate, String endTime) {
+        if (endDate == null || endTime == null) {
+            return false; // Assuming that an event must have both to be valid
+        }
+
+        SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm", Locale.getDefault()); // Time format
+        SimpleDateFormat sdfDate = new SimpleDateFormat("MMMM d, yyyy 'at' hh:mm:ss a 'UTC'z", Locale.getDefault());
+        sdfDate.setTimeZone(TimeZone.getTimeZone("UTC-6")); // Set timezone to match Firestore
+
+        try {
+            Date endTimeParsed = sdfTime.parse(endTime); // Parse the end time
+            Calendar eventDateTime = Calendar.getInstance();
+            eventDateTime.setTime(endDate);
+
+            Calendar endTimeCal = Calendar.getInstance();
+            endTimeCal.setTime(endTimeParsed);
+            eventDateTime.set(Calendar.HOUR_OF_DAY, endTimeCal.get(Calendar.HOUR_OF_DAY));
+            eventDateTime.set(Calendar.MINUTE, endTimeCal.get(Calendar.MINUTE));
+
+            return eventDateTime.getTime().before(new Date()); // Check if the event's date and time are before the current time
+        } catch (Exception e) {
+            Log.e("Event", "Error parsing time: " + endTime, e);
+            return false;
+        }
+    }
+    // end citation
+
 
     private void switchToOrganizerFragment() {
         OrganizerFragment organizerFragment = new OrganizerFragment();
