@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements AdminUserProfileD
                         // Create a new user with a unique name and the androidId as the id field
                         String guestLastName= "" + new Random().nextInt(10000); // Generate a random number between 0 and 9999
                         String profilePicture = "https://github.com/identicons/guest.png";
-                        User newUser = new User(androidId, "guest", guestLastName, "nonAdmin", profilePicture, "", "", "");
+                        User newUser = new User(androidId, "guest", guestLastName, "nonAdmin", profilePicture, "", "", "default");
                         // Add the new user to the database
                         FirebaseUtil.addUser(newUser, new OnSuccessListener<Void>() {
                             @Override
