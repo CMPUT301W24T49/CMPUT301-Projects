@@ -21,6 +21,7 @@ import com.example.qr.models.EventArrayAdapter;
 import com.example.qr.models.SharedViewModel;
 import com.example.qr.models.User;
 import com.example.qr.utils.FirebaseUtil;
+import com.example.qr.utils.GeolocationUtil;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -32,7 +33,6 @@ import java.util.Random;
  */
 public class MainActivity extends AppCompatActivity implements AdminUserProfileDetailFragment.UserDetailDialogListener, ImageDetailDialogFragment.ImageDetailDialogListener {
     private static final int RC_NOTIFICATION = 99;
-    EventArrayAdapter eventArrayAdapter;
 
     public static String androidId;
     @Override
@@ -152,6 +152,11 @@ public class MainActivity extends AppCompatActivity implements AdminUserProfileD
         if (Build. VERSION.SDK_INT >= Build. VERSION_CODES. TIRAMISU) {
             ActivityCompat.requestPermissions( this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, RC_NOTIFICATION);
         }
+
+        GeolocationUtil.getCurrentLocation(this, location -> {
+            Log.d("MainActivity", "Location: " + location);
+        });
+
         handleIntent(getIntent());
     }
 
