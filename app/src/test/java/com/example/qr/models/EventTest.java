@@ -1,5 +1,6 @@
 package com.example.qr.models;
 
+import static com.example.qr.activities.MainActivity.androidId;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import com.google.firebase.firestore.GeoPoint;
@@ -17,18 +18,24 @@ public class EventTest {
     public void testEventCreation() {
         GeoPoint location = new GeoPoint(37.7749, -122.4194); // Example coordinates
         Date eventDate = new Date();
-        Event event = new Event("event123", "Tech Conference", "Annual tech gathering", "user123",
-                eventDate, location, "http://example.com/qrcode.jpg", "http://example.com/poster.jpg", 100);
+        Event event = new Event("eventId", "eventTitle", "description.getText().toString()", "androidId",
+                eventDate, eventDate,
+                "startTime.getText().toString()", "endTime.getText().toString()", new GeoPoint(location.getLatitude(),
+                location.getLongitude()), "eventQr", "eventPromo", "", 99);
 
-        assertEquals("event123", event.getId());
-        assertEquals("Tech Conference", event.getTitle());
-        assertEquals("Annual tech gathering", event.getDescription());
-        assertEquals("user123", event.getOrganizerId());
-        assertEquals(eventDate, event.getEventDate());
+        assertEquals("eventId", event.getId());
+        assertEquals("eventTitle", event.getTitle());
+        assertEquals("description.getText().toString()", event.getDescription());
+        assertEquals("androidId", event.getOrganizerId());
+        assertEquals(eventDate, event.getStartDate());
+        assertEquals(eventDate, event.getEndDate());
+        assertEquals("startTime.getText().toString()", event.getStartTime());
+        assertEquals("endTime.getText().toString()", event.getEndTime());
         assertEquals(location, event.getLocation());
-        assertEquals("http://example.com/qrcode.jpg", event.getQrCode());
-        assertEquals("http://example.com/poster.jpg", event.getEventPoster());
-        assertEquals((Integer) 100, event.getAttendeeLimit());
+        assertEquals("eventQr", event.getQrCode());
+        assertEquals("eventPromo", event.getQrpCode());
+        assertEquals("", event.getEventPoster());
+        assertEquals((Integer) 99, event.getAttendeeLimit());
     }
 
     /**
@@ -43,7 +50,7 @@ public class EventTest {
         event.setOrganizerId("user456");
 
         Date newEventDate = new Date();
-        event.setEventDate(newEventDate);
+        event.setStartDate(newEventDate);
 
         GeoPoint newLocation = new GeoPoint(40.7128, -74.0060); // Example coordinates
         event.setLocation(newLocation);
@@ -56,7 +63,7 @@ public class EventTest {
         assertEquals("Science Fair", event.getTitle());
         assertEquals("A local community science fair for all ages.", event.getDescription());
         assertEquals("user456", event.getOrganizerId());
-        assertEquals(newEventDate, event.getEventDate());
+        assertEquals(newEventDate, event.getStartDate());
         assertEquals(newLocation, event.getLocation());
         assertEquals("http://example.com/new_qrcode.jpg", event.getQrCode());
         assertEquals("http://example.com/new_poster.jpg", event.getEventPoster());

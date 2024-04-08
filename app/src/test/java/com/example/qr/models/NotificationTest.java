@@ -16,7 +16,7 @@ public class NotificationTest {
     @Test
     public void testNotificationCreation() {
         Date sentTime = new Date();
-        Notification notification = new Notification("notif123", "event789", "Welcome to the event!", sentTime);
+        Notification notification = new Notification("notif123", "event789", "Welcome to the event!", sentTime, true);
 
         assertEquals("notif123", notification.getId());
         assertEquals("event789", notification.getEventId());
@@ -29,7 +29,7 @@ public class NotificationTest {
      */
     @Test
     public void testSettersAndGetters() {
-        Notification notification = new Notification("notif123", "event789", "Welcome to the event!", new Date());
+        Notification notification = new Notification("notif123", "event789", "Welcome to the event!", new Date(), true);
         notification.setId("notif456");
         notification.setEventId("event1011");
         notification.setMessage("Event update: New schedule.");

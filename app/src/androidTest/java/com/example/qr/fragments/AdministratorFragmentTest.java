@@ -90,4 +90,5 @@ public class AdministratorFragmentTest {
         Espresso.onView(withId(R.id.fragment_admin_settings)).check(ViewAssertions.matches(isDisplayed()));
     }
 
+
 }
