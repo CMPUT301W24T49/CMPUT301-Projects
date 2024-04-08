@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.qr.R;
-import com.example.qr.models.CheckIn;
 import com.example.qr.models.User;
 
 import java.util.Map;
@@ -23,8 +22,7 @@ public class OrganizerCheckInDetailFragment extends DialogFragment {
 
     User user;
 
-    Map<String, Integer> userCheckInCount;       // Count of each user's check-ins
-    Map<String, List<CheckIn>> userCheckInData;  // List of check-ins for each user
+    Map<String, Integer> userCheckInCount;     // Count of each user's check-ins
 
     @NonNull
     @Override
@@ -33,23 +31,17 @@ public class OrganizerCheckInDetailFragment extends DialogFragment {
 
         if (getArguments() != null) {
             user = (User) getArguments().getSerializable("User");
+            userCheckInCount = (Map<String, Integer>) getArguments().getSerializable("Map");
         }
-        userCheckInCount = (Map<String, Integer>) getArguments().getSerializable("Map");
-        userCheckInData = (Map<String, List<CheckIn>>) getArguments().getSerializable("CheckIns");
-
 
         TextView userId = view.findViewById(R.id.user_id);
         TextView checkInCount = view.findViewById(R.id.check_in_count);
-        TextView location = view.findViewById(R.id.check_in_location);
-        TextView timestamp = view.findViewById(R.id.check_in_timestamp);
+
 
         if (userCheckInCount != null) {
             checkInCount.setText(String.valueOf(userCheckInCount.get(user.getId())));
         }
-
         userId.setText(user.getId());
-        location.setText(userCheckInData.getLocation());
-        timestamp.setText(userCheckInData.getCheckInTime());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 

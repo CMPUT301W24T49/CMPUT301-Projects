@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
 import com.example.qr.models.AttendeeArrayAdapter;
-import com.example.qr.models.CheckIn;
 import com.example.qr.models.SignUp;
 import com.example.qr.models.Event;
 import com.example.qr.models.User;
@@ -22,12 +21,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrganizerSignUpListFragment extends Fragment {
     public Event event;
 
     ArrayList<User> attendeeDataList;
     AttendeeArrayAdapter attendeeArrayAdapter;
+    Map<String, List<SignUp>> userSignUpsMap;
 
     public OrganizerSignUpListFragment() {
         // Required empty public constructor
@@ -50,25 +51,6 @@ public class OrganizerSignUpListFragment extends Fragment {
 
         fetchSignUps();
 
-        // Clicking a user opens a popup with user details (number of check-ins, location, timestamp)
-        listView.setOnItemClickListener((adapterView, view1, position, rowId) -> {
-            User user = attendeeDataList.get(position);
-
-            SignUp userCheckInData = userSignUpsMap.getOrDefault(user.getId(), new ArrayList<>());
-
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("User", user);   // User data
-            bundle.putSerializable("CheckIns", (Serializable) userCheckInData);  // Check-in data
-
-            OrganizerCheckInDetailFragment checkInDetail = new OrganizerCheckInDetailFragment();
-            checkInDetail.setArguments(bundle); // Pass user data to user detail page
-
-            if (getFragmentManager() != null) {
-                checkInDetail.show(getFragmentManager(), "CheckInDetail");  // Show user detail dialog
-            }
-
-        });
-
         // Close button to go back to the previous screen
         btnClose.setOnClickListener(v -> {
             // Check if the fragment is added to an activity and if the activity has a FragmentManager
@@ -84,6 +66,7 @@ public class OrganizerSignUpListFragment extends Fragment {
     // Filter through signUpList and add userIds checked into the clicked event
     private void fetchSignUps() {
         List<String> userIds = new ArrayList<>();           // Initialize userIds list
+        userSignUpsMap = new HashMap<>();
         FirebaseUtil.fetchCollection("SignUp", SignUp.class, new FirebaseUtil.OnCollectionFetchedListener<SignUp>() {
             @Override
             public void onCollectionFetched(List<SignUp> signUpList) {
@@ -91,8 +74,10 @@ public class OrganizerSignUpListFragment extends Fragment {
                 for (SignUp signUp : signUpList) {
                     if (event.getId().equals(signUp.getEventId())) {
                         userIds.add(signUp.getUserId());
+
                     }
                 }
+
                 // Fetch signed up users and add them to the attendee data list
                 FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
                     @Override
@@ -108,7 +93,7 @@ public class OrganizerSignUpListFragment extends Fragment {
 
                     @Override
                     public void onError(Exception e) {
-                        Log.e("CheckInListFragment", "Error fetching users: ", e); // Log error
+                        Log.e("SignUpListFragment", "Error fetching users: ", e); // Log error
                     }
                 });
 
@@ -122,7 +107,7 @@ public class OrganizerSignUpListFragment extends Fragment {
 
             @Override
             public void onError(Exception e) {
-                Log.e("CheckInListFragment", "Error fetching sign-ups: ", e); // Log error
+                Log.e("SignUpListFragment", "Error fetching sign-ups: ", e); // Log error
             }
         });
 

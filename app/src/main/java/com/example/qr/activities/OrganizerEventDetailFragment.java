@@ -98,13 +98,13 @@ public class OrganizerEventDetailFragment extends Fragment {
             endDate.setText(endDateText);
         }
 
-        // Set start time
+        // Set start time for non-empty event
         if(!event.getStartTime().isEmpty()){
             String startTimeText = "Start Time: " + event.getStartTime();
             startTime.setText(startTimeText);
         }
 
-        // Set end time
+        // Set end time for non-empty event
         if(!event.getEndTime().isEmpty()){
             String endTimeText = "End Time: " + event.getEndTime();
             endTime.setText(endTimeText);

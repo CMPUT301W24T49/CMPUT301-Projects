@@ -34,7 +34,6 @@ public class OrganizerCheckInListFragment extends Fragment {
     AttendeeArrayAdapter attendeeArrayAdapter;
 
     Map<String, Integer> userCheckInCount;       // Count of each user's check-ins
-    Map<String, List<CheckIn>> userCheckInsMap; // List of check-ins for each user
 
     public OrganizerCheckInListFragment() {
         // Required empty public constructor
@@ -61,13 +60,9 @@ public class OrganizerCheckInListFragment extends Fragment {
         listView.setOnItemClickListener((adapterView, view1, position, rowId) -> {
             User user = attendeeDataList.get(position);
 
-            // Retrieve check-ins for this specific user
-            List<CheckIn> userCheckInData = userCheckInsMap.getOrDefault(user.getId(), new ArrayList<>());
-
             Bundle bundle = new Bundle();
             bundle.putSerializable("User", user);   // User data
             bundle.putSerializable("Map", (Serializable) userCheckInCount);     // User check-in count
-            bundle.putSerializable("CheckIns", (Serializable) userCheckInData);  // Check-in data
 
             OrganizerCheckInDetailFragment checkInDetail = new OrganizerCheckInDetailFragment();
             checkInDetail.setArguments(bundle); // Pass user data to user detail page
@@ -95,7 +90,6 @@ public class OrganizerCheckInListFragment extends Fragment {
     private void fetchCheckIns() {
         Set<String> userIdsSet = new HashSet<>();   // Set removes duplicate userIds
         userCheckInCount = new HashMap<>();         // Users are mapped to their number of check-ins
-        userCheckInsMap = new HashMap<>();          // Users are mapped to their list of check-ins
         FirebaseUtil.fetchCollection("CheckIn", CheckIn.class, new FirebaseUtil.OnCollectionFetchedListener<CheckIn>() {
             @Override
             public void onCollectionFetched(List<CheckIn> checkInList) {
@@ -110,13 +104,6 @@ public class OrganizerCheckInListFragment extends Fragment {
 
                         // Maps each user to their number of check-ins
                         userCheckInCount.put(checkIn.getUserId(), userCheckInCount.getOrDefault(checkIn.getUserId(), 0) + 1);
-
-                        // Maps each user to their check-ins
-                        List<CheckIn> userCheckIns = userCheckInsMap.getOrDefault(checkIn.getUserId(), new ArrayList<>());
-                        if (userCheckIns != null) {
-                            userCheckIns.add(checkIn);
-                        }
-                        userCheckInsMap.put(checkIn.getUserId(), userCheckIns);
                     }
                 }
 
