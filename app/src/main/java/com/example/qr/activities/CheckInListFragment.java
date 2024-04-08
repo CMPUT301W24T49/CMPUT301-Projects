@@ -14,9 +14,11 @@ import com.example.qr.R;
 import com.example.qr.models.AttendeeArrayAdapter;
 import com.example.qr.models.CheckIn;
 import com.example.qr.models.Event;
+import com.example.qr.models.Notification;
 import com.example.qr.utils.FirebaseUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CheckInListFragment extends Fragment {
@@ -89,6 +91,10 @@ public class CheckInListFragment extends Fragment {
                 Log.e("CheckInListFragment", "Error fetching check-ins: ", e); // Log error
             }
         });
+        FirebaseUtil.getFCMTokenID(event);
+        String message = "";
+        Notification notification = new Notification("notification" + System.currentTimeMillis(), event.getId(), message, new Date(), false);
+        FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
 
     }
 

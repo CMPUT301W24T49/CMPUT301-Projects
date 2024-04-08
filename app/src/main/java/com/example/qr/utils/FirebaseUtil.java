@@ -252,7 +252,7 @@ public class FirebaseUtil {
             }});
     }
     /**
-     * Moves FCM tokens from old event to new event
+     * When details is modified copy existing FCM token ids along with it.
      *
      * @param eventId1 Event id to move FCM token from.
      * @param eventId2 Event id to move FCM token to.
@@ -284,7 +284,14 @@ public class FirebaseUtil {
         });
     }
 
-
+    /**
+     * When details is modified copy existing FCM token ids along with it.
+     *
+     * @param event Event id to add notificatiin token id to.
+     * @param notificationTokenId new notification token id
+     * @param onSuccessListener Callback for successful upload, returns the image download URL.
+     * @param onFailureListener Callback for upload failure.
+     */
     public static void addUserTokenIdNotification(Event event, Map<String, Object> notificationTokenId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
         String tokenIdToCheck = (String) notificationTokenId.get("tokenId"); // Assuming the key for the token ID in the map is "tokenId"
         CollectionReference tokenCollectionRef = db.collection("Events").document(event.getId()).collection("Notification User TokenID");
