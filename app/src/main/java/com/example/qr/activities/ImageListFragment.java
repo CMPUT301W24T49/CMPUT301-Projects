@@ -171,7 +171,7 @@ public class ImageListFragment extends Fragment {
                             .setMessage("Are you sure you want to delete this image?") // Set the message
                             .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                                 // Delete the image if the user confirms
-                                FirebaseUtil.updateImage("Events", clickedEvent.getId(), "eventPoster", "https://github.com/identicons/" + clickedEvent.getEventPoster()+".png",
+                                FirebaseUtil.updateImage("Events", clickedEvent.getId(), "eventPoster", "https://github.com/identicons/" + clickedEvent.getTitle()+".png",
                                         aVoid -> {
                                             imageDataList.remove(position);
                                             profileAndPosterAdapter.notifyDataSetChanged();
