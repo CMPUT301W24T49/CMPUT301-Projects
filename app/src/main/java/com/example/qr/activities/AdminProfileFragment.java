@@ -152,6 +152,7 @@ public class AdminProfileFragment extends DialogFragment {
             // Update the user data
             currentUser.setFirstName(firstNameEditText.getText().toString());
             currentUser.setLastName(lastNameEditText.getText().toString());
+            currentUser.setName(firstNameEditText.getText().toString() + " " + lastNameEditText.getText().toString());
             currentUser.setEmail(emailEditText.getText().toString());
             currentUser.setPhoneNumber(phoneEditText.getText().toString());
             //currentUser.setHomepage(homePageEditText.getText().toString());

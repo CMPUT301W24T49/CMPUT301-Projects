@@ -67,7 +67,7 @@ public class OrganizerEventDetailFragment extends Fragment implements OnMapReady
         Button btnCheckInList = view.findViewById(R.id.btnCheckInList);
         Button btnSignupList = view.findViewById(R.id.btnSignupList);
         Button btnClose = view.findViewById(R.id.btn_close);
-
+        Button btnSendNotificaiton = view.findViewById(R.id.btnSendNotification);
 
         // Load event poster image
         if(event.getEventPoster() != "") {
@@ -196,6 +196,22 @@ public class OrganizerEventDetailFragment extends Fragment implements OnMapReady
                         .commit();
             }
         });
+        btnSendNotificaiton.setOnClickListener(v -> {
+            OrganizerSendCustomNotification organizerSendCustomNotification = new OrganizerSendCustomNotification();
+            Bundle bundle = new Bundle();
+
+            bundle.putSerializable("event", event);             // Store event data
+            organizerSendCustomNotification.setArguments(bundle);              // Pass data to notification list fragment
+            // Navigate to notification list page
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, organizerSendCustomNotification)
+                        .addToBackStack(null)                 // Optional: Add transaction to back stack
+                        .commit();
+            }
+        });
+
+
 
         // Close button going back previous screen
         btnClose.setOnClickListener(v -> {
