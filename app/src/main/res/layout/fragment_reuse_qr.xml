@@ -4,6 +4,20 @@
     android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="match_parent">
+    <!--<a href="https://www.flaticon.com/free-icons/arrow" title="arrow icons">Arrow icons created by Kirill Kazachek - Flaticon</a>-->
+    <Button
+        android:id="@+id/btn_close_event_list"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="16sp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back_arrow_description"
+        android:drawableStart="@drawable/ic_arrow_back"
+        android:onClick="onBackArrowClicked"/>
+
 
     <TextView
         android:id="@+id/reuseQRcode"

@@ -6,22 +6,7 @@
     android:layout_height="match_parent"
     android:background="#10283B">
 
-    <!-- Close (X) Button at the top right -->
-    <!--    <Button-->
-    <!--        android:id="@+id/btn_close_event_list"-->
-    <!--        style="@style/AppRoundedButton"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_alignParentTop="true"-->
-    <!--        android:layout_alignParentEnd="true"-->
-    <!--        android:layout_marginStart="16dp"-->
-    <!--        android:layout_marginTop="16dp"-->
-    <!--        android:layout_marginEnd="16dp"-->
-    <!--        android:layout_marginBottom="16dp"-->
-    <!--        android:text="X" />-->
-
     <!-- ListView for the events -->
-
     <TextView
         android:id="@+id/event_title_notification"
         android:layout_width="215dp"
@@ -45,9 +30,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="93dp"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="130dp"
         android:text="Notification List"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF"
