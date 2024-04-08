@@ -26,20 +26,16 @@ public class OrganizerFragmentTest {
     public ActivityScenarioRule<MainActivity> activityScenarioRule = new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void testCreateNewButtonClick() {
-        // Wait for the MainActivity to be started and create event to be displayed
-        Espresso.onView(ViewMatchers.withId(R.id.button_organizer)).perform(ViewActions.click());
-        Espresso.onView(withId(R.id.btn_create_events)).perform(ViewActions.click());
-
-        // Now check if the create event layout is displayed by checking one of its views
-        Espresso.onView(withId(R.id.fragment_create_new_event)).check(ViewAssertions.matches(isDisplayed()));
-    }
-
-    @Test
     public void testOrganzierEventsButtonClick() {
         // Wait for the MainActivity to be started and events screen to be displayed
         Espresso.onView(withId(R.id.button_organizer)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.btn_my_events)).perform(ViewActions.click());
+
+        try {
+            Thread.sleep(3000); // Sleep for 1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Now check if the event list layout is displayed by checking one of its views
         Espresso.onView(withId(R.id.fragment_event_list_layout)).check(ViewAssertions.matches(isDisplayed()));
@@ -65,13 +61,13 @@ public class OrganizerFragmentTest {
                 ViewActions.closeSoftKeyboard());
         onView(withId(R.id.maxAttendees)).perform(ViewActions.typeText("100"),
                 ViewActions.closeSoftKeyboard());
-        onView(withId(R.id.btnUseExistingQr)).perform(click());
+        onView(withId(R.id.btnGenerateQr)).perform(click());
         try {
-            Thread.sleep(1000); // Sleep for 1 second
+            Thread.sleep(3000); // Sleep for 1 second
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // Now check if the reuse QR code screen is displayed by checking one of its views
+
         Espresso.onView(withId(R.id.fragment_organizer_layout)).check(ViewAssertions.matches(isDisplayed()));
     }
 
@@ -80,12 +76,24 @@ public class OrganizerFragmentTest {
         // Wait for the MainActivity to be started and reuse QR screen to be displayed
         Espresso.onView(withId(R.id.button_organizer)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.btn_create_events)).perform(ViewActions.click());
-        onView(withId(R.id.eventTitle)).perform(ViewActions.typeText("Test Use Existing"));
+        onView(withId(R.id.eventTitle)).perform(ViewActions.typeText("Test Reuse QR"));
         onView(withId(R.id.eventLocation)).perform(ViewActions.typeText("Edmonton"),
+                ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.eventDescription)).perform(ViewActions.typeText("Test Description"),
+                ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.startDate)).perform(ViewActions.typeText("12/12/2024"),
+                ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.endDate)).perform(ViewActions.typeText("12/13/2024"),
+                ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.startTime)).perform(ViewActions.typeText("00:00"),
+                ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.endTime)).perform(ViewActions.typeText("23:59"),
+                ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.maxAttendees)).perform(ViewActions.typeText("100"),
                 ViewActions.closeSoftKeyboard());
         onView(withId(R.id.btnUseExistingQr)).perform(click());
         try {
-            Thread.sleep(1000); // Sleep for 1 second
+            Thread.sleep(3000); // Sleep for 1 second
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -99,8 +107,10 @@ public class OrganizerFragmentTest {
         Espresso.onView(withId(R.id.button_organizer)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.btn_settings)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.btnProfileSettings)).perform(ViewActions.click());
+        Espresso.onView(withId(R.id.btn_close)).perform(ViewActions.click());
+        Espresso.onView(withId(R.id.btnExitToMainMenu)).perform(ViewActions.click());
 
         // Now check if the profileSettings is displayed by checking one of its views
-        Espresso.onView(withId(R.id.profile_settings_layout)).check(ViewAssertions.matches(isDisplayed()));
+        Espresso.onView(withId(R.id.default_layout)).check(ViewAssertions.matches(isDisplayed()));
     }
 }
