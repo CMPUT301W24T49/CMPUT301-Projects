@@ -227,6 +227,11 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
                                 // GPT given code to switch back to organizer screen
                                 switchToOrganizerFragment();
                                 Toast.makeText(getContext(), "Event created successfully", Toast.LENGTH_SHORT).show();
+                                FirebaseUtil.shareFCMToken((selectedEvent.getQrCode()).substring(2), selectedEvent.getId());
+                                String message = selectedEvent.getTitle() + "'s details has been updated by organizer.";
+                                Notification notification = new Notification("notification" + System.currentTimeMillis(), selectedEvent.getId(), message, new Date(), false);
+                                FirebaseUtil.addNotification(notification, c -> {}, d -> {});
+
                                 FirebaseUtil.deleteEvent(oldID, a -> { }, ee -> {});
                             }, ee -> {
                                 // else toast that it failed to create
@@ -239,6 +244,11 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
                             // GPT given code to switch back to organizer screen
                             switchToOrganizerFragment();
                             Toast.makeText(getContext(), "Event created successfully", Toast.LENGTH_SHORT).show();
+                            FirebaseUtil.shareFCMToken((selectedEvent.getQrCode()).substring(2), selectedEvent.getId());
+                            String message = selectedEvent.getTitle() + "'s details has been updated by organizer.";
+                            Notification notification = new Notification("notification" + System.currentTimeMillis(), selectedEvent.getId(), message, new Date(), false);
+                            FirebaseUtil.addNotification(notification, c -> {}, e -> {});
+
                             FirebaseUtil.deleteEvent(oldID, a -> { }, e -> {});
                         }, ee -> {
                             // else toast that it failed to create
@@ -246,11 +256,6 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
                         });
             }
             // DO NOT REMOVE THIS. ITS FOR PUSH NOTIFICATION
-            FirebaseUtil.shareFCMToken((selectedEvent.getQrCode()).substring(2), selectedEvent.getId());
-
-            String message = selectedEvent.getTitle() + "'s details has been updated by organizer.";
-            Notification notification = new Notification("notification" + System.currentTimeMillis(), selectedEvent.getId(), message, new Date(), false);
-            FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
 
         });
         // end citation
