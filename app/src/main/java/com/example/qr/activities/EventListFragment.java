@@ -45,13 +45,33 @@ public class EventListFragment extends Fragment {
     private int positionToEdit;
     private FirebaseFirestore db;
 
+
+    /**
+     *
+     * Event list fragment
+     *
+     * @return public
+     */
     public EventListFragment() {
+
         // Required empty public constructor
     }
 
     @Override
+
+
+    /**
+     *
+     * On create view
+     *
+     * @param inflater  the inflater.
+     * @param container  the container.
+     * @param savedInstanceState  the saved instance state.
+     * @return View
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_event_list, container, false);
 
         ListView listView = view.findViewById(R.id.listview_events);
@@ -68,7 +88,7 @@ public class EventListFragment extends Fragment {
             Event event = eventDataList.get(position);
 
             // Send eventId to AttendeeListFragment
-            // Adapted from answer given by João Marcos
+            // Adapted from answer given by JoÃ£o Marcos
             // https://stackoverflow.com/questions/24555417/how-to-send-data-from-one-fragment-to-another-fragment
             Bundle args = new Bundle();
             args.putSerializable("Event", event);
@@ -87,7 +107,19 @@ public class EventListFragment extends Fragment {
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
+
+            /**
+             *
+             * On item long click
+             *
+             * @param parent  the parent.
+             * @param view  the view.
+             * @param position  the position.
+             * @param id  the id.
+             * @return boolean
+             */
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Event eventToBeDeleted = eventDataList.get(position);
 
                 // Create an AlertDialog to confirm deletion
@@ -136,10 +168,25 @@ public class EventListFragment extends Fragment {
     }
 
     // Fetch events from Firebase and add them to eventList
+
+    /**
+     *
+     * Fetch data
+     *
+     */
     private void fetchData() {
+
         FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
             @Override
+
+            /**
+             *
+             * On collection fetched
+             *
+             * @param eventList  the event list.
+             */
             public void onCollectionFetched(List<Event> eventList) {
+
                 // Handle the fetched events
                 eventDataList.addAll(eventList);
                 eventArrayAdapter.notifyDataSetChanged();   // Update event array adapter
@@ -147,7 +194,15 @@ public class EventListFragment extends Fragment {
             }
 
             @Override
+
+            /**
+             *
+             * On error
+             *
+             * @param e  the e.
+             */
             public void onError(Exception e) {
+
             }
 
         });

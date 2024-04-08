@@ -31,17 +31,34 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * AttendeeEventDetailFragment displays detailed information about an event, including the event's title, description, location, date, time, and maximum attendees.
+ */
 public class AttendeeEventDetailFragment extends Fragment {
 
+    // Event object
     public Event event;
 
+
     public AttendeeEventDetailFragment() {
+
         // Required empty public constructor
     }
 
 
     @Override
+
+/**
+ *
+ * On create view
+ *
+ * @param inflater  the inflater.
+ * @param container  the container.
+ * @param savedInstanceState  the saved instance state.
+ * @return View
+ */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 
         View view = inflater.inflate(R.layout.fragment_attendee_event_detail, container, false);
         event = (Event) getArguments().getSerializable("Event");
@@ -149,7 +166,15 @@ public class AttendeeEventDetailFragment extends Fragment {
 
         btnNotification.setOnClickListener(new View.OnClickListener() {
             @Override
+
+/**
+ *
+ * On click
+ *
+ * @param v  the v.
+ */
             public void onClick(View v) {
+
                 NotificationListFragment notificationListFragment = new NotificationListFragment();
                 Bundle args = new Bundle();
                 args.putSerializable("event_key", event.getId());
@@ -166,7 +191,15 @@ public class AttendeeEventDetailFragment extends Fragment {
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
+
+/**
+ *
+ * On click
+ *
+ * @param v  the v.
+ */
             public void onClick(View v) {
+
 
                 if(event.getAttendeeCount() == null){
                     event.setAttendeeCount(0);
@@ -180,7 +213,15 @@ public class AttendeeEventDetailFragment extends Fragment {
 
                 FirebaseUtil.fetchCollection("SignUp", SignUp.class, new FirebaseUtil.OnCollectionFetchedListener<SignUp>() {
                     @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param SignUps  the sign ups.
+ */
                     public void onCollectionFetched(List<SignUp> SignUps) {
+
                         //filter the signups to get the signups only for this event id
                         List<SignUp> eventSignUps = new ArrayList<>();
 
@@ -203,8 +244,8 @@ public class AttendeeEventDetailFragment extends Fragment {
                             }
 
                             if(signUp.getUserId().equals(androidId)){
-                                    isSignedUp = true;
-                                    break;
+                                isSignedUp = true;
+                                break;
                             }
 
                         }
@@ -242,7 +283,15 @@ public class AttendeeEventDetailFragment extends Fragment {
                     }
 
                     @Override
+
+/**
+ *
+ * On error
+ *
+ * @param e  the e.
+ */
                     public void onError(Exception e) {
+
                     }
 
 

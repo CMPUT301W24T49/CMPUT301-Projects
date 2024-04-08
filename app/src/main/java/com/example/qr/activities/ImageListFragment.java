@@ -94,13 +94,33 @@ public class ImageListFragment extends Fragment {
     private int positionToEdit;
     private FirebaseFirestore db;
 
+
+    /**
+     *
+     * Image list fragment
+     *
+     * @return public
+     */
     public ImageListFragment() {
+
         // Required empty public constructor
     }
 
     @Override
+
+
+    /**
+     *
+     * On create view
+     *
+     * @param inflater  the inflater.
+     * @param container  the container.
+     * @param savedInstanceState  the saved instance state.
+     * @return View
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_image_list, container, false);
 
         ListView listView = view.findViewById(R.id.listview_images);
@@ -118,7 +138,18 @@ public class ImageListFragment extends Fragment {
 //        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
+
+            /**
+             *
+             * On item click
+             *
+             * @param adapterView  the adapter view.
+             * @param view  the view.
+             * @param position  the position.
+             * @param id  the id.
+             */
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
                 listView.setItemChecked(position, true);
                 positionToEdit = position;
 
@@ -141,7 +172,19 @@ public class ImageListFragment extends Fragment {
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
+
+            /**
+             *
+             * On item long click
+             *
+             * @param parent  the parent.
+             * @param view  the view.
+             * @param position  the position.
+             * @param id  the id.
+             * @return boolean
+             */
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Object imageToBeDeleted = imageDataList.get(position);
                 if (imageToBeDeleted instanceof User) {
                     User clickedUser = (User) imageToBeDeleted;
@@ -187,7 +230,7 @@ public class ImageListFragment extends Fragment {
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
                 }else{
-                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
                 return true; // Indicate that the click was handled
             }
@@ -203,10 +246,25 @@ public class ImageListFragment extends Fragment {
         return view;
     }
 
+
+    /**
+     *
+     * Fetch user data
+     *
+     */
     private void fetchUserData() {
+
         FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
             @Override
+
+            /**
+             *
+             * On collection fetched
+             *
+             * @param userList  the user list.
+             */
             public void onCollectionFetched(List<User> userList) {
+
                 List<User> filteredUsers = new ArrayList<>();
                 for (User user : userList) {
                     if (user.getName() != null && !user.getName().trim().isEmpty() && user.getProfilePicture() != null && !user.getProfilePicture().trim().isEmpty()) {
@@ -218,15 +276,38 @@ public class ImageListFragment extends Fragment {
                 fetchEventData();
             }
             @Override
+
+            /**
+             *
+             * On error
+             *
+             * @param e  the e.
+             */
             public void onError(Exception e) {
+
             }
         });
     }
 
+
+    /**
+     *
+     * Fetch event data
+     *
+     */
     private void fetchEventData() {
+
         FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
             @Override
+
+            /**
+             *
+             * On collection fetched
+             *
+             * @param eventList  the event list.
+             */
             public void onCollectionFetched(List<Event> eventList) {
+
                 List<Event> filteredEvents = new ArrayList<>();
                 for (Event event : eventList) {
                     if (event.getTitle() != null && !event.getTitle().trim().isEmpty() && event.getEventPoster() != null && !event.getEventPoster().trim().isEmpty()) {
@@ -238,7 +319,15 @@ public class ImageListFragment extends Fragment {
             }
 
             @Override
+
+            /**
+             *
+             * On error
+             *
+             * @param e  the e.
+             */
             public void onError(Exception e) {
+
             }
         });
     }

@@ -13,79 +13,101 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.qr.R;
 import com.example.qr.models.SharedViewModel;
 
+/**
+ * AttendeeSettingsFragment displays settings options for attendees including profile management and location tracking.
+ */
 public class AttendeeSettingsFragment extends DialogFragment {
 
-        private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
-        // public default constructor
-        public AttendeeSettingsFragment() {
-        }
+    // public default constructor
 
-        // onCreateView method
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    /**
+     *
+     * Attendee settings fragment
+     *
+     * @return public
+     */
+    public AttendeeSettingsFragment() {
 
-            View view = inflater.inflate(R.layout.fragment_attendee_settings, container, false);
+    }
 
-            Button btnClose = view.findViewById(R.id.btn_close);
-            Button btnProfile = view.findViewById(R.id.btnProfileSettings);
-            Button btnExitToMain = view.findViewById(R.id.btnExitToMainMenu);
-            Switch switchLocation = view.findViewById(R.id.switchGeoTracking);
+    // onCreateView method
+    @Override
 
-            // profile settings
-            btnProfile.setOnClickListener(v -> {
-                AttendeeProfileSettingsFragment profileSettingsFragment = new AttendeeProfileSettingsFragment();
-                if (getActivity() != null) {
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, profileSettingsFragment)
-                            .addToBackStack(null)  // Optional: Add transaction to back stack
-                            .commit();
-                }
-            });
+/**
+ *
+ * On create view
+ *
+ * @param inflater  the inflater.
+ * @param container  the container.
+ * @param savedInstanceState  the saved instance state.
+ * @return View
+ */
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
+        View view = inflater.inflate(R.layout.fragment_attendee_settings, container, false);
+
+        Button btnClose = view.findViewById(R.id.btn_close);
+        Button btnProfile = view.findViewById(R.id.btnProfileSettings);
+        Button btnExitToMain = view.findViewById(R.id.btnExitToMainMenu);
+        Switch switchLocation = view.findViewById(R.id.switchGeoTracking);
+
+        // profile settings
+        btnProfile.setOnClickListener(v -> {
+            AttendeeProfileSettingsFragment profileSettingsFragment = new AttendeeProfileSettingsFragment();
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, profileSettingsFragment)
+                        .addToBackStack(null)  // Optional: Add transaction to back stack
+                        .commit();
+            }
+        });
 
             /*
             // Microsoft, 2024-03-07, Github Co-Pilot,
             // prompt: "when i toggle the switch and leave the screen and comeback,
             // the switch is toggled back off"
             */
-            // ******* start of copilot code ******* //
-            sharedPreferences = getActivity().getSharedPreferences("AttendeeSettings", 0); // 0 for private mode
+        // ******* start of copilot code ******* //
+        sharedPreferences = getActivity().getSharedPreferences("AttendeeSettings", 0); // 0 for private mode
 
-            // Get the saved state of the switches
-            boolean isNotificationsOn = sharedPreferences.getBoolean("Notifications", false);
-            boolean isLocationOn = sharedPreferences.getBoolean("Location", false);
-
-            
-            SharedViewModel viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-            viewModel.setOrganizerNotificationStatus(isNotificationsOn);
-
-            switchLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("Location", isChecked);
-                editor.apply();
-            });
-            // ******* end of copilot code ******* //
-
-            btnClose.setOnClickListener(v -> {
-                if (isAdded() && getActivity() != null) {
-                    getActivity().onBackPressed();
-                }
-            });
-
-            // exit to fragment_main
-            btnExitToMain.setOnClickListener(v -> {
-                GuestHomeFragment guestHomeFragment = new GuestHomeFragment();
-                if (getActivity() != null) {
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, guestHomeFragment)
-                            .addToBackStack(null)  // Optional: Add transaction to back stack
-                            .commit();
-                }
-            });
+        // Get the saved state of the switches
+        boolean isNotificationsOn = sharedPreferences.getBoolean("Notifications", false);
+        boolean isLocationOn = sharedPreferences.getBoolean("Location", false);
 
 
+        SharedViewModel viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        viewModel.setOrganizerNotificationStatus(isNotificationsOn);
 
-            return view;
+        switchLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("Location", isChecked);
+            editor.apply();
+        });
+        // ******* end of copilot code ******* //
 
-        }
+        btnClose.setOnClickListener(v -> {
+            if (isAdded() && getActivity() != null) {
+                getActivity().onBackPressed();
+            }
+        });
+
+        // exit to fragment_main
+        btnExitToMain.setOnClickListener(v -> {
+            GuestHomeFragment guestHomeFragment = new GuestHomeFragment();
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, guestHomeFragment)
+                        .addToBackStack(null)  // Optional: Add transaction to back stack
+                        .commit();
+            }
+        });
+
+
+
+        return view;
+
+    }
 }

@@ -41,6 +41,10 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;
 
+
+/**
+ * The class Organizer reuse qr code fragment extends fragment
+ */
 public class OrganizerReuseQrCodeFragment extends Fragment {
 
     private Button btnCancel, chooseQrCode;
@@ -61,11 +65,30 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
 
     private Date prevStartDate, prevEndDate;
 
+
+    /**
+     *
+     * Organizer reuse qr code fragment
+     *
+     * @return public
+     */
     public OrganizerReuseQrCodeFragment() {
+
         // Required empty public constructor
     }
 
+
+    /**
+     *
+     * On create view
+     *
+     * @param inflater  the inflater.
+     * @param container  the container.
+     * @param savedInstanceState  the saved instance state.
+     * @return View
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 
         View view = inflater.inflate(R.layout.fragment_reuse_qr, container, false);
         super.onCreate(savedInstanceState);
@@ -77,7 +100,7 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
         eventQrCode = view.findViewById(R.id.ivEventPoster);
 
         chooseQrCode = view.findViewById(R.id.chooseQrCodeButton);
-        
+
         eventDataList = new ArrayList<>();
 
         //get event object and uri if it exists
@@ -97,7 +120,18 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
 
         eventSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
+
+/**
+ *
+ * On item selected
+ *
+ * @param parent  the parent.
+ * @param view  the view.
+ * @param position  the position.
+ * @param id  the id.
+ */
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 // Check if the placeholder "Select one:" is selected
                 if(position == 0) {
                     // Placeholder selected, do nothing or reset the QR code image
@@ -117,7 +151,15 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
             }
 
             @Override
+
+/**
+ *
+ * On nothing selected
+ *
+ * @param parent  the parent.
+ */
             public void onNothingSelected(AdapterView<?> parent) {
+
                 // Do nothing
             }
         });
@@ -126,7 +168,15 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
         // in android studio
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
+
+/**
+ *
+ * On click
+ *
+ * @param v  the v.
+ */
             public void onClick(View v) {
+
                 // Create a new instance of OrganizerFragment
                 OrganizerCreateEventFragment organizerCreateEventFragment = new OrganizerCreateEventFragment();
 
@@ -208,7 +258,14 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
         return view;
     }
 
+
+    /**
+     *
+     * Fetch data
+     *
+     */
     private void fetchData() {
+
         Event placeholderEvent = new Event();
         placeholderEvent.setTitle("Select one:");
         placeholderEvent.setId("");
@@ -216,7 +273,15 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
 
         FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
             @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param eventList  the event list.
+ */
             public void onCollectionFetched(List<Event> eventList) {
+
                 Date now = new Date(); // Current date and time
 
                 for (Event event : eventList) {
@@ -232,7 +297,15 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
             }
 
             @Override
+
+/**
+ *
+ * On error
+ *
+ * @param e  the e.
+ */
             public void onError(Exception e) {
+
                 // Handle any errors here
             }
         });
@@ -240,7 +313,17 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
 
     // citation: Open MP, GPT 4.0, April 2024: How do I check for current runtime date compared to
     // the endDate and endTime based on *examples from database*
+
+    /**
+     *
+     * Is event before current time
+     *
+     * @param endDate  the end date.
+     * @param endTime  the end time.
+     * @return boolean
+     */
     private boolean isEventBeforeCurrentTime(Date endDate, String endTime) {
+
         if (endDate == null || endTime == null) {
             return false; // Ensure that both date and time are not null.
         }
@@ -294,7 +377,14 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
     // end citation
 
 
+
+    /**
+     *
+     * Switch to organizer fragment
+     *
+     */
     private void switchToOrganizerFragment() {
+
         OrganizerFragment organizerFragment = new OrganizerFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

@@ -30,16 +30,32 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.List;
 
+/**
+ * AttendeeFragment handles the UI for the attendee dashboard, providing navigation to different attendee functionalities.
+ */
 public class AttendeeFragment extends Fragment {
 
     private ActivityResultLauncher<Intent> qrScanLauncher;
 
+
     public AttendeeFragment() {
+
         // Required empty public constructor
     }
 
     @Override
+
+/**
+ *
+ * On create view
+ *
+ * @param inflater  the inflater.
+ * @param container  the container.
+ * @param savedInstanceState  the saved instance state.
+ * @return View
+ */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 
         View view = inflater.inflate(R.layout.fragment_attendee, container, false);
 
@@ -112,7 +128,15 @@ public class AttendeeFragment extends Fragment {
                                     //query all events with this qr code
                                     FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
                                         @Override
+
+                                        /**
+                                         *
+                                         * On collection fetched
+                                         *
+                                         * @param eventList  the event list.
+                                         */
                                         public void onCollectionFetched(List<Event> eventList) {
+
                                             //filter eventList with e
                                             for (Event event : eventList) {
                                                 if (event.getQrCode().equals(code)) {
@@ -136,13 +160,28 @@ public class AttendeeFragment extends Fragment {
                                         }
 
                                         @Override
+
+                                        /**
+                                         *
+                                         * On error
+                                         *
+                                         * @param e  the e.
+                                         */
                                         public void onError(Exception e) {
+
                                         }
                                     });
                                 } else if (code.startsWith("qrp")) {
                                     FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
                                         @Override
+                                        /**
+                                         *
+                                         * On collection fetched
+                                         *
+                                         * @param eventList  the event list.
+                                         */
                                         public void onCollectionFetched(List<Event> eventList) {
+
                                             //filter eventList with e
                                             Event selEvent = null;
                                             for (Event event : eventList) {
@@ -169,7 +208,14 @@ public class AttendeeFragment extends Fragment {
                                         }
 
                                         @Override
+                                        /**
+                                         *
+                                         * On error
+                                         *
+                                         * @param e  the e.
+                                         */
                                         public void onError(Exception e) {
+
                                         }
                                     });
                                 };

@@ -15,25 +15,62 @@ import com.example.qr.R;
 
 public class AdminSettingsFragment extends Fragment {
 
+
+    /**
+     *
+     * Admin settings fragment
+     *
+     * @return public
+     */
     public AdminSettingsFragment() {
+
         // Required empty public constructor
     }
 
     @Override
+
+
+/**
+ *
+ * On create view
+ *
+ * @param inflater  the inflater.
+ * @param container  the container.
+ * @param savedInstanceState  the saved instance state.
+ * @return View
+ */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_admin_settings, container, false);
     }
 
     @Override
+
+/**
+ *
+ * On view created
+ *
+ * @param view  the view.
+ * @param savedInstanceState  the saved instance state.
+ */
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
         View profileButton = view.findViewById(R.id.profile_button);
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
+
+/**
+ *
+ * On click
+ *
+ * @param v  the v.
+ */
             public void onClick(View v) {
+
                 AdminProfileFragment adminProfileFragment = new AdminProfileFragment();
                 if (getActivity() != null) {
                     getActivity().getSupportFragmentManager().beginTransaction()
@@ -47,7 +84,15 @@ public class AdminSettingsFragment extends Fragment {
         View logoutButton = view.findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
+
+/**
+ *
+ * On click
+ *
+ * @param v  the v.
+ */
             public void onClick(View v) {
+
                 // Handle logout button click
                 Fragment homeFrag = new HomeFragment();
                 if (getActivity() != null) {

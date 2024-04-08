@@ -38,6 +38,9 @@ import org.json.JSONException;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * AttendeeProfileSettingsFragment displays the profile settings for an attendee user, allowing them to edit their profile information and upload a profile picture.
+ */
 public class AttendeeProfileSettingsFragment extends DialogFragment {
 
     private EditText firstNameEditText;
@@ -52,12 +55,28 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
 
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
 
+
+    /**
+     *
+     * Attendee profile settings fragment
+     *
+     * @return public
+     */
     public AttendeeProfileSettingsFragment() {
+
         // Required empty public constructor
     }
 
     @Override
+
+/**
+ *
+ * On create
+ *
+ * @param savedInstanceState  the saved instance state.
+ */
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         // Initialize the ActivityResultLauncher for photo picking
         pickMedia = registerForActivityResult(new PickVisualMedia(), uri -> {
@@ -75,7 +94,18 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
     }
 
     @Override
+
+/**
+ *
+ * On create view
+ *
+ * @param inflater  the inflater.
+ * @param container  the container.
+ * @param savedInstanceState  the saved instance state.
+ * @return View
+ */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_attendee_profile_settings, container, false);
 
@@ -108,7 +138,15 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
         // Fetch the user data from Firebase
         FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
             @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param userList  the user list.
+ */
             public void onCollectionFetched(List<User> userList) {
+
                 for (User user : userList) {
                     if (user.getId().equals(androidId)) {
                         // Populate the EditText fields with the user data
@@ -147,7 +185,15 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
             }
 
             @Override
+
+/**
+ *
+ * On error
+ *
+ * @param e  the e.
+ */
             public void onError(Exception e) {
+
                 Log.e("AttendeeProfileSettings", "Error fetching user collection", e);
             }
         });
@@ -254,7 +300,15 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
         return view;
     }
 
+
+    /**
+     *
+     * Sets the edit text enabled
+     *
+     * @param enabled  the enabled.
+     */
     private void setEditTextEnabled(boolean enabled) {
+
         firstNameEditText.setEnabled(enabled);
         lastNameEditText.setEnabled(enabled);
         emailEditText.setEnabled(enabled);

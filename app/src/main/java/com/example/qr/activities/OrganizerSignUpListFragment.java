@@ -23,6 +23,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * The class Organizer sign up list fragment extends fragment
+ */
 public class OrganizerSignUpListFragment extends Fragment {
     public Event event;
 
@@ -30,12 +34,31 @@ public class OrganizerSignUpListFragment extends Fragment {
     AttendeeArrayAdapter attendeeArrayAdapter;
     Map<String, List<SignUp>> userSignUpsMap;
 
+
+    /**
+     *
+     * Organizer sign up list fragment
+     *
+     * @return public
+     */
     public OrganizerSignUpListFragment() {
+
         // Required empty public constructor
     }
 
     @Override
+
+/**
+ *
+ * On create view
+ *
+ * @param inflater  the inflater.
+ * @param container  the container.
+ * @param savedInstanceState  the saved instance state.
+ * @return View
+ */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate layout
         View view = inflater.inflate(R.layout.fragment_organizer_signup_list, container, false);
         event = (Event) getArguments().getSerializable("Event"); // Retrieve event from event detail page
@@ -64,12 +87,27 @@ public class OrganizerSignUpListFragment extends Fragment {
 
     // Fetch signed up attendees from Firebase and add them to the sign up list
     // Filter through signUpList and add userIds checked into the clicked event
+
+    /**
+     *
+     * Fetch sign ups
+     *
+     */
     private void fetchSignUps() {
+
         List<String> userIds = new ArrayList<>();           // Initialize userIds list
         userSignUpsMap = new HashMap<>();
         FirebaseUtil.fetchCollection("SignUp", SignUp.class, new FirebaseUtil.OnCollectionFetchedListener<SignUp>() {
             @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param signUpList  the sign up list.
+ */
             public void onCollectionFetched(List<SignUp> signUpList) {
+
                 // If sign-ups match the eventId, add to userIds list
                 for (SignUp signUp : signUpList) {
                     if (event.getId().equals(signUp.getEventId())) {
@@ -81,7 +119,15 @@ public class OrganizerSignUpListFragment extends Fragment {
                 // Fetch signed up users and add them to the attendee data list
                 FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
                     @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param userList  the user list.
+ */
                     public void onCollectionFetched(List<User> userList) {
+
                         // Filter through the user list and add userIds to the data list
                         for (User user : userList) {
                             if (userIds.contains(user.getId())) {
@@ -92,7 +138,15 @@ public class OrganizerSignUpListFragment extends Fragment {
                     }
 
                     @Override
+
+/**
+ *
+ * On error
+ *
+ * @param e  the e.
+ */
                     public void onError(Exception e) {
+
                         Log.e("SignUpListFragment", "Error fetching users: ", e); // Log error
                     }
                 });
@@ -106,7 +160,15 @@ public class OrganizerSignUpListFragment extends Fragment {
             }
 
             @Override
+
+/**
+ *
+ * On error
+ *
+ * @param e  the e.
+ */
             public void onError(Exception e) {
+
                 Log.e("SignUpListFragment", "Error fetching sign-ups: ", e); // Log error
             }
         });

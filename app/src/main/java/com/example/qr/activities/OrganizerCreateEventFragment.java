@@ -65,6 +65,9 @@ import java.util.Locale;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+/**
+ * OrganizerCreateEventFragment is a fragment that allows organizers to create a new event.
+ */
 public class OrganizerCreateEventFragment extends Fragment {
     private ImageView eventPoster;
     private EditText eventTitle, startDate, endDate, startTime, endTime, maxAttendees, description;
@@ -83,12 +86,28 @@ public class OrganizerCreateEventFragment extends Fragment {
     private ArrayAdapter<String> placesAdapter;
     private PlacesClient placesClient;
 
+
+    /**
+     *
+     * Organizer create event fragment
+     *
+     * @return public
+     */
     public OrganizerCreateEventFragment() {
+
         // Required empty public constructor
     }
 
     @Override
+
+/**
+ *
+ * On create
+ *
+ * @param savedInstanceState  the saved instance state.
+ */
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         // citation: OpenAI, ChatGPT 4, 2024: How to use google maps places API  to autofill a textbox
@@ -116,7 +135,18 @@ public class OrganizerCreateEventFragment extends Fragment {
 
     }
 
+
+    /**
+     *
+     * On create view
+     *
+     * @param inflater  the inflater.
+     * @param container  the container.
+     * @param savedInstanceState  the saved instance state.
+     * @return View
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 
         View view = inflater.inflate(R.layout.fragment_create_event, container, false);
         super.onCreate(savedInstanceState);
@@ -307,7 +337,15 @@ public class OrganizerCreateEventFragment extends Fragment {
         // in android studio
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
+
+/**
+ *
+ * On click
+ *
+ * @param v  the v.
+ */
             public void onClick(View v) {
+
                 // Create a new instance of OrganizerFragment
                 OrganizerFragment organizerFragment = new OrganizerFragment();
 
@@ -328,25 +366,70 @@ public class OrganizerCreateEventFragment extends Fragment {
 
     // citation: OpenAI, ChatGPT 4, 2024: How to use google maps places API  to autofill a textbox
     // showing a list of potential locations based on the text in the textbox android studio
+
+    /**
+     *
+     * Setup autocomplete text view
+     *
+     */
     private void setupAutocompleteTextView() {
+
         eventLocation.addTextChangedListener(new TextWatcher() {
             @Override
+
+/**
+ *
+ * Before text changed
+ *
+ * @param s  the s.
+ * @param start  the start.
+ * @param count  the count.
+ * @param after  the after.
+ */
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
+
+/**
+ *
+ * On text changed
+ *
+ * @param s  the s.
+ * @param start  the start.
+ * @param before  the before.
+ * @param count  the count.
+ */
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 updateAutocompletePredictions(s.toString());
             }
 
             @Override
+
+/**
+ *
+ * After text changed
+ *
+ * @param s  the s.
+ */
             public void afterTextChanged(Editable s) {
+
             }
         });
     }
     // end citation
 
+
+    /**
+     *
+     * Update autocomplete predictions
+     *
+     * @param query  the query.
+     */
     private void updateAutocompletePredictions(String query) {
+
         AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
         FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
                 .setSessionToken(token)
@@ -366,7 +449,16 @@ public class OrganizerCreateEventFragment extends Fragment {
     // end citation
 
     // Utility method to set up date and time pickers
+
+    /**
+     *
+     * Sets the up date time picker
+     *
+     * @param editText  the edit text.  It is final
+     * @param formatter  the formatter.  It is final
+     */
     private void setUpDateTimePicker(final EditText editText, final SimpleDateFormat formatter) {
+
         final Calendar calendar = Calendar.getInstance();
         editText.setOnClickListener(v -> {
             if (formatter == dateFormatter) { // Date picker
@@ -386,7 +478,16 @@ public class OrganizerCreateEventFragment extends Fragment {
 
     // citation: OpenAI, ChatGPT 4, 2024: how do I check if a user input is a valid location
     // in android studio
+
+    /**
+     *
+     * Check location validity
+     *
+     * @param locationString  the location string.
+     * @param callback  the callback.
+     */
     private void checkLocationValidity(String locationString, Consumer<Boolean> callback) {
+
         new Thread(() -> {
             Geocoder geocoder = new Geocoder(getContext());
             try {
@@ -400,7 +501,14 @@ public class OrganizerCreateEventFragment extends Fragment {
         }).start();
     }
 
+
+    /**
+     *
+     * Switch to organizer fragment
+     *
+     */
     private void switchToOrganizerFragment() {
+
         OrganizerFragment organizerFragment = new OrganizerFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -408,7 +516,15 @@ public class OrganizerCreateEventFragment extends Fragment {
         fragmentTransaction.commit();
     }
     // end of citation
+
+    /**
+     *
+     * Gets the location
+     *
+     * @return the location
+     */
     private LatLng getLocation() {
+
         return getLocationFromAddress( getActivity()  ,eventLocation.getText().toString());
 
     }
