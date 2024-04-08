@@ -34,10 +34,6 @@
             style="@style/AppRoundedButton"
             android:text="Profile Settings" />
 
-        <Switch
-            android:id="@+id/switchPushNotifications"
-            style="@style/AppRoundedSwitch"
-            android:text="Toggle Push Notifications" />
 
         <Switch
             android:id="@+id/switchGeoTracking"

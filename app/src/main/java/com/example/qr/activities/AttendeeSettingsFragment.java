@@ -30,7 +30,6 @@ public class AttendeeSettingsFragment extends DialogFragment {
             Button btnClose = view.findViewById(R.id.btn_close);
             Button btnProfile = view.findViewById(R.id.btnProfileSettings);
             Button btnExitToMain = view.findViewById(R.id.btnExitToMainMenu);
-            Switch switchNotifications = view.findViewById(R.id.switchPushNotifications);
             Switch switchLocation = view.findViewById(R.id.switchGeoTracking);
 
             // profile settings
@@ -56,16 +55,6 @@ public class AttendeeSettingsFragment extends DialogFragment {
             boolean isNotificationsOn = sharedPreferences.getBoolean("Notifications", false);
             boolean isLocationOn = sharedPreferences.getBoolean("Location", false);
 
-            // Set the saved state to the switches
-            switchNotifications.setChecked(isNotificationsOn);
-            switchLocation.setChecked(isLocationOn);
-
-            // Save the state of the switches whenever they are toggled
-            switchNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("Notifications", isChecked);
-                editor.apply();
-            });
             
             SharedViewModel viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
             viewModel.setOrganizerNotificationStatus(isNotificationsOn);
