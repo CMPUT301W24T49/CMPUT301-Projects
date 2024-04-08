@@ -9,44 +9,45 @@
     <!-- Close (X) Button at the top right -->
     <Button
         android:id="@+id/btn_close_event_list"
-        style="@style/AppRoundedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="X" />
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="16sp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back_arrow_description"
+        android:drawableStart="@drawable/ic_arrow_back"
+        android:onClick="onBackArrowClicked"/>
+
 
     <!-- Event list page title -->
+
+    <!-- ListView for the events -->
+
     <TextView
         android:id="@+id/txt_events_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="160dp"
-        android:layout_toStartOf="@id/btn_close_event_list"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="16dp"
         android:text="Event List"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFFFFF"/>
+        android:textColor="#FFFFFF" />
 
-    <!-- ListView for the events -->
     <ListView
         android:id="@+id/listview_events"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/btn_close_event_list"
-        android:layout_marginTop="16dp"
         android:background="#FFFFFF"
+        android:layout_marginTop="16dp"
         android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"
-        android:padding="8dp"
-        android:scrollbars="vertical"/>
+        android:dividerHeight="3dp"
+        android:padding="0dp"
+        android:scrollbars="vertical" />
 
 
 </RelativeLayout>
