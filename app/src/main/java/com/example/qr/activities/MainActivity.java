@@ -61,8 +61,19 @@ public class MainActivity extends AppCompatActivity implements AdminUserProfileD
                                 AdministratorFragment adminMenuFragment = new AdministratorFragment();
                                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, adminMenuFragment).commit();
                             } else  {
-                                GuestHomeFragment guestHomeFragment = new GuestHomeFragment();
-                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, guestHomeFragment).commit();
+                                // check the homepage of the user
+                                if (user.getHomepage().equals("default")) {
+                                    // Display the AttendeeFragment for the user
+                                    GuestHomeFragment guestHomeFragment = new GuestHomeFragment();
+                                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, guestHomeFragment).commit();
+                                } else if (user.getHomepage().equals("organizer")) {
+                                    Log.d("MainActivity", "Homepage is empty");
+                                    OrganizerFragment organizerFragment = new OrganizerFragment();
+                                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, organizerFragment).commit();
+                                } else if (user.getHomepage().equals("attendee")) {
+                                    AttendeeFragment attendeeFragment = new AttendeeFragment();
+                                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, attendeeFragment).commit();
+                                }
                             }
                             break;
                         }

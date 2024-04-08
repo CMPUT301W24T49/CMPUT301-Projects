@@ -12,10 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -84,7 +86,6 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
         lastNameEditText = view.findViewById(R.id.lastNameEditText);
         emailEditText = view.findViewById(R.id.emailEditText);
         phoneEditText = view.findViewById(R.id.phoneEditText);
-        homePageEditText = view.findViewById(R.id.homePage);
         editButton = view.findViewById(R.id.editButton);
         saveButton = view.findViewById(R.id.saveButton);
 
@@ -92,6 +93,12 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
         Button uploadButton = view.findViewById(R.id.uploadButton);
         Button removeButton = view.findViewById(R.id.removeButton);
         Button btnClose = view.findViewById(R.id.btn_close);
+        Spinner homePageSpinner = view.findViewById(R.id.homePageSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.homepage_options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        homePageSpinner.setAdapter(adapter);
+
         // Make the EditText fields read-only by default
         setEditTextEnabled(false);
 
@@ -109,7 +116,15 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
                         lastNameEditText.setText(user.getLastName());
                         emailEditText.setText(user.getEmail());
                         phoneEditText.setText(user.getPhoneNumber());
-                        homePageEditText.setText(user.getHomepage());
+
+                        String homepage = user.getHomepage();
+                        if (homepage.equals("organizer")) {
+                            homePageSpinner.setSelection(1);
+                        } else if (homepage.equals("attendee")) {
+                            homePageSpinner.setSelection(2);
+                        } else {
+                            homePageSpinner.setSelection(0);
+                        }
 
                         currentUser = user;
                         // Load the profile picture
@@ -150,7 +165,9 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
             currentUser.setLastName(lastNameEditText.getText().toString());
             currentUser.setEmail(emailEditText.getText().toString());
             currentUser.setPhoneNumber(phoneEditText.getText().toString());
-            currentUser.setHomepage(homePageEditText.getText().toString());
+
+            String selectedHomepage = homePageSpinner.getSelectedItem().toString();
+            currentUser.setHomepage(selectedHomepage);
 
             Object returnValue = profileImageView.getTag();
 
@@ -242,6 +259,5 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
         lastNameEditText.setEnabled(enabled);
         emailEditText.setEnabled(enabled);
         phoneEditText.setEnabled(enabled);
-        homePageEditText.setEnabled(enabled);
     }
 }

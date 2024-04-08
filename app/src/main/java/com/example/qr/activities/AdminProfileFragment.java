@@ -84,7 +84,7 @@ public class AdminProfileFragment extends DialogFragment {
         lastNameEditText = view.findViewById(R.id.lastNameEditText);
         emailEditText = view.findViewById(R.id.emailEditText);
         phoneEditText = view.findViewById(R.id.phoneEditText);
-        homePageEditText = view.findViewById(R.id.homePage);
+        //homePageEditText = view.findViewById(R.id.homePage);
         editButton = view.findViewById(R.id.editButton);
         saveButton = view.findViewById(R.id.saveButton);
 
@@ -109,7 +109,7 @@ public class AdminProfileFragment extends DialogFragment {
                         lastNameEditText.setText(user.getLastName());
                         emailEditText.setText(user.getEmail());
                         phoneEditText.setText(user.getPhoneNumber());
-                        homePageEditText.setText(user.getHomepage());
+                        //homePageEditText.setText(user.getHomepage());
 
                         currentUser = user;
                         // Load the profile picture
@@ -154,7 +154,7 @@ public class AdminProfileFragment extends DialogFragment {
             currentUser.setLastName(lastNameEditText.getText().toString());
             currentUser.setEmail(emailEditText.getText().toString());
             currentUser.setPhoneNumber(phoneEditText.getText().toString());
-            currentUser.setHomepage(homePageEditText.getText().toString());
+            //currentUser.setHomepage(homePageEditText.getText().toString());
 
             Object returnValue = profileImageView.getTag();
 
@@ -244,6 +244,6 @@ public class AdminProfileFragment extends DialogFragment {
         lastNameEditText.setEnabled(enabled);
         emailEditText.setEnabled(enabled);
         phoneEditText.setEnabled(enabled);
-        homePageEditText.setEnabled(enabled);
+        //homePageEditText.setEnabled(enabled);
     }
 }

@@ -4,4 +4,9 @@
     <string name="channel_name">My Notifications</string>
     <string name="channel_description">Notification channel for app alerts</string>
     <string name="back_arrow_description">Go back</string>
+    <string-array name="homepage_options">
+        <item>default</item>
+        <item>organizer</item>
+        <item>attendee</item>
+    </string-array>
 </resources>
