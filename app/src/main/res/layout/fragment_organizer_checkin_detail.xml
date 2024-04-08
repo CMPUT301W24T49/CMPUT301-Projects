@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User Details"
+        android:text="Check-in Details"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
@@ -31,7 +31,6 @@
             android:id="@+id/user_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 
@@ -71,7 +70,6 @@
             android:id="@+id/check_in_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="[0° N, 0° W]"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 
@@ -91,7 +89,6 @@
             android:id="@+id/check_in_timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2024-04-07 00:00:00"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 

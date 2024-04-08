@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,7 @@ public class OrganizerEventDetailFragment extends Fragment {
         
 
         // Load event poster image
-        if(event.getEventPoster() != null) {
+        if(event.getEventPoster() != "") {
             Glide.with(getContext()).load(event.getEventPoster()).into(profile);
         }
 
@@ -129,7 +128,7 @@ public class OrganizerEventDetailFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putSerializable("Event", event);    // Store event data
 
-            CheckInListFragment checkInList = new CheckInListFragment();
+            OrganizerCheckInListFragment checkInList = new OrganizerCheckInListFragment();
             checkInList.setArguments((bundle));        // Pass data to Check-In list fragment
 
             // Navigate to check-in list page
@@ -146,7 +145,7 @@ public class OrganizerEventDetailFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putSerializable("Event", event);    // Store event data
 
-            SignUpListFragment signUpList = new SignUpListFragment();
+            OrganizerSignUpListFragment signUpList = new OrganizerSignUpListFragment();
             signUpList.setArguments((bundle));           // Pass data to Sign-up list fragment
 
             // Navigate to sign-up list page

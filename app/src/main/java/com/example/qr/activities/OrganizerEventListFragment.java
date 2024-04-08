@@ -52,7 +52,6 @@ public class OrganizerEventListFragment extends Fragment {
 
         // Clicking an event directs to it's detail page
         listView.setOnItemClickListener((adapterView, view1, position, rowId) -> {
-
             // Get position of clicked event
             Event event = eventDataList.get(position);
 
