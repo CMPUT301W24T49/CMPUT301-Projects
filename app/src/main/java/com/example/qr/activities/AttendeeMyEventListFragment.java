@@ -79,7 +79,7 @@ public class AttendeeMyEventListFragment extends Fragment {
             }
 
         });
-        
+
         // Close button going back previous screen
         btnClose.setOnClickListener(v -> {
             // Check if fragment is added to an activity and if activity has a FragmentManager

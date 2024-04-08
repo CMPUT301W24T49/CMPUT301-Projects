@@ -33,7 +33,7 @@ public class AdminSettingsFragment extends Fragment {
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment adminProfileFragment = new AdminProfileFragment();
+                AdminProfileFragment adminProfileFragment = new AdminProfileFragment();
                 if (getActivity() != null) {
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, adminProfileFragment)

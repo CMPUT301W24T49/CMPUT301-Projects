@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Random;
 
 
-public class MainActivity extends AppCompatActivity implements EventDetailFragment.EventDetailDialogListener, AdminUserProfileDetailFragment.UserDetailDialogListener, ImageDetailDialogFragment.ImageDetailDialogListener {
+public class MainActivity extends AppCompatActivity implements AdminUserProfileDetailFragment.UserDetailDialogListener, ImageDetailDialogFragment.ImageDetailDialogListener {
     EventArrayAdapter eventArrayAdapter;
 
     public static String androidId;
@@ -132,13 +132,9 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                 .addToBackStack(null)
                 .commit();
     }
-    @Override
-    public void onDeleteEvent(Event event) {
-    }
 
-    @Override
-    public void onDeleteUser(User user){
-    }
+
+
 
 }
 

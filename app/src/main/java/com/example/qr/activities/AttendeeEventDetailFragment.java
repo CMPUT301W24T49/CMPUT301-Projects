@@ -61,6 +61,15 @@ public class AttendeeEventDetailFragment extends Fragment {
         Button btnSignUp = view.findViewById(R.id.btnSignUp);
         Button btnNotification = view.findViewById(R.id.btnNotification);
 
+        Button btnClose = view.findViewById(R.id.btn_close_event_list);
+        // Close button going back previous screen
+        btnClose.setOnClickListener(v -> {
+            // Check if fragment is added to an activity and if activity has a FragmentManager
+            if (isAdded() && getActivity() != null) {
+                getActivity().onBackPressed();
+            }
+        });
+
         if(noSignUp){
             btnSignUp.setVisibility(View.GONE);
             btnSignUp.setClickable(false);

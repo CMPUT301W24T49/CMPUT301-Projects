@@ -12,40 +12,40 @@ import androidx.fragment.app.Fragment;
 
 import com.example.qr.R;
 import com.example.qr.models.AttendeeArrayAdapter;
-import com.example.qr.models.CheckIn;
+import com.example.qr.models.SignUp;
 import com.example.qr.models.Event;
 import com.example.qr.utils.FirebaseUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckInListFragment extends Fragment {
+public class SignUpListFragment extends Fragment {
     public Event event;
 
     ArrayList<String> attendeeDataList;
     AttendeeArrayAdapter attendeeArrayAdapter;
 
-    public CheckInListFragment() {
+    public SignUpListFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate layout
-        View view = inflater.inflate(R.layout.fragment_checkin_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_signup_list, container, false);
         event = (Event) getArguments().getSerializable("Event"); // Retrieve event from event detail page
 
         // Button initialization
         ListView listView = view.findViewById(R.id.attendee_listview);
-        Button btnClose = view.findViewById(R.id.btn_close_checkin_list);
+        Button btnClose = view.findViewById(R.id.btn_close_signup_list);
 
         // Initialize attendee data list and attendee array adapter
         attendeeDataList = new ArrayList<>();
         attendeeArrayAdapter = new AttendeeArrayAdapter(getActivity(), attendeeDataList);
         listView.setAdapter(attendeeArrayAdapter);
 
-        fetchCheckIns();
-        
+        fetchSignUps();
+
         // Close button to go back to the previous screen
         btnClose.setOnClickListener(v -> {
             // Check if the fragment is added to an activity and if the activity has a FragmentManager
@@ -57,27 +57,23 @@ public class CheckInListFragment extends Fragment {
         return view;
     }
 
-    // Fetch check-ins (attendees) from Firebase and add them to the check-in list
-    // Filter through checkInList and add userIds checked into the clicked event
-    private void fetchCheckIns() {
+    // Fetch signed up attendees from Firebase and add them to the sign up list
+    // Filter through signUpList and add userIds checked into the clicked event
+    private void fetchSignUps() {
         List<String> userIds = new ArrayList<>();               // Initialize userIds list
-        FirebaseUtil.fetchCollection("CheckIn", CheckIn.class, new FirebaseUtil.OnCollectionFetchedListener<CheckIn>() {
+        FirebaseUtil.fetchCollection("SignUp", SignUp.class, new FirebaseUtil.OnCollectionFetchedListener<SignUp>() {
             @Override
-            public void onCollectionFetched(List<CheckIn> checkInList) {
-                // If check-ins match the eventId, add to userIds list
-                // citation: OpenAI, ChatGPT 4, 2024
-                // Prompt:  I want to only get checkIns with the eventId of the clicked event
-                // in the fetchCheckIns() method. How can I do this with a for loop?
-                for (CheckIn checkIn : checkInList) {
-                    if (event.getId().equals(checkIn.getEventId())) {
-                        userIds.add(checkIn.getUserId());
+            public void onCollectionFetched(List<SignUp> signUpList) {
+                // If sign-ups match the eventId, add to userIds list
+                for (SignUp signUp : signUpList) {
+                    if (event.getId().equals(signUp.getEventId())) {
+                        userIds.add(signUp.getUserId());
                     }
                 }
-                // End of citation
 
                 attendeeDataList.addAll(userIds);               // Add userIds to data list
                 attendeeArrayAdapter.notifyDataSetChanged();    // Update attendee array adapter
-                
+
                 // Print attendee data list
                 for (String userId : userIds) {
                     Log.d("AttendeeListFragment", "userId: " + userId);
@@ -86,11 +82,12 @@ public class CheckInListFragment extends Fragment {
 
             @Override
             public void onError(Exception e) {
-                Log.e("CheckInListFragment", "Error fetching check-ins: ", e); // Log error
+                Log.e("CheckInListFragment", "Error fetching sign-ups: ", e); // Log error
             }
         });
 
     }
 
-}
 
+
+}

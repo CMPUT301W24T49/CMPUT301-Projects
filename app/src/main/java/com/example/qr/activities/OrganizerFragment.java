@@ -31,21 +31,21 @@ public class OrganizerFragment extends Fragment {
         
         // Create events button onclick listener
         createEventsBtn.setOnClickListener(v -> {
-            OrganizerCreateEventFragment organizerCreateEventFragment = new OrganizerCreateEventFragment();
+            OrganizerCreateEventFragment organizerCreateEvent = new OrganizerCreateEventFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, organizerCreateEventFragment)
+                        .replace(R.id.fragment_container, organizerCreateEvent)
                         .addToBackStack(null)  // Optional: Add transaction to back stack
                         .commit();
             }
         });
 
-        // Events button onclick listener
+        // My events button onclick listener
         eventsBtn.setOnClickListener(v -> {
-            OrganizerEventListFragment eventListOrganizerFragment = new OrganizerEventListFragment();
+            OrganizerEventListFragment organizerEventList = new OrganizerEventListFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, eventListOrganizerFragment)
+                        .replace(R.id.fragment_container, organizerEventList)
                         .addToBackStack(null)  // Optional: Add transaction to back stack
                         .commit();
             }
@@ -53,16 +53,18 @@ public class OrganizerFragment extends Fragment {
 
         // Settings button onclick listener
         settingsBtn.setOnClickListener(v -> {
-            AttendeeSettingsFragment attendeeSettingsFragment = new AttendeeSettingsFragment();
+            AttendeeSettingsFragment attendeeSettings = new AttendeeSettingsFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, attendeeSettingsFragment)
+                        .replace(R.id.fragment_container, attendeeSettings)
                         .addToBackStack(null)  // Optional: Add transaction to back stack
                         .commit();
             }
         });
 
+        // Close button going back previous screen
         btnClose.setOnClickListener(v -> {
+            // Check if fragment is added to an activity and if activity has a FragmentManager
             if (isAdded() && getActivity() != null) {
                 getActivity().onBackPressed();
             }

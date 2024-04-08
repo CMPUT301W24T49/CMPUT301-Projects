@@ -66,7 +66,7 @@ public class AdministratorFragment extends Fragment {
 
         btnSettings.setOnClickListener(v -> {
             // Handle Settings click
-            Fragment adminSettingsFragment = new AdminSettingsFragment();
+            AdminSettingsFragment adminSettingsFragment = new AdminSettingsFragment();
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, adminSettingsFragment)
