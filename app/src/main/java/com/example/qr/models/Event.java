@@ -23,6 +23,7 @@ public class Event implements Serializable {
     private String endTime;
     private GeoPoint location;
     private String qrCode;
+    private String qrpCode;
     private String eventPoster;
     private Integer attendeeLimit; // Optional
 
@@ -39,7 +40,7 @@ public class Event implements Serializable {
 
     public Event(String id, String title, String description, String organizerId, Date startDate,
                  Date endDate, String startTime, String endTime, GeoPoint location, String qrCode,
-                 String eventPoster, Integer attendeeLimit) {
+                 String qrpCode, String eventPoster, Integer attendeeLimit) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -50,6 +51,7 @@ public class Event implements Serializable {
         this.endTime = endTime;
         this.location = location;
         this.qrCode = qrCode;
+        this.qrpCode = qrpCode;
         this.eventPoster = eventPoster;
         this.attendeeLimit = attendeeLimit;
         this.attendeeCount = 0;
@@ -228,6 +230,24 @@ public class Event implements Serializable {
      */
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode;
+    }
+
+    /**
+     * Returns the QR promo code of the event.
+     *
+     * @return The QR promo code of the event.
+     */
+    public String getQrpCode() {
+        return qrpCode;
+    }
+
+    /**
+     * Sets the QR promo code of the event.
+     *
+     * @param qrpCode The QR promo code of the event.
+     */
+    public void setQrpCode(String qrpCode) {
+        this.qrCode = qrpCode;
     }
 
     /**
