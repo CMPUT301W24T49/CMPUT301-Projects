@@ -13,31 +13,22 @@ import com.example.qr.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An ArrayAdapter for displaying images in a list.
+ * Manages a list of user profile & event poster and populates a ListView with views representing each image.
+ */
 public class ProfileAndPosterAdapter extends ArrayAdapter<Object> {
 
     private ArrayList<Object> items;
     private Context context;
 
-    /**
-     * Constructs an ProfileAndPosterAdapter.
-     *
-     * @param context The current context, used to inflate the layout file.
-     * @param items An ArrayList of User or Event objects to be displayed.
-     */
     public ProfileAndPosterAdapter(Context context, ArrayList<Object> items) {
         super(context, 0, items);
         this.context = context;
         this.items = items;
     }
-
-    /**
-     * Provides a view for an AdapterView.
-     *
-     * @param position The position in the list of data that should be displayed in the list item view.
-     * @param convertView The recycled view to populate.
-     * @param parent The parent ViewGroup that is used for inflation.
-     * @return The View for the position in the AdapterView.
-     */
+    
+    // citation: OpenAI, ChatGPT 4, 2024: How to handle object of two different data type using a single Array Adapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
@@ -47,6 +38,7 @@ public class ProfileAndPosterAdapter extends ArrayAdapter<Object> {
         Object item = items.get(position);
         ImageView imageView = view.findViewById(R.id.image_list_info);
         TextView textView = view.findViewById(R.id.image_picture);
+
         if (item instanceof User) {
             User user = (User) item;
             String profilePictureUrl = user.getProfilePicture();

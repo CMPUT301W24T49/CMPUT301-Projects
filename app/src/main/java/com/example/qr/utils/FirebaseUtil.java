@@ -5,6 +5,7 @@ import static com.example.qr.activities.MainActivity.androidId;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.qr.models.CheckIn;
 import com.example.qr.models.Event;
@@ -230,6 +231,11 @@ public class FirebaseUtil {
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
+    /**
+     * Get FCM token to send notification.
+     *
+     * @param event Event where FCM token will be saved
+     */
     public static void getFCMTokenID(Event event){
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
             @Override
@@ -245,6 +251,12 @@ public class FirebaseUtil {
                 FirebaseUtil.addUserTokenIdNotification(event, notificationTokenId, aVoid -> {}, e -> {});
             }});
     }
+    /**
+     * When details is modified copy existing FCM token ids along with it.
+     *
+     * @param eventId1 Event id to move FCM token from.
+     * @param eventId2 Event id to move FCM token to.
+     */
     public static void shareFCMToken(String eventId1, String eventId2){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference sourceCollection = db.collection("Events").document(eventId1).collection("Notification User TokenID");
@@ -257,10 +269,9 @@ public class FirebaseUtil {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Map<String, Object> data = document.getData();
                     Task<Void> writeTask = db.collection("Events").document(eventId2).collection("Notification User TokenID")
-                            .document(document.getId())  // Use the same document ID, or generate a new one if preferred
+                            .document(document.getId())
                             .set(data);
                     writeTasks.add(writeTask);
-                    writeTask.addOnSuccessListener(aVoid -> sourceCollection.document(document.getId()).delete());
                 }
                 Tasks.whenAllSuccess(writeTasks).addOnSuccessListener(results -> {
                     Log.d("MoveNotificationTokens", "All Notification Tokens moved successfully.");
@@ -273,14 +284,14 @@ public class FirebaseUtil {
         });
     }
 
-//    public static void addUserTokenIdNotification(Event event, Map<String, Object> notificationTokenId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener){
-//        db.collection("Events").document(event.getId()).collection("Notification User TokenID")
-//                // when user id is working change this to user ID
-//                .document(String.valueOf(System.currentTimeMillis()))
-//                .set(notificationTokenId)
-//                .addOnSuccessListener(onSuccessListener)
-//                .addOnFailureListener(onFailureListener);
-//    }
+    /**
+     * When details is modified copy existing FCM token ids along with it.
+     *
+     * @param event Event id to add notificatiin token id to.
+     * @param notificationTokenId new notification token id
+     * @param onSuccessListener Callback for successful upload, returns the image download URL.
+     * @param onFailureListener Callback for upload failure.
+     */
     public static void addUserTokenIdNotification(Event event, Map<String, Object> notificationTokenId, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
         String tokenIdToCheck = (String) notificationTokenId.get("tokenId"); // Assuming the key for the token ID in the map is "tokenId"
         CollectionReference tokenCollectionRef = db.collection("Events").document(event.getId()).collection("Notification User TokenID");

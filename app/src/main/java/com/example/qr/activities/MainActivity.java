@@ -29,6 +29,7 @@ import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity implements AdminUserProfileDetailFragment.UserDetailDialogListener, ImageDetailDialogFragment.ImageDetailDialogListener {
+    private static final int RC_NOTIFICATION = 99;
     EventArrayAdapter eventArrayAdapter;
 
     public static String androidId;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements AdminUserProfileD
                         // Create a new user with a unique name and the androidId as the id field
                         String guestLastName= "" + new Random().nextInt(10000); // Generate a random number between 0 and 9999
                         String profilePicture = "https://github.com/identicons/guest.png";
-                        User newUser = new User(androidId, "guest", guestLastName, "nonAdmin", profilePicture, "", "", "");
+                        User newUser = new User(androidId, "guest", guestLastName, "nonAdmin", profilePicture, "", "", "default");
                         // Add the new user to the database
                         FirebaseUtil.addUser(newUser, new OnSuccessListener<Void>() {
                             @Override
@@ -105,6 +106,9 @@ public class MainActivity extends AppCompatActivity implements AdminUserProfileD
                     Log.e("MainActivity", "Error fetching user collection", e);
                 }
             });
+        }
+        if (Build. VERSION.SDK_INT >= Build. VERSION_CODES. TIRAMISU) {
+            ActivityCompat.requestPermissions( this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, RC_NOTIFICATION);
         }
         handleIntent(getIntent());
     }
@@ -143,9 +147,15 @@ public class MainActivity extends AppCompatActivity implements AdminUserProfileD
                 .addToBackStack(null)
                 .commit();
     }
-
-
-
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RC_NOTIFICATION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            } else {
+                Toast.makeText(this, "Notification permission is required to send you important updates.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 }
 

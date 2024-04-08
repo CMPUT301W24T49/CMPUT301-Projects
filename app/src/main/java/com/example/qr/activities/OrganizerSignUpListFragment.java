@@ -14,25 +14,30 @@ import com.example.qr.R;
 import com.example.qr.models.AttendeeArrayAdapter;
 import com.example.qr.models.SignUp;
 import com.example.qr.models.Event;
+import com.example.qr.models.User;
 import com.example.qr.utils.FirebaseUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class SignUpListFragment extends Fragment {
+public class OrganizerSignUpListFragment extends Fragment {
     public Event event;
 
-    ArrayList<String> attendeeDataList;
+    ArrayList<User> attendeeDataList;
     AttendeeArrayAdapter attendeeArrayAdapter;
+    Map<String, List<SignUp>> userSignUpsMap;
 
-    public SignUpListFragment() {
+    public OrganizerSignUpListFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate layout
-        View view = inflater.inflate(R.layout.fragment_signup_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_organizer_signup_list, container, false);
         event = (Event) getArguments().getSerializable("Event"); // Retrieve event from event detail page
 
         // Button initialization
@@ -60,7 +65,8 @@ public class SignUpListFragment extends Fragment {
     // Fetch signed up attendees from Firebase and add them to the sign up list
     // Filter through signUpList and add userIds checked into the clicked event
     private void fetchSignUps() {
-        List<String> userIds = new ArrayList<>();               // Initialize userIds list
+        List<String> userIds = new ArrayList<>();           // Initialize userIds list
+        userSignUpsMap = new HashMap<>();
         FirebaseUtil.fetchCollection("SignUp", SignUp.class, new FirebaseUtil.OnCollectionFetchedListener<SignUp>() {
             @Override
             public void onCollectionFetched(List<SignUp> signUpList) {
@@ -68,10 +74,29 @@ public class SignUpListFragment extends Fragment {
                 for (SignUp signUp : signUpList) {
                     if (event.getId().equals(signUp.getEventId())) {
                         userIds.add(signUp.getUserId());
+
                     }
                 }
 
-                attendeeDataList.addAll(userIds);               // Add userIds to data list
+                // Fetch signed up users and add them to the attendee data list
+                FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
+                    @Override
+                    public void onCollectionFetched(List<User> userList) {
+                        // Filter through the user list and add userIds to the data list
+                        for (User user : userList) {
+                            if (userIds.contains(user.getId())) {
+                                attendeeDataList.add(user);
+                            }
+                        }
+                        attendeeArrayAdapter.notifyDataSetChanged();    // Update attendee array adapter
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Log.e("SignUpListFragment", "Error fetching users: ", e); // Log error
+                    }
+                });
+
                 attendeeArrayAdapter.notifyDataSetChanged();    // Update attendee array adapter
 
                 // Print attendee data list
@@ -82,7 +107,7 @@ public class SignUpListFragment extends Fragment {
 
             @Override
             public void onError(Exception e) {
-                Log.e("CheckInListFragment", "Error fetching sign-ups: ", e); // Log error
+                Log.e("SignUpListFragment", "Error fetching sign-ups: ", e); // Log error
             }
         });
 

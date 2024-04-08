@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/*
+    Foreground push notification implementation and on notification click implementation
+ */
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     @Override

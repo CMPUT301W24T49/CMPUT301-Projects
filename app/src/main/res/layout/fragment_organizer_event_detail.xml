@@ -63,7 +63,7 @@
                 android:focusable="true"
                 android:layout_marginTop="0dp"
                 android:padding = "0dp"
-                android:src="@drawable/ic_launcher_background" />
+                android:src="@drawable/ic_launcher_background"/>
 
             <TextView
                 android:id="@+id/eventTitle"
@@ -166,7 +166,7 @@
                     android:background="@drawable/rounded_button_dark"
                     android:text="Check In List"
                     android:textColor="#FFFFFF"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <Button
                     android:id="@+id/btnSignupList"
@@ -177,7 +177,7 @@
                     android:background="@drawable/rounded_button_dark"
                     android:text="Sign up List"
                     android:textColor="#FFFFFF"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
 
             </LinearLayout>
@@ -200,6 +200,38 @@
 
             </FrameLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnShareEvent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_button_dark"
+                    android:text="Share Event Page"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/btnShareQR"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_button_dark"
+                    android:text="Share QR Code"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/btnNotifications"
                 android:layout_width="173dp"
@@ -212,6 +244,27 @@
                 android:textSize="12sp" />
 
 
+
+            <TextView
+                android:id="@+id/locationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:text="Check-In Locations:"
+                android:layout_marginTop="20sp"
+                android:textSize="18sp"/>
+
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="300sp"
+                android:layout_marginTop="20sp"/>
+
         </LinearLayout>
     </ScrollView>
+
+
 </RelativeLayout>

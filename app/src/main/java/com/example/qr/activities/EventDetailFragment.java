@@ -30,6 +30,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * EventDetailFragments displays details for an specific event .
+ */
 public class EventDetailFragment extends Fragment {
 
     public Event event;
@@ -37,7 +40,6 @@ public class EventDetailFragment extends Fragment {
     public EventDetailFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -190,17 +190,11 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
             }
             // DO NOT REMOVE THIS. ITS FOR PUSH NOTIFICATION
             FirebaseUtil.shareFCMToken(selectedEvent.getQrCode(), selectedEvent.getId());
-            SharedViewModel viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-            viewModel.getOrganizerNotificationStatus().observe(getViewLifecycleOwner(), organizerNotificationStatus -> {
-                if (organizerNotificationStatus != null) {
-                    if (organizerNotificationStatus == Boolean.TRUE){
 
-                        String message = selectedEvent.getTitle() + "'s details has been updated by organizer.";
-                        Notification notification = new Notification("notification" + System.currentTimeMillis(), selectedEvent.getId(), message, new Date(), false);
-                        FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
-                    }
-                }
-            });
+            String message = selectedEvent.getTitle() + "'s details has been updated by organizer.";
+            Notification notification = new Notification("notification" + System.currentTimeMillis(), selectedEvent.getId(), message, new Date(), false);
+            FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
+
         });
         // end citation
 
