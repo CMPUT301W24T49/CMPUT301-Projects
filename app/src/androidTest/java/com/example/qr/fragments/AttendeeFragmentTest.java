@@ -13,41 +13,18 @@ import com.example.qr.activities.MainActivity;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import android.app.Instrumentation;
-import android.content.Intent;
-import android.provider.MediaStore;
 
-import static androidx.test.espresso.intent.Intents.intended;
+
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.intent.Intents.intending;
-import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
-import android.app.Activity;
-import android.app.Instrumentation;
-import android.provider.MediaStore;
-import androidx.test.espresso.intent.Intents;
-import org.junit.After;
-import org.junit.Before;
-import androidx.test.rule.GrantPermissionRule;
-import android.Manifest;
+
 
 @RunWith(AndroidJUnit4.class)
 public class AttendeeFragmentTest {
     @Rule
     public ActivityScenarioRule<MainActivity> activityScenarioRule = new ActivityScenarioRule<>(MainActivity.class);
 
-    @Rule
-    public GrantPermissionRule grantCameraPermission = GrantPermissionRule.grant(Manifest.permission.CAMERA);
 
-    @Before
-    public void setUp() {
-        Intents.init();
-    }
-
-    @After
-    public void tearDown() {
-        Intents.release();
-    }
     @Test
     public void testAttendeeEventsButtonClick() {
         try {
