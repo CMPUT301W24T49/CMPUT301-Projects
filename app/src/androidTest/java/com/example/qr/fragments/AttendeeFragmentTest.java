@@ -31,7 +31,7 @@ public class AttendeeFragmentTest {
         Espresso.onView(withId(R.id.fragment_attendee_layout)).check(ViewAssertions.matches(isDisplayed()));
 
         // Go to the event list
-        Espresso.onView(withId(R.id.btnEvents)).perform(ViewActions.click());
+        Espresso.onView(withId(R.id.btnMyEvents)).perform(ViewActions.click());
 
         // Now check if the EventListFragment is displayed by checking one of its views
         Espresso.onView(withId(R.id.fragment_event_list_layout)).check(ViewAssertions.matches(isDisplayed()));
