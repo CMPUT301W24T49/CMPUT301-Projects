@@ -168,6 +168,8 @@ public class OrganizerCreateEventFragment extends Fragment {
                         // if location exists
                         long currentTimeMillis = System.currentTimeMillis();
                         String eventId = Long.toString(currentTimeMillis);
+                        String eventQr = "qr" + Long.toString(currentTimeMillis);
+                        String eventPromo = "qrp" + Long.toString(currentTimeMillis);
                         // value setting for maxAttendees blank or not
                         if(maxAttendees.getText().toString().isEmpty()) {
                             maxAttendeesValue = 9999;
@@ -178,7 +180,7 @@ public class OrganizerCreateEventFragment extends Fragment {
                         Event event = new Event(eventId, eventTitle.getText().toString(), description.getText().toString(), androidId,
                                 new Date(startDate.getText().toString()), new Date(endDate.getText().toString()),
                                 startTime.getText().toString(), endTime.getText().toString(), new GeoPoint(location.getLatitude(),
-                                location.getLongitude()), eventId, "", maxAttendeesValue);
+                                location.getLongitude()), eventQr, eventPromo, "", maxAttendeesValue);
 
                         if(eventPoster.getTag() != null) {
                             Bundle args = new Bundle();
@@ -237,6 +239,8 @@ public class OrganizerCreateEventFragment extends Fragment {
                         // if location exists
                         long currentTimeMillis = System.currentTimeMillis();
                         String eventId = Long.toString(currentTimeMillis);
+                        String eventQr = "qr" + Long.toString(currentTimeMillis);
+                        String eventPromo = "qrp" + Long.toString(currentTimeMillis);
                         // value setting for maxAttendees blank or not
                         if(maxAttendees.getText().toString().isEmpty()) {
                             maxAttendeesValue = 9999;
@@ -247,7 +251,7 @@ public class OrganizerCreateEventFragment extends Fragment {
                         Event event = new Event(eventId, eventTitle.getText().toString(), description.getText().toString(), androidId,
                                 new Date(startDate.getText().toString()), new Date(endDate.getText().toString()),
                                 startTime.getText().toString(), endTime.getText().toString(), new GeoPoint(location.getLatitude(),
-                                location.getLongitude()), eventId, "", maxAttendeesValue);
+                                location.getLongitude()), eventQr, eventPromo, "", maxAttendeesValue);
 
                         if(eventPoster.getTag() != null) {
                             Uri profilePicture = (Uri) eventPoster.getTag();
