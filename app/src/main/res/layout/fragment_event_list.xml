@@ -19,9 +19,7 @@
         android:contentDescription="@string/back_arrow_description"
         android:drawableStart="@drawable/ic_arrow_back"
         android:onClick="onBackArrowClicked"/>
-
-
-    <!-- Event list page title -->
+    
 
     <!-- ListView for the events -->
 
@@ -31,11 +29,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="156dp"
+        android:layout_marginStart="167dp"
         android:layout_marginTop="16dp"
         android:text="Event List"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"/>
 
     <ListView
         android:id="@+id/listview_events"
