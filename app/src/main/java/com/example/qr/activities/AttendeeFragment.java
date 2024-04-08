@@ -10,6 +10,8 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +20,15 @@ import android.widget.Toast;
 
 import com.example.qr.R;
 import com.example.qr.models.CheckIn;
+import com.example.qr.models.Event;
 import com.example.qr.utils.FirebaseUtil;
 import com.example.qr.utils.GeolocationUtil;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.util.List;
 
 public class AttendeeFragment extends Fragment {
 
@@ -100,19 +105,74 @@ public class AttendeeFragment extends Fragment {
                                 Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
                             } else {
 
-                                CheckIn checkIn = new CheckIn(scanResult.getContents(), androidId,new java.util.Date() , null);
-                                GeolocationUtil.getCurrentLocation(getActivity(), location -> {
-                                    if (location != null) {
-                                        GeoPoint geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
-                                        checkIn.setLocation(geoPoint);
-                                    }
+                                final String code = scanResult.getContents();
 
-                                    FirebaseUtil.addCheckIn(checkIn, aVoid -> {
-                                        Toast.makeText(getContext(), "Checked in successfully!", Toast.LENGTH_LONG).show();
-                                    }, e -> {
-                                        Toast.makeText(getContext(), "Error checking in: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                //if code begins with qr vs qrp
+                                if (code.startsWith("qr")) {
+                                    //query all events with this qr code
+                                    FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
+                                        @Override
+                                        public void onCollectionFetched(List<Event> eventList) {
+                                            //filter eventList with e
+                                            for (Event event : eventList) {
+                                                if (event.getQrCode().equals(code)) {
+                                                    String eventId = event.getId();
+                                                    CheckIn checkIn = new CheckIn(eventId, androidId,new java.util.Date() , null);
+                                                    GeolocationUtil.getCurrentLocation(getActivity(), location -> {
+                                                        if (location != null) {
+                                                            GeoPoint geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
+                                                            checkIn.setLocation(geoPoint);
+                                                        }
+
+                                                        FirebaseUtil.addCheckIn(checkIn, aVoid -> {
+                                                            Toast.makeText(getContext(), "Checked in successfully!", Toast.LENGTH_LONG).show();
+                                                        }, e -> {
+                                                            Toast.makeText(getContext(), "Error checking in: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                                        });
+                                                    });
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onError(Exception e) {
+                                        }
                                     });
-                                });
+                                } else if (code.startsWith("qrp")) {
+                                    FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
+                                        @Override
+                                        public void onCollectionFetched(List<Event> eventList) {
+                                            //filter eventList with e
+                                            Event selEvent = null;
+                                            for (Event event : eventList) {
+                                                if (event.getQrpCode().equals(code)) {
+                                                    selEvent = event;
+                                                    break;
+                                                }
+                                            }
+
+                                            if(selEvent != null){
+                                                Bundle args = new Bundle();
+                                                args.putSerializable("Event", selEvent);
+                                                args.putSerializable("NoSignUp", false);
+
+                                                AttendeeEventDetailFragment attendeeEventDetailFragment = new AttendeeEventDetailFragment();
+                                                attendeeEventDetailFragment.setArguments(args); // Pass data to attendeeListFragment
+                                                if (getActivity() != null) {
+                                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                                            .replace(R.id.fragment_container, attendeeEventDetailFragment)
+                                                            .addToBackStack(null)  // Optional: Add transaction to back stack
+                                                            .commit();
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onError(Exception e) {
+                                        }
+                                    });
+                                };
 
 
                             }
