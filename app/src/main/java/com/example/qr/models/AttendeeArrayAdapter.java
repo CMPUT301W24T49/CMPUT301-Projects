@@ -20,9 +20,9 @@ import java.util.ArrayList;
  * An ArrayAdapter for displaying a list of attendees' names.
  * Converts an ArrayList of attendees into View items loaded into the ListView container.
  */
-public class AttendeeArrayAdapter extends ArrayAdapter<String> {
+public class AttendeeArrayAdapter extends ArrayAdapter<User> {
 
-    private ArrayList<String> attendeeDataList; // List of attendees
+    private ArrayList<User> attendeeDataList; // List of attendees
     private Context context;    // Current context
 
     /**
@@ -31,7 +31,7 @@ public class AttendeeArrayAdapter extends ArrayAdapter<String> {
      * @param context The current context which is used to inflate the layout file.
      * @param attendees An ArrayList of attendee names to display in the list.
      */
-    public AttendeeArrayAdapter(Context context, ArrayList<String> attendees) {
+    public AttendeeArrayAdapter(Context context, ArrayList<User> attendees) {
         super(context, 0, attendees);
         this.context = context;
         this.attendeeDataList = attendees;
@@ -54,9 +54,11 @@ public class AttendeeArrayAdapter extends ArrayAdapter<String> {
             view = LayoutInflater.from(context).inflate(R.layout.fragment_attendee_list_info, parent, false);
         }
 
-        String attendee = attendeeDataList.get(position);
-        TextView attendeeName = view.findViewById(R.id.attendee_list_info);
-        attendeeName.setText(attendee);
+        User attendee = attendeeDataList.get(position);
+        TextView attendeeName = view.findViewById(R.id.attendee_name);
+        TextView attendeeUserId = view.findViewById(R.id.attendee_user_id);
+        attendeeName.setText(attendee.getName());
+        attendeeUserId.setText(attendee.getId());
 
         return view;
     }

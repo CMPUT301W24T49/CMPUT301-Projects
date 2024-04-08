@@ -70,7 +70,7 @@ public class OrganizerEventDetailFragment extends Fragment implements OnMapReady
 
 
         // Load event poster image
-        if(event.getEventPoster() != null) {
+        if(event.getEventPoster() != "") {
             Glide.with(getContext()).load(event.getEventPoster()).into(profile);
         }
 
@@ -113,13 +113,13 @@ public class OrganizerEventDetailFragment extends Fragment implements OnMapReady
             endDate.setText(endDateText);
         }
 
-        // Set start time
+        // Set start time for non-empty event
         if(!event.getStartTime().isEmpty()){
             String startTimeText = "Start Time: " + event.getStartTime();
             startTime.setText(startTimeText);
         }
 
-        // Set end time
+        // Set end time for non-empty event
         if(!event.getEndTime().isEmpty()){
             String endTimeText = "End Time: " + event.getEndTime();
             endTime.setText(endTimeText);
@@ -148,7 +148,7 @@ public class OrganizerEventDetailFragment extends Fragment implements OnMapReady
             Bundle bundle = new Bundle();
             bundle.putSerializable("Event", event);    // Store event data
 
-            CheckInListFragment checkInList = new CheckInListFragment();
+            OrganizerCheckInListFragment checkInList = new OrganizerCheckInListFragment();
             checkInList.setArguments((bundle));        // Pass data to Check-In list fragment
 
             // Navigate to check-in list page
@@ -165,7 +165,7 @@ public class OrganizerEventDetailFragment extends Fragment implements OnMapReady
             Bundle bundle = new Bundle();
             bundle.putSerializable("Event", event);    // Store event data
 
-            SignUpListFragment signUpList = new SignUpListFragment();
+            OrganizerSignUpListFragment signUpList = new OrganizerSignUpListFragment();
             signUpList.setArguments((bundle));           // Pass data to Sign-up list fragment
 
             // Navigate to sign-up list page
@@ -196,9 +196,6 @@ public class OrganizerEventDetailFragment extends Fragment implements OnMapReady
                         .commit();
             }
         });
-
-
-
 
         // Close button going back previous screen
         btnClose.setOnClickListener(v -> {
@@ -244,7 +241,7 @@ public class OrganizerEventDetailFragment extends Fragment implements OnMapReady
             shareIntent.setType("image/jpeg");
             startActivity(Intent.createChooser(shareIntent, "Share QR Code via"));
         });
-        
+
         return view;
 
     }
