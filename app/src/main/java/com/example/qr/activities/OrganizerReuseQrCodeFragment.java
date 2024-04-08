@@ -31,6 +31,7 @@ import com.example.qr.utils.FirebaseUtil;
 import com.example.qr.utils.GenerateQRCode;
 import com.google.firebase.firestore.GeoPoint;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,6 +56,7 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
 
     private String qrCode;
     private String qrpCode;
+    private String oldID;
     private Integer prevMaxAttendees;
 
     private Date prevStartDate, prevEndDate;
@@ -104,8 +106,10 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
                 }
 
                 // Your existing logic for when a real event is selected
+
                 qrCode = eventDataList.get(position).getQrCode();
                 qrpCode = eventDataList.get(position).getQrpCode();
+                oldID = eventDataList.get(position).getId();
                 if(qrCode != null) {
                     Bitmap img = GenerateQRCode.generateQR(qrCode);
                     eventQrCode.setImageBitmap(img);
@@ -160,6 +164,7 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
                                 // GPT given code to switch back to organizer screen
                                 switchToOrganizerFragment();
                                 Toast.makeText(getContext(), "Event created successfully", Toast.LENGTH_SHORT).show();
+                                FirebaseUtil.deleteEvent(oldID, a -> { }, e -> {});
                             }, e -> {
                                 // else toast that it failed to create
                                 Toast.makeText(getContext(), "Failed to create event", Toast.LENGTH_SHORT).show();
@@ -172,6 +177,7 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
                                 // GPT given code to switch back to organizer screen
                                 switchToOrganizerFragment();
                                 Toast.makeText(getContext(), "Event created successfully", Toast.LENGTH_SHORT).show();
+                                FirebaseUtil.deleteEvent(oldID, a -> { }, ee -> {});
                             }, ee -> {
                                 // else toast that it failed to create
                                 Toast.makeText(getContext(), "Failed to create event", Toast.LENGTH_SHORT).show();
@@ -183,6 +189,7 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
                             // GPT given code to switch back to organizer screen
                             switchToOrganizerFragment();
                             Toast.makeText(getContext(), "Event created successfully", Toast.LENGTH_SHORT).show();
+                            FirebaseUtil.deleteEvent(oldID, a -> { }, e -> {});
                         }, ee -> {
                             // else toast that it failed to create
                             Toast.makeText(getContext(), "Failed to create event", Toast.LENGTH_SHORT).show();
@@ -235,28 +242,54 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
     // the endDate and endTime based on *examples from database*
     private boolean isEventBeforeCurrentTime(Date endDate, String endTime) {
         if (endDate == null || endTime == null) {
-            return false; // Assuming that an event must have both to be valid
+            return false; // Ensure that both date and time are not null.
         }
 
-        SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm", Locale.getDefault()); // Time format
-        SimpleDateFormat sdfDate = new SimpleDateFormat("MMMM d, yyyy 'at' hh:mm:ss a 'UTC'z", Locale.getDefault());
-        sdfDate.setTimeZone(TimeZone.getTimeZone("UTC-6")); // Set timezone to match Firestore
+        // Current date and time setup.
+        Calendar nowCal = Calendar.getInstance();
+        Date now = nowCal.getTime();
 
-        try {
-            Date endTimeParsed = sdfTime.parse(endTime); // Parse the end time
-            Calendar eventDateTime = Calendar.getInstance();
-            eventDateTime.setTime(endDate);
+        // Set up calendar with the event's end date.
+        Calendar eventDateCal = Calendar.getInstance();
+        eventDateCal.setTime(endDate);
+        eventDateCal.set(Calendar.SECOND, 0);
+        eventDateCal.set(Calendar.MILLISECOND, 0);
 
-            Calendar endTimeCal = Calendar.getInstance();
-            endTimeCal.setTime(endTimeParsed);
-            eventDateTime.set(Calendar.HOUR_OF_DAY, endTimeCal.get(Calendar.HOUR_OF_DAY));
-            eventDateTime.set(Calendar.MINUTE, endTimeCal.get(Calendar.MINUTE));
+        // Remove time parts for day comparison.
+        Calendar eventDateOnly = (Calendar) eventDateCal.clone();
+        Calendar nowDateOnly = (Calendar) nowCal.clone();
+        eventDateOnly.set(Calendar.HOUR_OF_DAY, 0);
+        eventDateOnly.set(Calendar.MINUTE, 0);
+        nowDateOnly.set(Calendar.HOUR_OF_DAY, 0);
+        nowDateOnly.set(Calendar.MINUTE, 0);
 
-            return eventDateTime.getTime().before(new Date()); // Check if the event's date and time are before the current time
-        } catch (Exception e) {
-            Log.e("Event", "Error parsing time: " + endTime, e);
-            return false;
+        // Check if the event date is strictly before today's date.
+        if (eventDateOnly.before(nowDateOnly)) {
+            return true;
         }
+
+        // Check time only if it's the same day.
+        if (eventDateOnly.compareTo(nowDateOnly) == 0) {
+            SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            try {
+                Date endTimeParsed = sdfTime.parse(endTime);
+                Calendar endTimeCal = Calendar.getInstance();
+                endTimeCal.setTime(endTimeParsed);
+
+                // Set time from endTime to eventDateCal for precise comparison.
+                eventDateCal.set(Calendar.HOUR_OF_DAY, endTimeCal.get(Calendar.HOUR_OF_DAY));
+                eventDateCal.set(Calendar.MINUTE, endTimeCal.get(Calendar.MINUTE));
+
+                // Now compare the full eventDateCal (with adjusted end time) to nowCal.
+                return eventDateCal.before(nowCal);
+            } catch (ParseException e) {
+                Log.e("Event", "Error parsing time: " + endTime, e);
+                return false;
+            }
+        }
+
+        // If not before and not the same day, it's not past.
+        return false;
     }
     // end citation
 
