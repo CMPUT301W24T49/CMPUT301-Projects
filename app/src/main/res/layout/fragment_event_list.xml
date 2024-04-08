@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#10283B">
 
-    <!-- Close (X) Button at the top right -->
     <Button
         android:id="@+id/btn_close_event_list"
         android:layout_width="25sp"
@@ -19,7 +18,7 @@
         android:contentDescription="@string/back_arrow_description"
         android:drawableStart="@drawable/ic_arrow_back"
         android:onClick="onBackArrowClicked"/>
-    
+
 
     <!-- ListView for the events -->
 
