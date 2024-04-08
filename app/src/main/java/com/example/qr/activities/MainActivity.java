@@ -28,7 +28,8 @@ import java.util.List;
 import java.util.Random;
 
 
-public class MainActivity extends AppCompatActivity implements EventDetailFragment.EventDetailDialogListener, AdminUserProfileDetailFragment.UserDetailDialogListener, ImageDetailDialogFragment.ImageDetailDialogListener {
+public class MainActivity extends AppCompatActivity implements AdminUserProfileDetailFragment.UserDetailDialogListener, ImageDetailDialogFragment.ImageDetailDialogListener {
+    private static final int RC_NOTIFICATION = 99;
     EventArrayAdapter eventArrayAdapter;
 
     public static String androidId;
@@ -61,8 +62,19 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                                 AdministratorFragment adminMenuFragment = new AdministratorFragment();
                                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, adminMenuFragment).commit();
                             } else  {
-                                GuestHomeFragment guestHomeFragment = new GuestHomeFragment();
-                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, guestHomeFragment).commit();
+                                // check the homepage of the user
+                                if (user.getHomepage().equals("default")) {
+                                    // Display the AttendeeFragment for the user
+                                    GuestHomeFragment guestHomeFragment = new GuestHomeFragment();
+                                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, guestHomeFragment).commit();
+                                } else if (user.getHomepage().equals("organizer")) {
+                                    Log.d("MainActivity", "Homepage is empty");
+                                    OrganizerFragment organizerFragment = new OrganizerFragment();
+                                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, organizerFragment).commit();
+                                } else if (user.getHomepage().equals("attendee")) {
+                                    AttendeeFragment attendeeFragment = new AttendeeFragment();
+                                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, attendeeFragment).commit();
+                                }
                             }
                             break;
                         }
@@ -71,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                         // Create a new user with a unique name and the androidId as the id field
                         String guestLastName= "" + new Random().nextInt(10000); // Generate a random number between 0 and 9999
                         String profilePicture = "https://github.com/identicons/guest.png";
-                        User newUser = new User(androidId, "guest", guestLastName, "nonAdmin", profilePicture, "", "", "");
+                        User newUser = new User(androidId, "guest", guestLastName, "nonAdmin", profilePicture, "", "", "default");
                         // Add the new user to the database
                         FirebaseUtil.addUser(newUser, new OnSuccessListener<Void>() {
                             @Override
@@ -94,6 +106,9 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                     Log.e("MainActivity", "Error fetching user collection", e);
                 }
             });
+        }
+        if (Build. VERSION.SDK_INT >= Build. VERSION_CODES. TIRAMISU) {
+            ActivityCompat.requestPermissions( this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, RC_NOTIFICATION);
         }
         handleIntent(getIntent());
     }
@@ -133,12 +148,14 @@ public class MainActivity extends AppCompatActivity implements EventDetailFragme
                 .commit();
     }
     @Override
-    public void onDeleteEvent(Event event) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RC_NOTIFICATION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            } else {
+                Toast.makeText(this, "Notification permission is required to send you important updates.", Toast.LENGTH_LONG).show();
+            }
+        }
     }
-
-    @Override
-    public void onDeleteUser(User user){
-    }
-
 }
 

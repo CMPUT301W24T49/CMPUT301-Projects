@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.qr.R;
 import com.example.qr.models.Event;
+import com.example.qr.models.Notification;
 import com.example.qr.models.SignUp;
 import com.example.qr.utils.FirebaseUtil;
 import com.example.qr.utils.GenerateQRCode;
@@ -60,6 +61,15 @@ public class AttendeeEventDetailFragment extends Fragment {
         ImageView qrCode = view.findViewById(R.id.ivQrCode);
         Button btnSignUp = view.findViewById(R.id.btnSignUp);
         Button btnNotification = view.findViewById(R.id.btnNotification);
+
+        Button btnClose = view.findViewById(R.id.btn_close_event_list);
+        // Close button going back previous screen
+        btnClose.setOnClickListener(v -> {
+            // Check if fragment is added to an activity and if activity has a FragmentManager
+            if (isAdded() && getActivity() != null) {
+                getActivity().onBackPressed();
+            }
+        });
 
         if(noSignUp){
             btnSignUp.setVisibility(View.GONE);
@@ -218,6 +228,15 @@ public class AttendeeEventDetailFragment extends Fragment {
                             }, e -> {
                                 Toast.makeText(getContext(), "Failed to Sign Up!", Toast.LENGTH_SHORT).show();
                             });
+                            FirebaseUtil.getFCMTokenID(event);
+                            String message = String.valueOf(event.getAttendeeCount() +1) + " attendees has sign up for " + event.getTitle() + " event.";
+                            Notification notification = new Notification("notification" + System.currentTimeMillis(), event.getId(), message, new Date(), false);
+                            FirebaseUtil.addNotification(notification, aVoid -> {}, e -> {});
+                            if (event.getAttendeeCount()+1 == event.getAttendeeLimit()){
+                                message = event.getTitle() + " event is full!!!";
+                                Notification notificationFullEvent = new Notification("notification" + System.currentTimeMillis(), event.getId(), message, new Date(), false);
+                                FirebaseUtil.addNotification(notificationFullEvent, aVoid -> {}, e -> {});
+                            }
                         }
 
                     }

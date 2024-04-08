@@ -62,16 +62,27 @@ public class EventListFragment extends Fragment {
         listView.setAdapter(eventArrayAdapter);
         fetchData();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                listView.setItemChecked(position, true);
-                positionToEdit = position;
-                Event clickedEvent = (Event) adapterView.getAdapter().getItem(position);
-                EventDetailFragment eventFragment = EventDetailFragment.newInstance(clickedEvent);
-                eventFragment.setTargetFragment(EventListFragment.this, 0);
-                eventFragment.show(getParentFragmentManager(), "Event Detail");
+        listView.setOnItemClickListener((adapterView, view1, position, rowId) -> {
+
+            // Get position and Id of event clicked
+            Event event = eventDataList.get(position);
+
+            // Send eventId to AttendeeListFragment
+            // Adapted from answer given by João Marcos
+            // https://stackoverflow.com/questions/24555417/how-to-send-data-from-one-fragment-to-another-fragment
+            Bundle args = new Bundle();
+            args.putSerializable("Event", event);
+            args.putSerializable("NoSignUp", true);
+
+            AttendeeEventDetailFragment attendeeEventDetailFragment = new AttendeeEventDetailFragment();
+            attendeeEventDetailFragment.setArguments(args); // Pass data to attendeeListFragment
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, attendeeEventDetailFragment)
+                        .addToBackStack(null)  // Optional: Add transaction to back stack
+                        .commit();
             }
+
         });
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

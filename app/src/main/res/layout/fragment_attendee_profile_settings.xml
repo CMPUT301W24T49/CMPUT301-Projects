@@ -159,24 +159,23 @@
         android:textSize="16sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/homePage"
+    <Spinner
+        android:id="@+id/homePageSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/homePageLabel"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:hint="Home Page" />
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp" />
 
     <Button
         android:id="@+id/editButton"
         style="@style/BlueAppRoundedButton"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_below="@+id/homePage"
+        android:layout_below="@+id/homePageSpinner"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="33sp"
         android:layout_marginTop="16dp"
@@ -188,7 +187,7 @@
         style="@style/BlueAppRoundedButton"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_below="@+id/homePage"
+        android:layout_below="@+id/homePageSpinner"
         android:layout_alignParentStart="true"
         android:layout_marginStart="75sp"
         android:layout_marginTop="16dp"

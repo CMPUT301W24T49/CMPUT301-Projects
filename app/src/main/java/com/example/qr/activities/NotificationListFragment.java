@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,6 +41,16 @@ public class NotificationListFragment extends Fragment {
 
         ListView listView = view.findViewById(R.id.listview_notification);
 //        Button btnClose = view.findViewById(R.id.btn_close_event_list);
+
+
+        Button btnClose = view.findViewById(R.id.btn_close_event_list);
+        // Close button going back previous screen
+        btnClose.setOnClickListener(v -> {
+            // Check if fragment is added to an activity and if activity has a FragmentManager
+            if (isAdded() && getActivity() != null) {
+                getActivity().onBackPressed();
+            }
+        });
 
         notificationsDataList = new ArrayList<>();
         notificationArrayAdapter = new NotificationArrayAdapter(getContext(), notificationsDataList);
