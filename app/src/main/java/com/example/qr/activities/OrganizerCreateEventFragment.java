@@ -49,12 +49,6 @@ import com.google.type.LatLng;
 
 import com.google.android.libraries.places.api.Places;
 
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
-
-import static android.app.Activity.RESULT_OK;
-import static android.app.Activity.RESULT_CANCELED;
 
 import android.widget.ArrayAdapter;
 
@@ -97,11 +91,14 @@ public class OrganizerCreateEventFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // citation: OpenAI, ChatGPT 4, 2024: How to use google maps places API  to autofill a textbox
+        // showing a list of potential locations based on the text in the textbox android studio
         if (!Places.isInitialized()) {
             Places.initialize(getContext(), "AIzaSyAgri4iQIBsBRP3ZWB9slBTckBpw0kEmVk");
         }
         placesClient = Places.createClient(getContext());
         placesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, new ArrayList<String>());
+        // end citation
 
         // Initialize the ActivityResultLauncher for photo picking
         pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
@@ -343,6 +340,7 @@ public class OrganizerCreateEventFragment extends Fragment {
             }
         });
     }
+    // end citation
 
     private void updateAutocompletePredictions(String query) {
         AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
@@ -361,6 +359,7 @@ public class OrganizerCreateEventFragment extends Fragment {
             placesAdapter.notifyDataSetChanged();
         }).addOnFailureListener(e -> Log.e(TAG, "Error getting autocomplete predictions", e));
     }
+    // end citation
 
     // Utility method to set up date and time pickers
     private void setUpDateTimePicker(final EditText editText, final SimpleDateFormat formatter) {
