@@ -59,7 +59,7 @@ public class AdminSettingsFragment extends Fragment {
             }
         });
 
-        Button btnClose = view.findViewById(R.id.btn_close);
+        Button btnClose = view.findViewById(R.id.btnClose);
         btnClose.setOnClickListener(v -> {
             // Check if the fragment is added to an activity and if the activity has a FragmentManager
             if (isAdded() && getActivity() != null) {

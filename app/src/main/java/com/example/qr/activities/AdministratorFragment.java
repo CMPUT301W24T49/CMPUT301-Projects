@@ -29,7 +29,7 @@ public class AdministratorFragment extends Fragment {
         Button btnProfileOption = view.findViewById(R.id.btn_profile_option);
         Button btnImagesOption = view.findViewById(R.id.btn_images_option);
         Button btnSettings = view.findViewById(R.id.btn_settings);
-        Button btnClose = view.findViewById(R.id.btn_close);
+        Button btnClose = view.findViewById(R.id.btnClose);
 
         // Set up the button click listeners
         // Replace these with actual implementations
