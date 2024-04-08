@@ -247,7 +247,7 @@ public class Event implements Serializable {
      * @param qrpCode The QR promo code of the event.
      */
     public void setQrpCode(String qrpCode) {
-        this.qrCode = qrpCode;
+        this.qrpCode = qrpCode;
     }
 
     /**
