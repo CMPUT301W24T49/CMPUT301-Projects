@@ -186,12 +186,12 @@ public class AttendeeProfileSettingsFragment extends DialogFragment {
 
             @Override
 
-/**
- *
- * On error
- *
- * @param e  the e.
- */
+            /**
+             *
+             * On error
+             *
+             * @param e  the e.
+             */
             public void onError(Exception e) {
 
                 Log.e("AttendeeProfileSettings", "Error fetching user collection", e);
