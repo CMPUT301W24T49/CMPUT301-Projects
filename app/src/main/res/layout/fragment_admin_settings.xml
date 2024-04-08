@@ -8,7 +8,7 @@
     android:padding="16dp">
 
     <Button
-        android:id="@+id/btn_close"
+        android:id="@+id/btnClose"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignParentStart="true"

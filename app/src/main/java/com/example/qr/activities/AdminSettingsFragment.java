@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
@@ -55,6 +56,14 @@ public class AdminSettingsFragment extends Fragment {
                             .addToBackStack(null)  // Optional: Add transaction to back stack
                             .commit();
                 }
+            }
+        });
+
+        Button btnClose = view.findViewById(R.id.btn_close);
+        btnClose.setOnClickListener(v -> {
+            // Check if the fragment is added to an activity and if the activity has a FragmentManager
+            if (isAdded() && getActivity() != null) {
+                getActivity().onBackPressed();
             }
         });
     }
