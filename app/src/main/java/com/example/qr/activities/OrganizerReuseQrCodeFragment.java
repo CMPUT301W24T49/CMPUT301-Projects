@@ -189,7 +189,7 @@ public class OrganizerReuseQrCodeFragment extends Fragment {
                         });
             }
             // DO NOT REMOVE THIS. ITS FOR PUSH NOTIFICATION
-            FirebaseUtil.shareFCMToken(selectedEvent.getQrCode(), selectedEvent.getId());
+            FirebaseUtil.shareFCMToken((selectedEvent.getQrCode()).substring(2), selectedEvent.getId());
 
             String message = selectedEvent.getTitle() + "'s details has been updated by organizer.";
             Notification notification = new Notification("notification" + System.currentTimeMillis(), selectedEvent.getId(), message, new Date(), false);
