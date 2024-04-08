@@ -37,14 +37,14 @@ public class AttendeeFragmentTest {
 
         // Now check if the AttendeeFragment is displayed by checking one of its views
         Espresso.onView(withId(R.id.fragment_attendee_layout)).check(ViewAssertions.matches(isDisplayed()));
+
+        // Go to the event list
+        Espresso.onView(withId(R.id.btnMyEvents)).perform(ViewActions.click());
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000); // Sleep for 1 second
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // Go to the event list
-        Espresso.onView(withId(R.id.btnMyEvents)).perform(ViewActions.click());
-
         // Now check if the EventListFragment is displayed by checking one of its views
         Espresso.onView(withId(R.id.fragment_event_list_layout)).check(ViewAssertions.matches(isDisplayed()));
     }
@@ -61,14 +61,14 @@ public class AttendeeFragmentTest {
 
         // Now check if the AttendeeFragment is displayed by checking one of its views
         Espresso.onView(withId(R.id.fragment_attendee_layout)).check(ViewAssertions.matches(isDisplayed()));
+
+        // Go to settings
+        Espresso.onView(withId(R.id.btnSettings)).perform(ViewActions.click());
         try {
-            Thread.sleep(2000); // Sleep for 1 second
+            Thread.sleep(3000); // Sleep for 1 second
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // Go to settings
-        Espresso.onView(withId(R.id.btnSettings)).perform(ViewActions.click());
-
         // Now check if the OrganizerSettingsFragment is displayed by checking one of its views
         Espresso.onView(withId(R.id.fragment_settings_layout)).check(ViewAssertions.matches(isDisplayed()));
     }
@@ -77,14 +77,14 @@ public class AttendeeFragmentTest {
     @Test
     public void testAttendeeBrowseEventsButtonClick() {
 
-        // Wait for the MainActivity to be started and HomeFragment to be displayed
-        Espresso.onView(withId(R.id.button_attendee)).perform(ViewActions.click());
-
         try {
             Thread.sleep(2000); // Sleep for 1 second
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        // Wait for the MainActivity to be started and HomeFragment to be displayed
+        Espresso.onView(withId(R.id.button_attendee)).perform(ViewActions.click());
 
         // Now check if the AttendeeFragment is displayed by checking one of its views
         Espresso.onView(withId(R.id.fragment_attendee_layout)).check(ViewAssertions.matches(isDisplayed()));
@@ -93,12 +93,34 @@ public class AttendeeFragmentTest {
         Espresso.onView(withId(R.id.btnBrowseEvents)).perform(ViewActions.click());
 
         try {
-            Thread.sleep(2000); // Sleep for 1 second
+            Thread.sleep(3000); // Sleep for 1 second
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         // Now check if the AttendeeBrowseEventListFragment is displayed by checking one of its views
         Espresso.onView(withId(R.id.fragment_event_list_layout)).check(ViewAssertions.matches(isDisplayed()));
+    }
+
+    @Test
+    public void testProfileSettingsButtonClick() {
+        try {
+            Thread.sleep(3000); // Sleep for 1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // Wait for the MainActivity to be started and profileSettings to be displayed
+        Espresso.onView(withId(R.id.button_organizer)).perform(ViewActions.click());
+        Espresso.onView(withId(R.id.btn_settings)).perform(ViewActions.click());
+        Espresso.onView(withId(R.id.btnProfileSettings)).perform(ViewActions.click());
+        Espresso.onView(withId(R.id.btn_close)).perform(ViewActions.click());
+        Espresso.onView(withId(R.id.btnExitToMainMenu)).perform(ViewActions.click());
+        try {
+            Thread.sleep(3000); // Sleep for 1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // Now check if the profileSettings is displayed by checking one of its views
+        Espresso.onView(withId(R.id.default_layout)).check(ViewAssertions.matches(isDisplayed()));
     }
 
 
