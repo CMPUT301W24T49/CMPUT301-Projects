@@ -227,6 +227,7 @@ public class AttendeeEventDetailFragment extends Fragment {
                             }, e -> {
                                 Toast.makeText(getContext(), "Failed to Sign Up!", Toast.LENGTH_SHORT).show();
                             });
+                            FirebaseUtil.getFCMTokenID(event);
                         }
 
                     }
