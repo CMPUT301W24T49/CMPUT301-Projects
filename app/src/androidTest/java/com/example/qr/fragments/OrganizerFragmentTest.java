@@ -27,6 +27,11 @@ public class OrganizerFragmentTest {
 
     @Test
     public void testOrganzierEventsButtonClick() {
+        try {
+            Thread.sleep(3000); // Sleep for 1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // Wait for the MainActivity to be started and events screen to be displayed
         Espresso.onView(withId(R.id.button_organizer)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.btn_my_events)).perform(ViewActions.click());
@@ -43,6 +48,11 @@ public class OrganizerFragmentTest {
 
     @Test
     public void testCreateQrButtonClick() {
+        try {
+            Thread.sleep(3000); // Sleep for 1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // Wait for the MainActivity to be started and reuse QR screen to be displayed
         Espresso.onView(withId(R.id.button_organizer)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.btn_create_events)).perform(ViewActions.click());
@@ -73,6 +83,11 @@ public class OrganizerFragmentTest {
 
     @Test
     public void testUseExistingQrButtonClick() {
+        try {
+            Thread.sleep(3000); // Sleep for 1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // Wait for the MainActivity to be started and reuse QR screen to be displayed
         Espresso.onView(withId(R.id.button_organizer)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.btn_create_events)).perform(ViewActions.click());
@@ -103,13 +118,22 @@ public class OrganizerFragmentTest {
 
     @Test
     public void testProfileSettingsButtonClick() {
+        try {
+            Thread.sleep(3000); // Sleep for 1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // Wait for the MainActivity to be started and profileSettings to be displayed
         Espresso.onView(withId(R.id.button_organizer)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.btn_settings)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.btnProfileSettings)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.btn_close)).perform(ViewActions.click());
         Espresso.onView(withId(R.id.btnExitToMainMenu)).perform(ViewActions.click());
-
+        try {
+            Thread.sleep(3000); // Sleep for 1 second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // Now check if the profileSettings is displayed by checking one of its views
         Espresso.onView(withId(R.id.default_layout)).check(ViewAssertions.matches(isDisplayed()));
     }
