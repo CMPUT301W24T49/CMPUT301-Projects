@@ -1,9 +1,12 @@
 package com.example.qr.activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +19,27 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.qr.R;
+import com.example.qr.models.CheckIn;
 import com.example.qr.models.Event;
+import com.example.qr.models.SignUp;
+import com.example.qr.utils.FirebaseUtil;
 import com.example.qr.utils.GenerateQRCode;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class OrganizerEventDetailFragment extends Fragment {
+public class OrganizerEventDetailFragment extends Fragment implements OnMapReadyCallback {
 
     public Event event;
+    private GoogleMap mMap;
 
     public OrganizerEventDetailFragment() {
         // Required empty public constructor
@@ -53,7 +67,7 @@ public class OrganizerEventDetailFragment extends Fragment {
         Button btnCheckInList = view.findViewById(R.id.btnCheckInList);
         Button btnSignupList = view.findViewById(R.id.btnSignupList);
         Button btnClose = view.findViewById(R.id.btn_close);
-        
+
 
         // Load event poster image
         if(event.getEventPoster() != null) {
@@ -124,6 +138,11 @@ public class OrganizerEventDetailFragment extends Fragment {
             qrCode.setImageBitmap(qrCodeBitmap);
         }
 
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
+
         // Attendee check-in list button
         btnCheckInList.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
@@ -188,8 +207,80 @@ public class OrganizerEventDetailFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+
+        Button btnShareEvent = view.findViewById(R.id.btnShareEvent);
+        Button btnShareQR = view.findViewById(R.id.btnShareQR);
+
+        btnShareEvent.setOnClickListener(v -> {
+
+            if(event.getQrpCode().isEmpty()) {
+                return;
+            }
+
+            Bitmap qrCodeBitmap = GenerateQRCode.generateQR(event.getQrpCode());
+            String path = MediaStore.Images.Media.insertImage(getContext().getContentResolver(), qrCodeBitmap, "QR Promo Code", null);
+            Uri uri = Uri.parse(path);
+
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.setType("image/jpeg");
+            startActivity(Intent.createChooser(shareIntent, "Share QR Promo Code via"));
+        });
+
+        btnShareQR.setOnClickListener(v -> {
+
+            if(event.getQrCode().isEmpty()) {
+                return;
+            }
+
+            Bitmap qrCodeBitmap = GenerateQRCode.generateQR(event.getQrCode());
+            String path = MediaStore.Images.Media.insertImage(getContext().getContentResolver(), qrCodeBitmap, "QR Code", null);
+            Uri uri = Uri.parse(path);
+
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.setType("image/jpeg");
+            startActivity(Intent.createChooser(shareIntent, "Share QR Code via"));
+        });
         
         return view;
 
     }
+
+
+    private void addCheckInMarkers() {
+        // Query all check-ins for the event
+        FirebaseUtil.fetchCollection("CheckIn", CheckIn.class, new FirebaseUtil.OnCollectionFetchedListener<CheckIn>() {
+            @Override
+            public void onCollectionFetched(List<CheckIn> checkInList) {
+                for (CheckIn checkIn : checkInList) {
+                    // Check if the check-in is for the current event
+                    if (checkIn.getEventId().equals(event.getId())) {
+                        // Add a marker for each check-in
+                        //check if location exists
+                        if(checkIn.getLocation() != null) {
+                            LatLng location = new LatLng(checkIn.getLocation().getLatitude(), checkIn.getLocation().getLongitude());
+                            mMap.addMarker(new MarkerOptions().position(location).title(checkIn.getUserId()));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 20));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Log.e("OrganizerEventDetailFragment", "Error fetching check-ins", e);
+            }
+        });
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        addCheckInMarkers();
+    }
+
 }
