@@ -245,6 +245,16 @@
                 android:text="Notifications"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp" />
+            <Button
+                android:id="@+id/btnSendNotification"
+                android:layout_width="173dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/rounded_button_dark"
+                android:text="Send Notification"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
 
 
 
