@@ -36,17 +36,39 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * OrganizerEventDetailFragment displays detailed information about an event, including a map of the event location.
+ */
 public class OrganizerEventDetailFragment extends Fragment implements OnMapReadyCallback {
 
     public Event event;
     private GoogleMap mMap;
 
+
+    /**
+     *
+     * Organizer event detail fragment
+     *
+     * @return public
+     */
     public OrganizerEventDetailFragment() {
+
         // Required empty public constructor
     }
 
     @Override
+
+/**
+ *
+ * On create view
+ *
+ * @param inflater  the inflater.
+ * @param container  the container.
+ * @param savedInstanceState  the saved instance state.
+ * @return View
+ */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 
         // Inflate layout
         View view = inflater.inflate(R.layout.fragment_organizer_event_detail, container, false);
@@ -263,11 +285,26 @@ public class OrganizerEventDetailFragment extends Fragment implements OnMapReady
     }
 
 
+
+    /**
+     *
+     * Add check in markers
+     *
+     */
     private void addCheckInMarkers() {
+
         // Query all check-ins for the event
         FirebaseUtil.fetchCollection("CheckIn", CheckIn.class, new FirebaseUtil.OnCollectionFetchedListener<CheckIn>() {
             @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param checkInList  the check in list.
+ */
             public void onCollectionFetched(List<CheckIn> checkInList) {
+
                 for (CheckIn checkIn : checkInList) {
                     // Check if the check-in is for the current event
                     if (checkIn.getEventId().equals(event.getId())) {
@@ -283,14 +320,30 @@ public class OrganizerEventDetailFragment extends Fragment implements OnMapReady
             }
 
             @Override
+
+/**
+ *
+ * On error
+ *
+ * @param e  the e.
+ */
             public void onError(Exception e) {
+
                 Log.e("OrganizerEventDetailFragment", "Error fetching check-ins", e);
             }
         });
     }
 
     @Override
+
+/**
+ *
+ * On map ready
+ *
+ * @param googleMap  the google map.
+ */
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
 
         addCheckInMarkers();

@@ -14,13 +14,33 @@ import com.example.qr.R;
  */
 public class AdministratorFragment extends Fragment {
 
+
+    /**
+     *
+     * Administrator fragment
+     *
+     * @return public
+     */
     public AdministratorFragment() {
+
         // Required empty public constructor
     }
 
     @Override
+
+
+/**
+ *
+ * On create view
+ *
+ * @param inflater  the inflater.
+ * @param container  the container.
+ * @param savedInstanceState  the saved instance state.
+ * @return View
+ */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_administrator, container, false);
 

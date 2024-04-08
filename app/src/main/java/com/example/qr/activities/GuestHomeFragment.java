@@ -12,10 +12,24 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.qr.R;
 
+/**
+ * GuestHomeFragment displays the home screen for the guest user.
+ */
 public class GuestHomeFragment extends Fragment {
 
     @Override
+
+    /**
+     *
+     * On create view
+     *
+     * @param inflater  the inflater.  It is NonNull
+     * @param container  the container.
+     * @param savedInstanceState  the saved instance state.
+     * @return View
+     */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_guest_home, container, false);
 
@@ -29,7 +43,15 @@ public class GuestHomeFragment extends Fragment {
         // Set a click listener for the attendee button
         attendeeButton.setOnClickListener(new View.OnClickListener() {
             @Override
+
+            /**
+             *
+             * On click
+             *
+             * @param v  the v.
+             */
             public void onClick(View v) {
+
 
                 // Replace the HomeFragment with AttendeeFragment
                 AttendeeFragment attendeeFragment = new AttendeeFragment();
@@ -46,7 +68,15 @@ public class GuestHomeFragment extends Fragment {
         // Set a click listener for the attendee button
         organizerButton.setOnClickListener(new View.OnClickListener() {
             @Override
+
+            /**
+             *
+             * On click
+             *
+             * @param v  the v.
+             */
             public void onClick(View v) {
+
                 // Replace the HomeFragment with AttendeeFragment
                 OrganizerFragment organizerFragment = new OrganizerFragment();
                 FragmentManager fragmentManager = getFragmentManager();

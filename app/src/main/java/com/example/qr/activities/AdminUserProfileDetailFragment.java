@@ -37,7 +37,15 @@ public class AdminUserProfileDetailFragment extends DialogFragment {
     }
 
     @Override
+
+/**
+ *
+ * On attach
+ *
+ * @param context  the context.  It is NonNull
+ */
     public void onAttach(@NonNull Context context) {
+
         super.onAttach(context);
         if (context instanceof UserDetailDialogListener) {
             listener = (UserDetailDialogListener) context;
@@ -48,7 +56,16 @@ public class AdminUserProfileDetailFragment extends DialogFragment {
 
     @NonNull
     @Override
+
+/**
+ *
+ * On create dialog
+ *
+ * @param savedInstanceState  the saved instance state.  It is Nullable
+ * @return Dialog
+ */
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+
         user = (User) getArguments().getSerializable("user");
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_admin_user_profile_detail, null);
 

@@ -18,6 +18,9 @@ import com.example.qr.models.User;
 import java.util.Map;
 import java.util.List;
 
+/**
+ * OrganizerCheckInDetailFragment displays detailed information about a user's check-ins.
+ */
 public class OrganizerCheckInDetailFragment extends DialogFragment {
 
     User user;
@@ -26,7 +29,16 @@ public class OrganizerCheckInDetailFragment extends DialogFragment {
 
     @NonNull
     @Override
+
+/**
+ *
+ * On create dialog
+ *
+ * @param savedInstanceState  the saved instance state.  It is Nullable
+ * @return Dialog
+ */
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+
         View view = getLayoutInflater().inflate(R.layout.fragment_organizer_checkin_detail, null);
 
         if (getArguments() != null) {
@@ -49,7 +61,16 @@ public class OrganizerCheckInDetailFragment extends DialogFragment {
                 .setView(view)
                 .setPositiveButton("Close", new DialogInterface.OnClickListener() {  // Close dialog
                     @Override
+
+/**
+ *
+ * On click
+ *
+ * @param dialog  the dialog.
+ * @param which  the which.
+ */
                     public void onClick(DialogInterface dialog, int which) {
+
                         dialog.dismiss();
                     }
                 })

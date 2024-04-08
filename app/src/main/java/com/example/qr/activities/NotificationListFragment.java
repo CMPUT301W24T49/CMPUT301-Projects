@@ -23,14 +23,28 @@ import com.example.qr.utils.FirebaseUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * NotificationListFragment displays a list of notifications for a specific event.
+ */
 public class NotificationListFragment extends Fragment {
     private String eventID;
     private Event event;
     ArrayList<Notification> notificationsDataList;
-   NotificationArrayAdapter notificationArrayAdapter;
+    NotificationArrayAdapter notificationArrayAdapter;
 
     @Override
+
+/**
+ *
+ * On create view
+ *
+ * @param inflater  the inflater.
+ * @param container  the container.
+ * @param savedInstanceState  the saved instance state.
+ * @return View
+ */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             eventID = (String) getArguments().getSerializable("event_key");
@@ -62,7 +76,18 @@ public class NotificationListFragment extends Fragment {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
+
+/**
+ *
+ * On item click
+ *
+ * @param adapterView  the adapter view.
+ * @param view  the view.
+ * @param position  the position.
+ * @param id  the id.
+ */
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
                 listView.setItemChecked(position, true);
                 Notification clickedNotification = (Notification) adapterView.getAdapter().getItem(position);
                 Boolean readStatus = clickedNotification.getReadStatus();
@@ -72,21 +97,44 @@ public class NotificationListFragment extends Fragment {
                 clickedNotification.setReadStatus(!readStatus);
                 notificationArrayAdapter.notifyDataSetChanged();
             }
-            });
+        });
         return view;
     }
 
+
+    /**
+     *
+     * Fetch data
+     *
+     */
     private void fetchData() {
+
         String pathToNotifications = "Events/" + eventID + "/Notifications";
         FirebaseUtil.fetchCollection(pathToNotifications, Notification.class, new FirebaseUtil.OnCollectionFetchedListener<Notification>() {
             @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param notificationList  the notification list.
+ */
             public void onCollectionFetched(List<Notification> notificationList) {
+
                 notificationsDataList.addAll(notificationList);
                 notificationArrayAdapter.notifyDataSetChanged();   // Update notification array adapter
                 Log.d("NotificationFragment", "Fetched " + notificationList.size() + " notifications for eventID: " + eventID);
             }
             @Override
+
+/**
+ *
+ * On error
+ *
+ * @param e  the e.
+ */
             public void onError(Exception e) {
+
                 Log.e("NotificationFragment", "Error fetching notifications for eventID: " + eventID, e);
             }
         });

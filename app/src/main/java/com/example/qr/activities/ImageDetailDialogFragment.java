@@ -91,7 +91,18 @@ public class ImageDetailDialogFragment extends DialogFragment {
     private ImageDetailDialogListener listener;
     private Image image;
     // Assume you pass the image details as arguments
+
+    /**
+     *
+     * New instance
+     *
+     * @param imageUrl  the image url.
+     * @param title  the title.
+     * @param imageId  the image identifier.
+     * @return ImageDetailDialogFragment
+     */
     public static ImageDetailDialogFragment newInstance(String imageUrl, String title, String imageId) {
+
         ImageDetailDialogFragment fragment = new ImageDetailDialogFragment();
         Bundle args = new Bundle();
         args.putString("image_url", imageUrl);
@@ -101,7 +112,15 @@ public class ImageDetailDialogFragment extends DialogFragment {
         return fragment;
     }
     @Override
+
+/**
+ *
+ * On attach
+ *
+ * @param context  the context.  It is NonNull
+ */
     public void onAttach(@NonNull Context context) {
+
         super.onAttach(context);
         if (context instanceof AdminUserProfileDetailFragment.UserDetailDialogListener) {
             listener = (ImageDetailDialogListener) context;
@@ -109,39 +128,19 @@ public class ImageDetailDialogFragment extends DialogFragment {
             throw new RuntimeException(context.toString() + " must implement ImageDetailDialogListener");
         }
     }
-    //    @NonNull
-//    @Override
-//    public Dialog onCreateDialog(Bundle savedInstanceState) {
-//        // Use the Builder class for convenient dialog construction
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        // Inflate and set the layout for the dialog
-//        // Pass null as the parent view because its going in the dialog layout
-//        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_image_detail, null);
-//
-//        ImageView imageView = view.findViewById(R.id.image_detail);
-//        Button btnDelete = view.findViewById(R.id.btn_delete_image);
-//        Button btnCancel = view.findViewById(R.id.btn_cancel_image);
-//
-//        // TODO: Set the image for imageView, for example using Glide or Picasso
-//        String imageUrl = getArguments().getString("image_url");
-//        // Glide.with(this).load(imageUrl).into(imageView);
-//
-//        btnDelete.setOnClickListener(v -> {
-//            // TODO: Implement your delete logic
-//            dismiss();
-//        });
-//
-//        btnCancel.setOnClickListener(v -> {
-//            // Close the dialog
-//            dismiss();
-//        });
-//
-//        builder.setView(view);
-//        return builder.create();
-//    }
+
     @NonNull
     @Override
+
+/**
+ *
+ * On create dialog
+ *
+ * @param savedInstanceState  the saved instance state.  It is Nullable
+ * @return Dialog
+ */
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_image_detail, null);
 
         String imageUrl = getArguments().getString("image_url");

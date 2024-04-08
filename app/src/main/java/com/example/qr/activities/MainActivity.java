@@ -27,14 +27,24 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.List;
 import java.util.Random;
 
-
+/**
+ * MainActivity is the main activity for the application.
+ */
 public class MainActivity extends AppCompatActivity implements AdminUserProfileDetailFragment.UserDetailDialogListener, ImageDetailDialogFragment.ImageDetailDialogListener {
     private static final int RC_NOTIFICATION = 99;
     EventArrayAdapter eventArrayAdapter;
 
     public static String androidId;
     @Override
+
+    /**
+     *
+     * On create
+     *
+     * @param savedInstanceState  the saved instance state.
+     */
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         SharedViewModel viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
@@ -53,7 +63,15 @@ public class MainActivity extends AppCompatActivity implements AdminUserProfileD
             // Use the fetchCollection function to get the user associated with this Android ID
             FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
                 @Override
+
+                /**
+                 *
+                 * On collection fetched
+                 *
+                 * @param userList  the user list.
+                 */
                 public void onCollectionFetched(List<User> userList) {
+
                     boolean userFound = false;
                     for (User user : userList) {
                         if (user.getId().equals(androidId)) {
@@ -86,15 +104,31 @@ public class MainActivity extends AppCompatActivity implements AdminUserProfileD
                         User newUser = new User(androidId, "guest", guestLastName, "nonAdmin", profilePicture, "", "", "default");
                         // Add the new user to the database
                         FirebaseUtil.addUser(newUser, new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // Display the AttendeeFragment for the new user
-                                GuestHomeFragment guestHomeFragment = new GuestHomeFragment();
-                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, guestHomeFragment).commit();
-                            }
+                        @Override
+
+                        /**
+                         *
+                         * On success
+                         *
+                         * @param aVoid  the a void.
+                         */
+                        public void onSuccess(Void aVoid) {
+
+                            // Display the AttendeeFragment for the new user
+                            GuestHomeFragment guestHomeFragment = new GuestHomeFragment();
+                            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, guestHomeFragment).commit();
+                        }
                         }, new OnFailureListener() {
                             @Override
+
+                            /**
+                             *
+                             * On failure
+                             *
+                             * @param e  the e.  It is NonNull
+                             */
                             public void onFailure(@NonNull Exception e) {
+
                                 Log.e("MainActivity", "Error adding new user", e);
                             }
                         });
@@ -102,7 +136,15 @@ public class MainActivity extends AppCompatActivity implements AdminUserProfileD
                 }
 
                 @Override
+
+                /**
+                 *
+                 * On error
+                 *
+                 * @param e  the e.
+                 */
                 public void onError(Exception e) {
+
                     Log.e("MainActivity", "Error fetching user collection", e);
                 }
             });
@@ -114,13 +156,29 @@ public class MainActivity extends AppCompatActivity implements AdminUserProfileD
     }
 
     @Override
+
+/**
+ *
+ * On new intent
+ *
+ * @param intent  the intent.
+ */
     protected void onNewIntent(Intent intent) {
+
         super.onNewIntent(intent);
         setIntent(intent);
         handleIntent(intent);
     }
 
+
+    /**
+     *
+     * Handle intent
+     *
+     * @param intent  the intent.
+     */
     private void handleIntent(Intent intent) {
+
         if (intent != null && intent.hasExtra("open_fragment") &&
                 "notification_list_fragment".equals(intent.getStringExtra("open_fragment"))) {
             String eventID = intent.getStringExtra("event_key");
@@ -135,7 +193,15 @@ public class MainActivity extends AppCompatActivity implements AdminUserProfileD
         }
     }
 
+
+    /**
+     *
+     * Open notification list fragment
+     *
+     * @param event  the event.
+     */
     private void openNotificationListFragment(Event event) {
+
         NotificationListFragment fragment = new NotificationListFragment();
         Bundle args = new Bundle();
         args.putSerializable("event_key", event.getId()); // Make sure the event ID is serialized properly
@@ -148,7 +214,17 @@ public class MainActivity extends AppCompatActivity implements AdminUserProfileD
                 .commit();
     }
     @Override
+
+/**
+ *
+ * On request permissions result
+ *
+ * @param requestCode  the request code.
+ * @param permissions  the permissions.
+ * @param grantResults  the grant results.
+ */
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == RC_NOTIFICATION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

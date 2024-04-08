@@ -32,13 +32,33 @@ public class ProfileListFragment extends Fragment {
     UserArrayAdapter userArrayAdapter;
     private int positionToEdit;
     private FirebaseFirestore db;
+
+    /**
+     *
+     * Profile list fragment
+     *
+     * @return public
+     */
     public ProfileListFragment() {
+
         // Required empty public constructor
     }
 
     @Override
+
+
+/**
+ *
+ * On create view
+ *
+ * @param inflater  the inflater.
+ * @param container  the container.
+ * @param savedInstanceState  the saved instance state.
+ * @return View
+ */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_profile_list, container, false);
 
         ListView listView = view.findViewById(R.id.listview_profiles);
@@ -53,7 +73,18 @@ public class ProfileListFragment extends Fragment {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
+
+/**
+ *
+ * On item click
+ *
+ * @param adapterView  the adapter view.
+ * @param view  the view.
+ * @param position  the position.
+ * @param id  the id.
+ */
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
                 listView.setItemChecked(position, true);
                 positionToEdit = position;
                 User clickedProfile = (User) adapterView.getAdapter().getItem(position);
@@ -64,7 +95,19 @@ public class ProfileListFragment extends Fragment {
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
+
+/**
+ *
+ * On item long click
+ *
+ * @param parent  the parent.
+ * @param view  the view.
+ * @param position  the position.
+ * @param id  the id.
+ * @return boolean
+ */
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
                 User userToBeDeleted = userDataList.get(position);
 
                 // Construct an AlertDialog for confirmation
@@ -102,11 +145,26 @@ public class ProfileListFragment extends Fragment {
         return view;
     }
 
+
+    /**
+     *
+     * Fetch data
+     *
+     */
     private void fetchData() {
+
 
         FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
             @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param userList  the user list.
+ */
             public void onCollectionFetched(List<User> userList) {
+
                 // Handle the fetched user here
                 userDataList.clear();
                 userDataList.addAll(userList);
@@ -117,7 +175,15 @@ public class ProfileListFragment extends Fragment {
             }
 
             @Override
+
+/**
+ *
+ * On error
+ *
+ * @param e  the e.
+ */
             public void onError(Exception e) {
+
                 // Handle any errors here
             }
 

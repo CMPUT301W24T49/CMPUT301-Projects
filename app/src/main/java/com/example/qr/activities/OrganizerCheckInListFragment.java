@@ -27,6 +27,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * OrganizerCheckInListFragment displays a list of attendees who have checked into an event.
+ */
 public class OrganizerCheckInListFragment extends Fragment {
     public Event event;
 
@@ -35,12 +38,31 @@ public class OrganizerCheckInListFragment extends Fragment {
 
     Map<String, Integer> userCheckInCount;       // Count of each user's check-ins
 
+
+    /**
+     *
+     * Organizer check in list fragment
+     *
+     * @return public
+     */
     public OrganizerCheckInListFragment() {
+
         // Required empty public constructor
     }
 
     @Override
+
+/**
+ *
+ * On create view
+ *
+ * @param inflater  the inflater.
+ * @param container  the container.
+ * @param savedInstanceState  the saved instance state.
+ * @return View
+ */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate layout
         View view = inflater.inflate(R.layout.fragment_organizer_checkin_list, container, false);
         event = (Event) getArguments().getSerializable("Event"); // Retrieve event from event detail page
@@ -73,7 +95,7 @@ public class OrganizerCheckInListFragment extends Fragment {
 
         });
 
-        
+
         // Close button to go back to the previous screen
         btnClose.setOnClickListener(v -> {
             // Check if the fragment is added to an activity and if the activity has a FragmentManager
@@ -87,12 +109,27 @@ public class OrganizerCheckInListFragment extends Fragment {
 
     // Fetch check-ins (attendees) from Firebase and add them to the check-in list
     // Filter through the check-in list and add userIds checked into the clicked event
+
+    /**
+     *
+     * Fetch check ins
+     *
+     */
     private void fetchCheckIns() {
+
         Set<String> userIdsSet = new HashSet<>();   // Set removes duplicate userIds
         userCheckInCount = new HashMap<>();         // Users are mapped to their number of check-ins
         FirebaseUtil.fetchCollection("CheckIn", CheckIn.class, new FirebaseUtil.OnCollectionFetchedListener<CheckIn>() {
             @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param checkInList  the check in list.
+ */
             public void onCollectionFetched(List<CheckIn> checkInList) {
+
                 // If check-ins match the eventId, add to userIds list
                 // citation: OpenAI, ChatGPT 4, 2024
                 // Prompt:  I want to only get checkIns with the eventId of the clicked event
@@ -120,7 +157,15 @@ public class OrganizerCheckInListFragment extends Fragment {
 
                 FirebaseUtil.fetchCollection("Users", User.class, new FirebaseUtil.OnCollectionFetchedListener<User>() {
                     @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param userList  the user list.
+ */
                     public void onCollectionFetched(List<User> userList) {
+
                         // Filter through the user list and add user data to the attendee list
                         for (User user : userList) {
                             if (userIdsSet.contains(user.getId())) {
@@ -131,7 +176,15 @@ public class OrganizerCheckInListFragment extends Fragment {
                     }
 
                     @Override
+
+                /**
+                 *
+                 * On error
+                 *
+                 * @param e  the e.
+                 */
                     public void onError(Exception e) {
+
                         Log.e("CheckInListFragment", "Error fetching users: ", e); // Log error
                     }
                 });
@@ -140,7 +193,15 @@ public class OrganizerCheckInListFragment extends Fragment {
             }
 
             @Override
+
+            /**
+             *
+             * On error
+             *
+             * @param e  the e.
+             */
             public void onError(Exception e) {
+
                 Log.e("CheckInListFragment", "Error fetching check-ins: ", e); // Log error
             }
         });

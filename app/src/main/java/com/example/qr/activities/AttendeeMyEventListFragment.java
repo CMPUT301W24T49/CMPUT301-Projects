@@ -27,6 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * AttendeeMyEventListFragment displays a list of events that an attendee has signed up for or checked in to.
+ */
 public class AttendeeMyEventListFragment extends Fragment {
 
     ArrayList<Event> eventDataList;
@@ -35,12 +38,31 @@ public class AttendeeMyEventListFragment extends Fragment {
     RelativeLayout fragmentLayout;
 
 
+
+    /**
+     *
+     * Attendee my event list fragment
+     *
+     * @return public
+     */
     public AttendeeMyEventListFragment() {
+
         // Required empty public constructor
     }
 
     @Override
+
+/**
+ *
+ * On create view
+ *
+ * @param inflater  the inflater.
+ * @param container  the container.
+ * @param savedInstanceState  the saved instance state.
+ * @return View
+ */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate layout
         View view = inflater.inflate(R.layout.fragment_event_list, container, false);
         fragmentLayout = view.findViewById(R.id.fragment_event_list_layout);
@@ -48,7 +70,7 @@ public class AttendeeMyEventListFragment extends Fragment {
         // Button initialization
         ListView listView = view.findViewById(R.id.listview_events);
         Button btnClose = view.findViewById(R.id.btn_close_event_list);
-        
+
         eventDataList = new ArrayList<>();
         eventArrayAdapter = new EventArrayAdapter(getContext(), eventDataList);
         listView.setAdapter(eventArrayAdapter);
@@ -63,7 +85,7 @@ public class AttendeeMyEventListFragment extends Fragment {
             Event event = eventDataList.get(position);
 
             // Send eventId to AttendeeListFragment
-            // Adapted from answer given by João Marcos
+            // Adapted from answer given by JoÃ£o Marcos
             // https://stackoverflow.com/questions/24555417/how-to-send-data-from-one-fragment-to-another-fragment
             Bundle args = new Bundle();
             args.putSerializable("Event", event);
@@ -95,7 +117,14 @@ public class AttendeeMyEventListFragment extends Fragment {
     }
 
     // Fetch events from Firebase and add them to eventList
+
+    /**
+     *
+     * Fetch data
+     *
+     */
     private void fetchData() {
+
         // Citation: OpenAI, ChatGPT 4, 2024
         // Prompt: How would i use fetchCollection to fetch event data?
 
@@ -103,7 +132,15 @@ public class AttendeeMyEventListFragment extends Fragment {
 
         FirebaseUtil.fetchCollection("SignUp", SignUp.class, new FirebaseUtil.OnCollectionFetchedListener<SignUp>() {
             @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param signUpList  the sign up list.
+ */
             public void onCollectionFetched(List<SignUp> signUpList) {
+
                 //only get the event ids that the user has signed up for
                 for (SignUp signUp : signUpList) {
                     if (signUp.getUserId().equals(androidId)) {
@@ -114,7 +151,15 @@ public class AttendeeMyEventListFragment extends Fragment {
 
                 FirebaseUtil.fetchCollection("CheckIn", CheckIn.class, new FirebaseUtil.OnCollectionFetchedListener<CheckIn>() {
                     @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param CheckInList  the check in list.
+ */
                     public void onCollectionFetched(List<CheckIn> CheckInList) {
+
                         //only get the event ids that the user has checked in for
                         for (CheckIn checkIn : CheckInList) {
                             if (checkIn.getUserId().equals(androidId)) {
@@ -126,7 +171,15 @@ public class AttendeeMyEventListFragment extends Fragment {
                         //fetch all events with the id and add them to the list
                         FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
                             @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param eventList  the event list.
+ */
                             public void onCollectionFetched(List<Event> eventList) {
+
                                 // Handle the fetched events
                                 for (Event event : eventList) {
                                     if (eventIds.contains(event.getId())) {
@@ -139,14 +192,30 @@ public class AttendeeMyEventListFragment extends Fragment {
                             }
 
                             @Override
+
+/**
+ *
+ * On error
+ *
+ * @param e  the e.
+ */
                             public void onError(Exception e) {
+
                                 //log error
                                 Log.d("AttendeeMyEventListFragment", "Failed to fetch events");
                             }
                         });
                     }
                     @Override
+
+/**
+ *
+ * On error
+ *
+ * @param e  the e.
+ */
                     public void onError(Exception e) {
+
                         //log error
                         Log.d("AttendeeMyEventListFragment", "Failed to fetch checkins");
                     }
@@ -154,7 +223,15 @@ public class AttendeeMyEventListFragment extends Fragment {
                 });
             }
             @Override
+
+/**
+ *
+ * On error
+ *
+ * @param e  the e.
+ */
             public void onError(Exception e) {
+
                 //log error
                 Log.d("AttendeeMyEventListFragment", "Failed to fetch signups");
 
@@ -163,7 +240,14 @@ public class AttendeeMyEventListFragment extends Fragment {
         });
     }
 
+
+    /**
+     *
+     * Fetch data optimized
+     *
+     */
     private void fetchDataOptimized() {
+
         List<String> eventIds = new ArrayList<>();
 
         // Fetch SignUps for the current user
@@ -188,7 +272,15 @@ public class AttendeeMyEventListFragment extends Fragment {
                 });
     }
 
+
+    /**
+     *
+     * Fetch events
+     *
+     * @param eventIds  the event ids.
+     */
     private void fetchEvents(List<String> eventIds) {
+
         List<List<String>> batches = splitListIntoBatches(eventIds, 10); // Split event IDs into batches of 10
         AtomicInteger batchesCompleted = new AtomicInteger();
         List<Event> combinedEvents = new ArrayList<>();

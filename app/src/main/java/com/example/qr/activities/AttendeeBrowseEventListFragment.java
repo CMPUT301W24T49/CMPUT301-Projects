@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * AttendeeBrowseEventListFragment displays a list of events that an attendee can browse and sign up for.
+ */
 public class AttendeeBrowseEventListFragment extends Fragment {
 
     ArrayList<Event> eventDataList;
@@ -32,11 +35,23 @@ public class AttendeeBrowseEventListFragment extends Fragment {
     RelativeLayout fragmentLayout;
 
     public AttendeeBrowseEventListFragment() {
+
         // Required empty public constructor
     }
 
     @Override
+
+/**
+ *
+ * On create view
+ *
+ * @param inflater  the inflater.
+ * @param container  the container.
+ * @param savedInstanceState  the saved instance state.
+ * @return View
+ */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate layout
         View view = inflater.inflate(R.layout.fragment_event_list, container, false);
         fragmentLayout = view.findViewById(R.id.fragment_event_list_layout);
@@ -44,7 +59,7 @@ public class AttendeeBrowseEventListFragment extends Fragment {
         // Button initialization
         ListView listView = view.findViewById(R.id.listview_events);
         Button btnClose = view.findViewById(R.id.btn_close_event_list);
-        
+
         eventDataList = new ArrayList<>();
         eventArrayAdapter = new EventArrayAdapter(getContext(), eventDataList);
         listView.setAdapter(eventArrayAdapter);
@@ -58,7 +73,7 @@ public class AttendeeBrowseEventListFragment extends Fragment {
             Event event = eventDataList.get(position);
 
             // Send eventId to AttendeeListFragment
-            // Adapted from answer given by João Marcos
+            // Adapted from answer given by JoÃ£o Marcos
             // https://stackoverflow.com/questions/24555417/how-to-send-data-from-one-fragment-to-another-fragment
             Bundle args = new Bundle();
             args.putSerializable("Event", event);
@@ -73,7 +88,7 @@ public class AttendeeBrowseEventListFragment extends Fragment {
                         .commit();
             }
         });
-        
+
         // Close button going back previous screen
         btnClose.setOnClickListener(v -> {
             // Check if fragment is added to an activity and if activity has a FragmentManager
@@ -87,12 +102,27 @@ public class AttendeeBrowseEventListFragment extends Fragment {
     }
 
     // Fetch events from Firebase and add them to eventList
+
+    /**
+     *
+     * Fetch data
+     *
+     */
     private void fetchData() {
+
         // Citation: OpenAI, ChatGPT 4, 2024
         // Prompt: How would i use fetchCollection to fetch event data?
         FirebaseUtil.fetchCollection("Events", Event.class, new FirebaseUtil.OnCollectionFetchedListener<Event>() {
             @Override
+
+/**
+ *
+ * On collection fetched
+ *
+ * @param eventList  the event list.
+ */
             public void onCollectionFetched(List<Event> eventList) {
+
                 // Handle the fetched events
 
                 eventDataList.addAll(eventList);   // Add events to data list
@@ -104,7 +134,15 @@ public class AttendeeBrowseEventListFragment extends Fragment {
             }
 
             @Override
+
+/**
+ *
+ * On error
+ *
+ * @param e  the e.
+ */
             public void onError(Exception e) {
+
             }
             // End of citation
 
